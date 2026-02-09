@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<meta charset="UTF-8">
+<html lang="en">
+<?php
+	$filepath = __FILE__;
+	require_once "top.php";
+?>
+<body>
+<p>On this website, I list some music projects I've been involved with. The page is a work-in-progress. You can send emails related to these things (or other things) to vosalo(at)utu.fi. </p>
+
+<p>
+Ongoing projects
+<ul>
+<li> <a href="norsu.html"> Norsu / Cartesian Closed Elephant </a> </li>
+<li> <a href="lasol.html"> Veli Lasol </a> </li>
+<li> (planned) Mursu </li>
+</ul>
+</p>
+
+You can find a collection of my old songs in midi format <a href="midis.html">here</a>.
+
+<p>
+Some old projects
+<ul>
+<li> <a href="http://mikseri.net/artists/hereford.44508.php">Hereford</a> </li>
+	<ul>
+	<li> Our demo can be found in the above link. Songs:
+		<ul>
+		<li> Reflection </li>
+		<li> Wanna Feel Pain </li>
+		</ul>
+	<li> Reflection is composed by me (guitar solo by Sauli). Wanna Feel Pain is composed by Ilmari until the synth solo, the ending is by me.
+	<li> Members (in alphabetical order, at the time of recording):
+		<ul>
+		<li> Ilmari (guitar &amp; vocals)
+		<li> Janne K (drums)
+		<li> Joonas (growls &amp; vocals)
+		<li> Sauli (guitar)
+		<li> Valtteri (bass)
+		<li> Ville (synth)
+		</ul>
+	</ul>
+<li> Amorte </li>
+	<ul>
+	<li> In Finnish.
+	<li> Our demo on YouTube:
+		<ul>
+		<li> <a href="https://www.youtube.com/watch?v=dc9F59gzD4c"> Liekeissä </a>
+		<li> <a href="https://www.youtube.com/watch?v=zAwr0Zmxz3Y"> Miksi edes yrittää </a>
+		<li> <a href="https://www.youtube.com/watch?v=njFY9ABWgsc"> Tämän taivaan alla </a>
+		<li> <a href="https://www.youtube.com/watch?v=w4x4W_4Yn2E">  Syleily </a>
+		</ul>
+	<li> First three songs composed by me, Syleily by Niko.
+	<li> Members (in alphabetical order, at the time of recording):
+		<ul>
+		<li> Ilmari (drums)
+		<li> Niko (guitar &amp; vocals)
+		<li> Valtteri (bass)
+		<li> Ville (guitar &amp; growls &amp; vocals)
+		</ul>
+	</ul>
+<li> Concealed affection </li>
+	<ul>
+	<li> Our demo (downloadable files in the .wma format):
+		<ul>
+		<li> <a href="AtTU.wma"> All the Things Undone </a>
+		<li> <a href="CA.wma"> Concealed Affection </a>
+		<li> <a href="LMH.wma"> Losing My Hope </a>
+		<li> <a href="RaD.wma"> Reality &amp; Delusion </a>
+		<li> <a href="TCPI.wma"> The Convict Part I </a>
+		<li> <a href="TCPII.wma"> The Convict Part II </a>
+		</ul>
+	<li> All songs composed by Janne A (I think).
+	<li> Members (in alphabetical order, at the time of recording):
+		<ul>
+		<li> Ilmari (drums)
+		<li> Janne A (synth &amp; vocals)
+		<li> Kati (vocals)
+		<li> Valtteri (bass)
+		<li> Ville (guitar &amp; growls)
+		</ul>
+	</ul>
+</ul>
+
+</p>
+
+</body>
+</html>
+
+

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Ville Salo</title>
+    <meta name="description" content="Ville Salo"/>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="shortcut icon" type="image/png" href="pics/angrydeity.png"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<script type="text/javascript" async
+	src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+
+  document.querySelectorAll("button.collapse").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const panel = btn.nextElementSibling; // the div.text right after it
+      panel.classList.toggle("open");
+    });
+  });
+</script>
+
+
+
+</head>
+<body>
+
+<h1>Ville Salo's webpage</h1>
+
+<ul id="menu">
+	<li><a href="index.html">Main page</a></li>
+	<li><a href="publications.html">Publications</a></li>
+	<li><a href="openproblems.html">Open problems</a></li>
+	<li><a href="closedproblems.html">Closed problems</a></li>
+</ul>
+
+<div id="main" class="derp">
+<img id="photo_id" src="pics/vs.jpg" alt="photo" title="photo">
+
+
+<p>
+I am an associate professor at University of Turku, Department of Mathematics and Statistics. On this page, you can find information about my research, and other stuff. You can reach me through vosalo(at)utu(dot)fi.
+</p>
+
+<div id="research" class="derp">
+<h3>Research</h3>
+
+	My research is in the field of symbolic dynamics, which deals with things like subshifts, cellular automata, (discrete/Wang) tilings, zero-dimensional dynamics. I am particularly interested in connections with algebra and/or computer science.
+	
+	Some of my primary research topics are listed below. These can be clicked open for a little more information. Look at my publications for even more information.
+	<ul>
+	<li> <button type="button" class="collapse">
+        automorphism groups of subshifts
+    </button>
+    
+    <div class="text">
+        "Subshift" can mean many things, but for me usually it means a topologically closed set \(X \subset A^G\) where \(G\) is a countable group and \(A\) a finite alphabet, which is closed under the shift action of \(G\) defined by the formula \(gx_h = x_{g^{-1}h}\). The automorphism group of a subshift is the group of self-homeomorphisms that commute with the actions of all \(g \in G\).
+		<br><br>
+		I have several results dealing with the construction of finitely-generated subgroups of \(A^{G}\) (in particular the classical case \(G = \mathbb{Z}\)), limitations on them, and on the structure of automorphism groups of minimal subshifts and countable subshifts. I have so many papers on this topic that it's hard to choose one result to mention, but perhaps the most interesting one is that I found here the first examples of natural finitely-generated groups where the conjugacy problem is undecidable (and then also finitely-presented such groups).
+    </div></li>
+	
+	<li> <button type="button" class="collapse">
+        construction of subshifts of finite type and sofic shifts on groups
+    </button>
+    
+    <div class="text">
+        Let \(G\) be a countable group and \(A\) a finite alphabet. Then \(G\) acts on \(A^G\) by the formula \(gx_h = x_{g^{-1}h}\). A subshift of finite type or <em>SFT</em> is a set of the form \(\{x \in A^G\;|\; \forall g\in G: gx \notin C\}\) where \(C\) is clopen. A sofic shift is a factor (shift-commuting continuous image) of a subshift of finite type. Two classical topics are the construction of SFTs (equivalently, of sofic shifts) where the group action is free, and proofs that the emptiness problem for SFTs is undecidable. These can be seen as interesting geometric properties of the group.
+		<br><br>
+		I have looked at these problems these problems in many types of groups. In a large class of ("sufficiently complicated") groups, we showed with Barbieri and Sablik that the sofic shifts coincide with computable subshifts. This provides a very strong hammer solving the above problems and beyond. We have also shown such "simulation theorems" in other settings. In particular, with Bartholdi we solved the two problems listed above for the lamplighter group \(\mathbb{Z}_2 \wr \mathbb{Z}\). The importance of this specific group is that it is very simple, but contains no (Euclidean or hyperbolic) planes. All constructions of SFTs before this were somehow based on using planes in the group and doing classical tiling theory on them. Ultimately, we also use a plane, it is just well-hidden.
+    </div></li>
+	
+	<li> <button type="button" class="collapse">
+        lightface classification of properties of cellular automata and subshifts
+    </button>
+	
+	    <div class="text">
+		Lightface classification is a specific type of activity in effective descriptive set theory. We have mathematical objects that we can represent on a computer in some way, either as finite bit strings, or infinite ones. We try to understand the complexity of sets of objects that have a specific property, the idea being that this is an absolute bound on how hard it is to solve the property or give equivalent formulas. 
+		<br><br>
+		I'll mention one recent result of mine. Let's say a <em>cellular automaton</em> is a continuous shift-commuting function \(f : A^{\mathbb{Z}^d} \to A^{\mathbb{Z}^d}\). This is a continuous self-map of the full shift \(A^{\mathbb{Z}^d}\), which is a compact metric space, so we are in a very standard case of dynamical systems. Such a map is <em>sensitive (to initial conditions)</em> if there exists \(\varepsilon > 0\) such that for any point \(x\) of the space, there are points arbitrarily close to it, whose trajectories eventually separate from that of \(x\) by at least \(\varepsilon\). This is considered one of the main ingredients of "chaos" in dynamical systems.
+		<br><br>
+		Recently, we showed with Tom Favereau that sensitivity  is very difficult to solve on a computer, given the description of a cellular automaton. In fact, in the case of dimension one (\(d=1\)), it is impossible to solve even if you know the solution to the halting problem. In two dimensions, it is even impossible if you know the halting problem of Turing machines that know the solution to the halting problem. But it's no harder than that. (In technical terms, the problems are \(\Pi^0_2\)-complete and \(\Sigma^0_3\)-complete, respectively.)
+		</div></li>
+
+	<li> <button type="button" class="collapse">
+        realization problems for invariants of subshifts and all sorts of "universality" results
+    </button>
+	
+	<div class="text">
+		Often, in symbolic dynamics our basic objects (subshifts, their automorphism groups, cellular automata...) are so complicated, that we can't expect to have any simple descriptions of any phenomena. So what we do is try to show that we can in some sense to absolutely anything.
+		<br><br>
+		For example, we gave an example of a "physically universal" Turing machine with Ilkka Törmä (it can implement any transformation of space, in a sense). As another, I've shown that every even permutation of \(\{0,1\}^n\) (for \(n \geq 4\)) can be written as a composition of the "flip the \(i\)th bit if the left neighbor is \(1\) or the right neighbor is \(0\)". You can try to flip a single bit <a href="<kuluma/e57game.html">here</a>. As far as I know, no human has ever succeeded in this (of course it's easy to write a search script, that's what I did for my paper).
+	</div></li>
+	
+	<li> <button type="button" class="collapse">
+        the category of subshifts and its internal algebras
+    </button>
+	
+	<div class="text">
+		Subshifts (over a fixed group) form a category. It has products, so you can talk about internal algebras. For examples, internal groups are a classical object, and are called group shifts. Something we observed with Ilkka Törmä many years ago is that sometimes properties of the variety imply properties for internal algebras in this category. For example, if an algebra is "shallow" (meaning "affine maps" are equivalent to ones of bounded depth) then every internal subshift algebra is isomorphic to one whose operations are defined cellwise (i.e. the alphabet of the subshift is in the variety).
+		<br><br>
+		We still don't have an example of a variety which is non-shallow, but where the same happens, but we have looked at various classes of lattices and Lie algebras, among others.
+	</div></li>
+	
+	<li> <button type="button" class="collapse">
+		properties of subshifts of finite type that prevent Turing universality
+	</button>
+	
+	<div class="text">
+		Sometimes people speak of symbolic dynamics as "the swamp of undecidability", a funny term due to Douglas Lind. While, as I've discussed above, it's possible to turn this pessimism around into universality results. Sometimes it's still nice to consider more restricted classes, where there are less constructions and more proofs. I have invented several classes of SFTs that are better-behaved than general SFTs, in particular TEP subshift and avoshifts. The latter generalizes group shifts.
+	</div></li>
+	
+	<li> <button type="button" class="collapse">
+		finite-state "group-walking" automata
+	</button>
+	
+	<div class="text">
+		We drop some type of turtle (with a very small brain) on some type of graph. It walks around, trying to understand where it is. What kind of properties can be observed by a turtle, if we cleverly program its brain?
+		<br><br>
+		For example, for subshifts on groups that are defined this way, we showed with Ilkka Törmä that 3 turtles can already define the same subshift that any finite amount can, if the groups is not torsion and has decidable word problem (otherwise, I've shown the sharp limit is 4 turtles). On torsion groups, on the other hand, you may need an arbitrary amount of turtles. 
+	</div></li>
+		
+	<li> <button type="button" class="collapse">
+		nilpotent and "cold" dynamics (dynamics with only transient behavior)
+	</button>
+	
+	<div class="text">
+		Let's say a <em>cellular automaton</em> is a continuous shift-commuting function \(f : A^G \to A^G\), where \(A\) is a finite alphabet and \(G\) a finitely-generated group. This is a continuous self-map of the full shift \(A^G\), which is a compact metric space, so we are in a very standard case of dynamical systems. Let's say such a map is <em>asymptotically nilpotent</em> if every point tends to the same zero-point \(0\), and <em>nilpotent</em> if this convergence is uniform. We showed with Ilkka Törmä that if \(G\) is residually finite and virtually solvable, then these properties are equivalent.
+	</div></li>
+	
+	<li> <button type="button" class="collapse">
+        Game of Life and other individual complex systems
+    </button>
+	
+	<div class="text">
+		With Ilkka Törmä, we have solved many open problems of the Game of Life community, and Conway's "unique father problem". 
+	</div></li>
+	
+	<li> <button type="button" class="collapse">
+        software
+    </button>
+	
+	<div class="text">
+		With Ilkka Törmä, we develop the Python package Griddy, which can do various things related to symbolic dynamics.
+	</div></li>
+	
+	</ul>
+
+</div>
+
+<div id="teaching" class="derp">
+
+	<h3>Teaching Activity</h3>
+	<ul>
+	<li> Algebran peruskurssi I (Basic algebra I), spring 2026.</li>
+	<li> Lebesguen mitta ja integraali (Lebesgue measure and integral), fall 2025.</li>
+	<li> Logiikka (Logic), spring 2025.	</li>
+	<li> Lebesguen mitta ja integraali (Lebesgue measure and integral), fall 2023.</li>
+	<li> Logiikka (Logic), spring 2023.</li>
+	<li> Topologian perusteet (Basic topology), fall 2022.</li>
+	<li> Cellular automata, spring 2022.</li>
+	<li> Topologian perusteet (Basic topology), fall 2019.</li>
+	<li> Symbolic dynamics II, spring 2019.</li>
+	<li> Johdatus automaattien teoriaan (Introduction to automata theory), spring 2018.</li>
+	<li> Cellular automata, spring 2018.</li>
+	<li> Algoritminen matematiikka (Algorithmic mathematics), spring 2017.</li>
+	<li> Johdatus automaattien teoriaan (Introduction to automata theory), spring 2017.</li>
+	</ul>
+</div>
+
+
+<div id="other" class="derp">
+
+	<h3>Other things/hobbies</h3>
+	<ul>
+	<li> <a href="https://symbolicdynamicsandotherthings.wordpress.com/">My math blog</a></li>
+	<li> <a href="e/index.html"> Music </a></li>
+	<li> <a href="https://www.youtube.com/@villesalo257">My YouTube channel (for mostly music, sometimes other stuff too)</a></li>
+	<li> Programming and programming languages
+		<ul>
+		<li> <a href="kuluma/index.html">Game programming</a>, play <a href="kuluma/conwaysoldiers.html">Conway's Soldiers</a> here.</li>
+		<li> Implementing esoteric programming languages and programming in them</li>
+		</ul></li>
+	<li> <a href="https://mathoverflow.net/users/123634/ville-salo">mathoverflow</a>
+		<ul>
+		<li> When not doing math, I do mathoverflow. Totally different.</li>
+		</ul></li>
+	<li> "Running"
+		<ul>
+		<li> records 10k in 46:40, half-marathon in 1:56:54, marathon in 4:36:46</li>
+		</ul></li>
+	<li> <a href="https://www.youtube.com/@VS100-d4m">My other YouTube channel</a> (juggling)</li>
+	<li> Languages
+		<ul>
+		<li> Fluent Finnish, English. Ok Spanish.</li>
+		<li> Studied Swedish and German at school. I read these relatively fluently.</li>
+		<li> I know a bit of Japanese and Russian.</li>
+		</ul></li>
+	</ul>
+</div>
+
+<script>
+        let btn = document.getElementsByClassName("collapse");
+        
+        btn[0].addEventListener("click", function () {
+            this.classList.toggle("active");
+            let content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+        
+</script>
+
+</body>
+</html>
+
+
+
+
+

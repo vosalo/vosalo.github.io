@@ -1,0 +1,658 @@
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Unleast your inner cubist</title>
+
+<style>
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 350px;
+  background-color: #588;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+</head>
+
+<body style="font-family:consolas, fixedsys;">
+
+<div id="info">
+<br>
+Instructions: 
+<br>
+In the bottom view, draw any function you like with your mouse. Press shift while drawing to remove support. Choose minimal and maximal sizes of cubes by clicking on the two cube shapes. Arrow keys and z/x move the view. Press space to calculate cubes.
+<br>
+</div>
+
+<tr><td colspan="2">
+<canvas id="canvas" width="1000" height="600" onmousedown="mousedown(event)" onmouseup="mouseup(event)" onmousemove="mousemove(event)" tabindex='1'></canvas>
+</td></tr>
+
+
+
+
+
+
+<script src="BigInt_BigRat.min.js"></script>
+<script src="PL000.js"></script>
+
+
+<script>
+var canvas = document.getElementById("canvas");
+
+
+//import { cubes_from_list, Convex, HP } from "./PL.js";
+
+var f_maxheight = 40; // this corresponds to value 1, if it matters
+var f_y = 100; // height where f_y is drawn on canvas
+
+var min_y = 20; // height at which the min cube is drawn
+var min_x = 20; // the number of cells in each piece of min cube
+var max_y = 40; // height at which max cube is drawn
+var max_x = 40; // the number of cells in each piece of max cube
+
+var xscale = 30; // how many unit cells fit in canvas
+var cell_size = canvas.width/xscale; // pixels per unit distance
+var xpos = 0; // what cell is at center of canvas
+
+// f_graph is the function, stored as a list of nonoverlapping intervals in asc order
+var f_graph = [];
+f_graph.push([0, 1]);
+var downed = null;
+var upped = null;
+
+var cube_attempts = [];
+var cutoff = 10; // only 10 best shown
+
+
+var paramspace_min_x = -10;
+var paramspace_max_x = 10;
+var paramspace_min_y = -10;
+var paramspace_max_y = 10;
+
+var viz_x = 0;
+var viz_x2 = 1;
+
+
+function mousedown(event) {
+	let xy = getMousePos(canvas, event);
+	//event = event || window.event;
+
+    let x = xy.x;
+    let y = xy.y;
+	
+	if (Math.abs(y - min_y) < 10) {
+		min_x = (x - 10)/cell_size/3;
+		min_x = round_it(min_x);
+	}
+	else if (Math.abs(y - max_y) < 10) {
+		max_x = (x - 10)/cell_size/3;
+		max_x = round_it(max_x);
+	}
+	else if (Math.abs(y - f_y) < 30 && y < f_y) {
+		downed = (x - canvas.width/2)/cell_size + xpos;
+		downed = round_it(downed);
+		upped = downed;
+	}
+	
+	//update();
+}
+
+// from a pair of points below line, to pair of points on abstract line, by moving triangularly.
+function fromscreen2(x, y) {
+	let height = y - f_y;
+	let xx = fromscreen([x, f_y]);
+	//console.log(height, "mus-");
+	//console.log(height, xx, f_maxheight, cell_size, );
+	//console.log("fromscreen2 from", x, y, "to", xx - height*f_maxheight/cell_size, xx + height*f_maxheight/cell_size);
+	return [xx[0] - height/f_maxheight, xx[0] + height/f_maxheight];
+	//return [xx[0] - 1, xx[0] + 1];
+	
+}
+
+function ra(a, b) {
+	if (typeof a === 'object' && a.constructor.name == "BigRational" && b != null) return a.divide(b);
+	return bigRat(a, b);
+}
+function rat(a, b) {
+	return ra(a, b);
+}
+
+function getMousePos(canvas, evt) {
+    const rect = canvas.getBoundingClientRect();
+    return {
+        x: (evt.clientX - rect.left) * (canvas.width / rect.width),
+        y: (evt.clientY - rect.top) * (canvas.height / rect.height)
+    };
+}
+
+
+function mousemove(event) {
+
+	let xy = getMousePos(canvas, event);
+
+    let x = xy.x
+    let y = xy.y;
+	
+	if (downed != null && Math.abs(y - f_y) < 30) {
+		upped = (x - canvas.width/2)/cell_size + xpos;
+		upped = round_it(upped);
+	}
+	
+	if (downed == null && y > f_y) {
+		[viz_x, viz_x2] = fromscreen2(x, y);
+		//console.log(viz_x, viz_x2);
+	}
+	else {
+		viz_x = null;
+	}
+	
+}
+
+var resolution = rat(1);
+function round_it(v) {
+	// say resolution is r, then we should
+	return (rat(v).divide(resolution)).round().multiply(resolution)
+}
+
+function mouseup(event) {
+
+	let xy = getMousePos(canvas, event);
+	let x = xy.x;
+	let y = xy.y;
+	
+	if (Math.abs(y - f_y) <= f_maxheight+5 && y < f_y && downed != null) {
+		//console.log("here");
+		if (upped < downed) {
+			[downed, upped] = [upped, downed];
+		}
+		minimum = resolution;
+		if (upped - downed < minimum) upped = downed + minimum; 
+		if (keysDown.has("ShiftLeft"))
+			remove_interval(downed, upped);
+		else
+			add_interval(downed, upped);
+	
+	}
+	
+	downed = null;
+	upped = null;
+
+}
+
+function add_interval(a, b) {
+	add_interval_by_leftmost_(a, b);
+	merge();
+}
+
+function remove_interval(a, b) {
+	for (i = 0; i < f_graph.length; i++) {
+		if (interval_overlap(f_graph[i], [a, b])) {
+			news = interval_setminus(f_graph[i], [a, b]);
+			f_graph.splice(i, 1, ...news);
+			i += news.length - 1; // we may have to redo, or jump ahead
+		}
+	}
+}
+
+// assuming intervals overlap, remove l2 from l and return remaining intervals
+function interval_setminus(l, l2) {
+	if (l2[0] <= l[0] && l2[1] >= l[1]) {
+		return [];
+	}
+	if (l2[0] > l[0] && l2[1] >= l[1]) {
+		return [[l[0], l2[0]]];
+	}
+	if (l2[0] <= l[0] && l2[1] < l[1]) {
+		return [[l2[1], l[1]]];
+	}
+	return [[l[0], l2[0]], [l2[1], l[1]]];
+}
+
+function merge(start = 0) {
+	for (i = start; i < f_graph.length-1; i++) {
+		if (interval_overlap(f_graph[i], f_graph[i+1])) {
+			l = interval_union(f_graph[i], f_graph[i+1]);
+			f_graph.splice(i, 2, l);
+			return merge(i); // merge more
+		}
+	}
+}
+
+function interval_overlap(l, l2) {
+	if (l[0] > l2[0]) return interval_overlap(l2, l);
+	return l[1] >= l2[0];
+}
+
+// union of intervals, which are assumed to overlap
+function interval_union(l, l2) {
+	if (l[0] > l2[0]) return interval_union(l2, l);
+	if (l[1] >= l2[1]) return l;
+	return [l[0], l2[1]];
+}
+
+// add interval in sorted order by leftmost point, but do not remove overlaps yet
+function add_interval_by_leftmost_(a, b) {
+	if (f_graph == []) {
+		
+		f_graph.push([a, b]);
+		//console.log("push", f_graph);
+		return;
+	}
+	if (f_graph[0][0] > a) {
+		f_graph.unshift([a, b]);
+		//console.log("unshift", f_graph);
+		return;
+	}
+	if (f_graph.at(-1)[0] < a) {
+		f_graph.push([a, b]);
+		//console.log("push be", f_graph);
+		return;
+	}
+	for (i = 0; i < f_graph.length; i++) {
+		if (f_graph[i][0] > a) {
+			f_graph.insert(i, [a, b]);
+			//console.log("inser", f_graph);
+			return;
+		}
+	}
+	
+	
+}
+
+document.addEventListener('mousemove', (event) => {
+const { clientX, clientY } = event;
+});
+
+function drawcirc(ctx, x, y, r, c) {
+	ctx.beginPath();
+	ctx.arc(x, y, r/2, 0, 2 * Math.PI, false);
+	if (c.length == 3) c.push(1); 
+	ctx.strokeStyle = "rgba("+c[0]+","+c[1]+","+c[2]+","+c[3]+")"; //"black";
+	ctx.fillStyle = "rgba("+c[0]+","+c[1]+","+c[2]+","+c[3]+")"; //"black";
+	ctx.lineWidth = 1;
+	ctx.fill();
+	ctx.stroke();
+}
+
+function drawline(ctx, x, y, x2, y2, color = [0,0,0], thick= 1) {
+	ctx.beginPath();
+	ctx.moveTo(x, y);
+	ctx.lineTo(x2, y2);
+	if (color.length == 3) color.push(1);
+	ctx.lineWidth = thick;
+	ctx.strokeStyle = "rgba("+color[0]+","+color[1]+","+color[2]+","+color[3]+")"; //"black";
+	ctx.stroke();
+}
+
+function drawpolygon(ctx, lines, fill) {
+	ctx.beginPath();
+	ctx.moveTo(lines[0][0], lines[0][1]); // Starting point
+	for (let i = 1; i < lines.length; i++) {
+		ctx.lineTo(lines[i][0], lines[i][1]); // Line to second point
+	}
+	ctx.closePath(); // Close the path
+	
+	if (fill.length == 3) fill.push(1);
+
+	// Fill and stroke the polygon
+	//ctx.fillStyle = "blue";
+	if (fill != null) ctx.fillStyle = "rgba("+fill[0]+","+fill[1]+","+fill[2]+","+fill[3]+")"; //'blue';
+	ctx.fill();
+	//ctx.strokeStyle = 'black';
+	//ctx.stroke();
+}
+
+function integrate(a, b) {
+	s = 0;
+	f_graph.forEach((v, i) => {
+		s += overlap_length(a, b, v[0], v[1]);
+	});
+	return s;
+}
+
+var ccc = 0;
+
+function update() {
+
+	if (keysDown.has("KeyZ")) {
+		cell_size *= 1.05;
+	}
+	if (keysDown.has("KeyX")) {
+		cell_size /= 1.05;
+	}
+	if (keysDown.has("ArrowLeft")) {
+		xpos -= 20/cell_size;
+	}
+	if (keysDown.has("ArrowRight")) {
+		xpos += 20/cell_size;
+	}
+
+	/// graphics
+
+	let ctx = canvas.getContext("2d");
+	ctx.fillStyle = "#FFFFFF";
+	ctx.fillRect(0, 0, canvas.width, canvas.height);
+	
+	/*let ctx2 = canvas2.getContext("2d");
+	ctx2.fillStyle = "#FFFFFF";
+	ctx2.fillRect(0, 0, canvas2.width, canvas2.height);*/
+	
+	/*drawcube(ctx, 10, 10 + min_x*cell_size*3, min_y);
+	drawcube(ctx, 10, 10 + max_x*cell_size*3, max_y);*/
+	drawline(ctx, 0, f_y, canvas.width, f_y);
+	
+	for (var i in f_graph) {
+		drawCell(ctx, f_graph[i][0], f_graph[i][1]);
+	}
+	if (downed != null) {
+		if (keysDown.has("ShiftLeft")){
+			drawUnCell(ctx, downed, upped);
+		}
+		else
+		{
+			drawCell(ctx, downed, upped);
+		}
+	}
+	
+	if (downed == null && viz_x != null /*&& viz_x2 >= viz_x*/) {
+		//console.log(viz_x, viz_x2)
+		//console.log(toscreen([viz_x, 0]), toscreen([viz_x2, 0]), f_y + 15 + 10);
+		ccc ++;
+		//if (ccc % 50 == 0)
+	//		console.log(toscreen([viz_x, 0])[0], toscreen([viz_x2, 0])[0], f_y + 15 + 10);
+		drawcube(ctx, toscreen([viz_x, 0])[0], toscreen([viz_x2, 0])[0], f_y, [0, 255, 0], 3);
+		//drawcube(ctx, 100,400, f_y + 15 + 10);
+	}
+	
+	zeroesdraw();
+	
+	/*drawthickline(ctx2, 0, 0, 600, 0);
+	drawthickline(ctx2, 600, 0, 600, 600);
+	drawthickline(ctx2, 600, 600, 0, 600);
+	drawthickline(ctx2, 0, 600, 0, 0);*/
+}
+
+function drawthickline(ctx, x, y, x2, y2) {
+	ctx.beginPath();
+	ctx.moveTo(x, y);
+	ctx.lineTo(x2, y2);
+	ctx.lineWidth = 5;
+	ctx.strokeStyle = "black";
+	ctx.stroke();
+}
+
+function drawcube(ctx, x, x2, y, color, thick) {
+	drawline(ctx, x, y, x2, y,  color, thick);
+	drawline(ctx, x, y-5, x, y+5,  color, thick);
+	let dd = (x2 - x) / 3;
+	drawline(ctx, x+dd, y-5, x+dd, y+5, color, thick);
+	drawline(ctx, x+dd*2, y-5, x+dd*2, y+5, color, thick);
+	drawline(ctx, x+dd*3, y-5, x+dd*3, y+5, color, thick);
+}
+
+const keysDown = new Set();
+
+document.addEventListener("keydown", (e) => {
+    keysDown.add(e.code);
+	
+	if (e.code == 'KeyQ') {
+		clearInterval(intervalId);
+	}
+	if (e.code == 'KeyW') {
+		intervalId = setInterval(update, 100);
+	}
+});
+
+document.addEventListener("keyup", (e) => {
+    keysDown.delete(e.code);
+	if (e.code == "Space") {
+		//console.log("Spa");
+		//console.log(f_graph);
+		[zz1, zz2, zz3] = cubes_from_list(f_graph);//([[0, 1]]);
+		/*console.log("zz1");
+		for (let z1 of zz1) {
+			console.log(z1.str());
+		}
+		console.log("zz2");
+		for (let z2 of zz2) {
+			console.log(z2.str());
+		}*/
+	}
+});
+
+// from abstract real line to x-space of ctx
+function toscreen(pos) {
+	return [canvas.width/2 + (pos[0] - xpos)*cell_size, pos[1]*f_maxheight + f_y];
+}
+
+// from x-space of ctx to abstract real line
+function fromscreen(pos) {
+	return [(pos[0] - canvas.width/2)/cell_size + xpos, (pos[1] - f_y)/f_maxheight];
+}
+
+function drawCell(ctx, a, b) {
+	if (b < a) {
+		[a, b] = [b, a];
+	}
+	//console.log(v);
+	var centereda = a - xpos; // how many cells from center?
+	var pixel_centera = centereda * cell_size; // how far from center in pixels
+	var centeredb = b - xpos; 
+	var pixel_centerb = centeredb * cell_size; 	
+		
+	ctx.rect(pixel_centera + canvas.width/2, f_y, pixel_centerb - pixel_centera, -f_maxheight);
+	ctx.fillStyle = "black";
+	ctx.fill();
+	//console.log(pixel_centera + canvas.width/2, f_y, pixel_centerb + canvas.width/2, f_y - f_maxheight)
+}
+
+function drawUnCell(ctx, a, b) {
+	ctx.beginPath();
+	if (b < a) {
+		[a, b] = [b, a];
+	}
+	//console.log(v);
+	var centereda = a - xpos; // how many cells from center?
+	var pixel_centera = centereda * cell_size; // how far from center in pixels
+	var centeredb = b - xpos; 
+	
+	var pixel_centerb = centeredb * cell_size; 
+	ctx.rect(pixel_centera + canvas.width/2, f_y, pixel_centerb - pixel_centera, -f_maxheight);
+	ctx.strokeStyle = "red";
+	ctx.lineWidth = 3;
+	ctx.stroke();
+	ctx.strokeStyle = "black";
+	//console.log(pixel_centera + canvas.width/2, f_y, pixel_centerb + canvas.width/2, f_y - f_maxheight)
+}
+
+// special for (-10...10)^2 for now
+/*function toscreen2(v) {
+	return [v[0].multiply(10).add(300).valueOf(), v[1].multiply(-10).add(300).valueOf()];
+}*/	
+
+var cidx;
+function zeroesdraw() {
+
+	let ctx = canvas.getContext("2d");
+	//ctx.fillStyle = "#FFFFFF";
+	//ctx.fillRect(0, 0, canvas2.width, canvas2.height);
+	
+	//drawpolygon(ctx2, [[0, 0], [600, 0], [600,600], [0, 600]], [255, 255, 255]);
+		
+		
+	// limits are: b > a
+	// left point of real line is local cube at xpos-xscale/2, right is xpos+xscale/2
+	// bottom point...
+	let canvasmaxy = (canvas.height - f_y)/f_maxheight; // how much abstract height fits on canvas
+	let lefto = xpos-xscale/2 - canvasmaxy;
+	let righto = xpos+xscale/2 + canvasmaxy;
+	//console.log(lefto, righto);
+	
+	let rightlimit = new HP([-1, 0], -righto);
+	let leftlimit = new HP([1, 0], lefto);
+	/*let toplimit = new HP([0, 1], -10);
+	let bottomlimit = new HP([0, -1], -10);*/
+	
+	let rgel =  new HP([-1, 1], 0);
+	let sizelimit = new HP([1, -1], -canvasmaxy);
+
+	let square = new Convex([rightlimit, leftlimit, sizelimit, rgel]);
+
+	for (let zzi of [0, 1, 2]) {
+		//if(zzi == 0) continue;
+		let zz = [zz1, zz2, zz3][zzi];
+		let colo = [[255,0,0,0.3], [0,255,0,0.3], [0,0,255,0.3]][zzi];
+	
+		for (let z = 0; z < zz.length; z++) {
+		
+			let con = zz[z];
+			con = con.intersection(square);
+			if (!con.is_empty() && con.dimension == 2) {
+				con.is_empty();
+				let pts = [];
+				for (let hpi of con.hp_intervals) {
+					let l = hpi[1];
+					pts.push([...toscreen2(l.a)]);
+				}
+				drawpolygon(ctx, pts, colo);
+			}
+		}
+		
+		// h
+		/*drawline (...toscreen([rat(-10), rat(0)]), ...toscreen([rat(10), rat(0)]), [200,200,200]);
+		drawline (...toscreen([rat(-10), rat(1)]), ...toscreen([rat(10), rat(1)]), [200,200,200]);
+		drawline (...toscreen([rat(-10), rat(-1)]), ...toscreen([rat(10), rat(-1)]), [200,200,200]);
+		drawline (...toscreen([rat(0), rat(-10)]), ...toscreen([rat(0), rat(10)]), [200,200,200]);
+		drawline (...toscreen([rat(1), rat(-10)]), ...toscreen([rat(1), rat(10)]), [200,200,200]);
+		drawline (...toscreen([rat(-1), rat(-10)]), ...toscreen([rat(-1), rat(10)]), [200,200,200]);*/
+
+		for (let z = 0; z < zz.length; z++) {
+			let con = zz[z];
+			con = con.intersection(square);
+			if (!con.is_empty() && con.dimension == 1) {
+				let x;
+				let y;
+				let x2;
+				let y2;
+				[x, y] = toscreen2(con.line.a);
+				[x2, y2] = toscreen2(con.line.b);
+				drawline(ctx, x, y, x2, y2, colo);
+			}
+		}
+		
+		for (let z = 0; z < zz.length; z++) {
+		
+			//console.log("h", cidx, zz.length, z);
+			//if (cidx != zz.length && z != cidx) continue;
+			//console.log("am here");
+			let con = zz[z];
+			con = con.intersection(square);
+			if (!con.is_empty() && con.dimension == 0) {
+				let [x, y] = toscreen2(con.point) //(yinvert(con.point));
+				
+				//console.log(x, y, con.point[0].toString(), con.point[1].toString());
+				//setpixel(x, y, 255,125,0,255);
+				drawcirc(ctx, x, y, 4, colo);
+			}
+		}
+	}
+
+	//console.log(c.empty())
+
+	/*drawthickline(0, 0, 600, 0);
+	drawthickline(600, 0, 600, 600);
+	drawthickline(600, 600, 0, 600);
+	drawthickline(0, 600, 0, 0);*/
+}
+
+
+// converts a point from param space to under real line
+// note that this is not an inverse of fromscreen2 since internally in PL different repr is used
+function toscreen2(pt) {
+	// from PL representation (endpoints of first interval in cube)
+	// to center point of cube
+	let center = pt[0].valueOf() + (pt[1].valueOf() - pt[0].valueOf())*1.5;
+	
+	let height = (pt[1].valueOf() - pt[0].valueOf())*1.5;
+	return toscreen([center, height]);
+}
+
+function yinvert(t) {
+	return [t[0], -t[1]];
+}
+
+Array.prototype.insert = function ( index, ...items ) {
+    this.splice( index, 0, ...items );
+};
+
+//drawit();
+//canvas.addEventListener("keydown", presso);
+//canvas.onmousedown(mousedown);
+//canvas.onmousedown(mouse);
+
+
+
+
+let c = new Convex([new HP([1, 0], 0), new HP([-1, 0], -0), new HP([0, 1], 1), new HP([0, -1], -1)], false);
+//console.log(c.str());
+//a = bbb
+let zz1 = []; //[new Convex(new HP([-1, 1], 1))];	
+let zz2 = []; //new Convex(new HP([-2, 1], 1))];
+//let a = cubes_from_list([]);
+let zz3 = [];
+
+
+
+
+
+var intervalId = setInterval(update, 100);
+
+</script>
+
+</body>
+
+</html>
+
+
+

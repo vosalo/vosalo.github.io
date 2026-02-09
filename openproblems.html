@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Ville Salo</title>
+    <meta name="description" content="Ville Salo"/>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="shortcut icon" type="image/png" href="pics/angrydeity.png"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<script type="text/javascript" async
+	src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+
+</script>
+</head>
+
+<body>		
+
+<h1>Ville Salo's webpage</h1>
+
+<ul id="menu">
+	<li><a href="index.html">Main page</a></li>
+	<li><a href="publications.html">Publications</a></li>
+	<li><a href="openproblems.html">Open problems</a></li>
+	<li><a href="closedproblems.html">Closed problems</a></li>
+</ul>
+
+<div id="main" class="derp">
+	<h2>Preamble</h2>
+	
+Here I list some open problems that have arisen from my research (with various coauthors, of course). Probably all the good questions were already asked before, and in such cases I try to give a reference. Do tell me if attributions are missing.
+<br><br>
+For now, I do not cite my own papers where the questions arose, nor explain the context, unless the question uses nonstandard terminology that is only explained in the paper (and even then, not necessarily). Hopefully this improves later. The questions have a randomly assigned id code, as I don't want to be married to a fixed ordering (because the categorization is currently rather bad). I may clarify a question without changing the id code, if I believe the content stays the exact same.
+<br><br>
+If you feel some question is not stated precisely enough, feel free to send me an email and I will add details. If you solve a problem, I'll be very interested in knowing. Many pairs of questions of course have substantial overlap or direct implications between them. I believe most of these questions are hard. There are a few where I don't remember why they were supposed to be hard, and there are a few I feel should be easy. This is not a fixed list, and I will keep updating it as I stumble into new or old problems.
+<br><br>
+Have fun.
+
+<h2> Definitions </h2>
+
+Definitions are mostly included in the questions, or just in the cited reference, but a few are listed here.
+<br><br>
+A (\(G\)-)<em>subshift</em> is a topologically closed \(G\)-invariant subset of \(A^G\) under \(G\)-translations, where \(A\) is a finite discrete alphabet. The full system \(A^G\) is the <em>full shift</em>. An <em>SFT</em> is a subshift defined by taking the points of the full shift whose orbit never enters a particular clopen set. We have natural analogs of these on monoids, in particular on \(\mathbb{N}\) (the shift may or may not be required to be surjective, but this shouldn't matter in the questions).
+<br><br>
+A <em>morphism</em> between subshifts is a continuous shift-commuting map. A <em>factor map</em> is a surjective morphisms, and an <em>embedding</em> is an injective one. A <em>factor</em> of a subshift is an image of it in a factor map. These terms also extend to other dynamical systems in an obvious way. A factor of an SFT is called <em>sofic</em>.
+<br><br>
+When \(X\) is a subshift, \(\mathrm{Aut}(X)\) refers to the group of self-homeomorphisms of \(X\)
+that commute with the shift maps on \(X\), i.e. its automorphisms. Write \(\mathrm{Aut}_n = \mathrm{Aut}(\{0,1,...,n-1\}^{\mathbb{Z}})\)
+for short. If \(G\) is a group, a subgroup \(H \leq G\) is <em>universal</em>
+if \(G \leq H\) (up to isomorphism).
+<br><br>
+A <em>pattern</em> is \(P \in A^D\) for (by default finite) \(D \subset G\), and the corresponding <em>cylinder</em> is \([P] = \{x \in A^G \;|\; x|D = P\}\), where \(G, A\) are understood from context.
+<br><br>
+Let \( G \) be a countably infinite group, \( A \) a finite alphabet with \( 0 \in A \). We
+have a continuous action \(G \curvearrowright A^G\) on the Cantor space \(A^G\) by \(gx_h = x_{g^{-1}h}\).
+Say \(G\) is <em>nilrigid</em> if the following holds
+Whenever a continuous function \(f : A^G \to A^G\) commutes with the \(G\)-action and satisfies \(\forall x \in A^G: f^n(x) \overset{n \rightarrow \infty}\longrightarrow 0^G\) where \(0^G \in A^G\) is the unique element of \(\{0\}^G\), we also have \( f^n(A^G) \overset{n \rightarrow \infty}\longrightarrow \{0^G\}. \)
+<br><br>
+Let \(G\) be a finitely-generated group with decidable word problem. We say \(G\) is <em>self-simulable</em> if all \(G\)-subshifts with a decidable language of defining forbidden patterns (a.k.a. \(\Pi^0_1\) or <em>effective</em> subshift) is sofic.
+<br><br>
+If \(H \leq G\) are groups, and \(X\) is a \(G\)-subshift, the <em>\(H\)-trace</em> of \(X\) is just \(\{x|_H \;|\; x \in X\}\). For a group \(G\) clear from context, the <em>sunny-side-up</em> is the subshift \(\{x \in \{0,1\}^G \;|\; \sum x \leq 1\}\). If \(G\) is a group, \(D \subset G\) is finite and \(P \in A^D\), then we write
+\([P] = \{x \in A^G \;|\; x|_D = P\}\). If \(H \leq G\) and \(X \subset A^H\) is a subshift, the <em>free extension</em> (or <em>induction</em>) is the subshift of \(A^G\) with the same forbidden patterns as \(X\). This idea extends naturally to other dynamical systems, by representing systems over a Cantor space alphabet.
+<br><br>
+If P is a property of configurations in \(A^G\), a configuration \(x \in A^G\) is <em>asymptotically P</em>
+if there is a configuration \(y \in A^G\) with property P such that \(\{g \in G \;|\; x_g \neq y_g\}\)
+is finite. If \(G = \mathbb{Z}^d\) a configuration is <em>semilinear</em> if for each \(a \in A\),
+\(\{\vec{v} \in \mathbb{Z}^d \;|\; x_{\vec{v}} = a\}\)
+is semilinear (definable in Presburger arithmetic). A configuration
+\(x \in A^G\) is <em>periodic</em> if \(\{g \in G \;|\; g\cdot x = x\}\)
+is a finite index subgroup of \(G\). If we have singled out a zero symbol \(0 \in A\) (usually meaning
+literally \(0 \in A\)), then the <em>support</em> of \(x \in A^G\) is \(\{g \in G \;|\; x_g \neq 0\}\).
+In the same situation, \(x \in A^G\) is <em>homoclinic</em> if \(\{g \in G \;|\; x_g \neq 0\}\) is finite, in other words \(x\) is asymptotically (all-)zero.
+
+
+
+<h2> Open problems </h2>
+
+
+
+<h3> Automorphism groups </h3>
+
+<ul>
+<li> (Q68185067) Does there exist a subgroup \(H \leq \mathrm{Aut}_2\) which is finitely generated and contains an isomorphic copy of \(\mathrm{Aut}_2\)?
+<li> (Q31510155) Is the commutator subgroup \([\mathrm{Aut}_2, \mathrm{Aut}_2]\) is finitely generated?
+<li> (Q71003309) Does the commutator subgroup \([\mathrm{Aut}_2, \mathrm{Aut}_2]\) contain an isomorphic copy of \(\mathrm{Aut}_2\)?
+<li> (Q41006072) Do the automorphism groups of mixing \(\mathbb{Z}\)-SFTs always embed in each other?
+
+<li> (Q52648523) Is the set of subgroups of \(\mathrm{Aut}_2\) closed under wreath produces with abelian base?
+
+<li> (Q94425830) Does \(\mathbb{Z}_2 \wr (\mathbb{Z}_2 \wr \mathbb{Z}^2)\) embed in \(\mathrm{Aut}_2\)?
+
+<li> (Q32632855) Does \(\mathbb{Z}_2 \wr (\mathbb{Z} \wr \mathbb{Z})\) embed in \(\mathrm{Aut}_2\)?
+<li> (Q71824582) Does \(\mathbb{Z}_2 \wr (\mathbb{Z}_2 \wr (\mathbb{Z}_2 \wr \mathbb{Z})))\) embed in \(\mathrm{Aut}_2\)?
+
+<li> (Q93226418) Let \(g \in \mathrm{Aut}_2\) be of infinite order. What are the possible word norm growth functions for \(g^n\). In particular, is \(\mathrm{log}(n)\) possible?
+
+<li> (Q28615120) Are there ever distortion elements in \(\mathrm{Aut}(X)\) for \(X\) a minimal \(\mathbb{Z}\)-subshift? (see <a href="#CyFrKrPe18">[Cyr-Franks-Kra-Petite, 2018]</a>)
+
+<li> (Q83349536) Are there ever distortion elements in \(\mathrm{Aut}(X)\) for \(X\) a \(\mathbb{Z}\)-subshift of zero entropy? (see <a href="#CyFrKrPe18">[Cyr-Franks-Kra-Petite, 2018]</a>)
+
+<li> (Q56041295) Can we embed the \(3 \times 3\) Heisenberg group in \(\mathrm{Aut}_2\)? (see <a href="#CyFrKrPe18">[Cyr-Franks-Kra-Petite, 2018]</a>)
+
+<li> (Q47805222) Can we embed the Baumslag-Solitar group \(BS(1, 2)\) in \(\mathrm{Aut}_2\)? (see <a href="#CyFrKrPe18">[Cyr-Franks-Kra-Petite, 2018]</a>)
+
+<li> (Q39301965) Does \(\mathrm{Aut}(A^{\mathbb{N}})\) have distorted infinite cyclic sybgroups?
+
+<li> (Q43824104) Does some \(\mathbb{N}\)-subshift have distorted infinite cyclic sybgroups?
+
+<li> (Q88293014) Which alternation diameters can be realized by automorphism groups of product subshifts on \(\mathbb{Z}\)? <a href="#Sa19">[Salo, 2019]</a>
+
+<li> (Q99642960\(n\)) Here \(n \in \{3, \ldots, 7\}\). Does the Tits alternative hold for finitely-generated subgroups of \(\mathrm{Aut}(\{0, \ldots, n-1\}^{\mathbb{N}})\)?
+
+<li> (Q58294960) Let \(X \subset A^{\mathbb{Z}}\) be a mixing SFT. What is the minimal size of a finitely-generated subgroup of \(\mathrm{Aut}(X)\) that acts \(\infty\)-orbit-transitively on homoclinic points? (This means \(k\)-transitivity for all \(k\), but restricted to tuples of points that are from different shift-orbits (which is of course necessary).) In particular, is it always 2? Is it 2 for \(X = \{0,1,2,3\}^{\mathbb{Z}}\).
+
+<li> (Q46698678) Let \(X \subset A^{\mathbb{Z}}\) be a mixing SFT. Is there a finitely-generated subgroup \(G \leq \mathrm{Aut}(X)\) such that if \((x_1, \ldots, x_k)\) are pairwise asymptotic and each \(x_i\) contains a word \(w_i\) that occurs only once in \(x_i\) and does not occur in \(x_j\) for \(j \neq i\), every permutation of the \(x_i\) can be performed by the \(G\)-action?
+
+<li> (Q35568486) Let \(G\) be finitely-generated, and let \(X \subset A^G\) be an SFT with nice gluing properties. Can we find a finitely generated subgroup of \(\mathrm{Aut}(X)\) that acts \(\infty\)-orbit-transitively on the aperiodic finite points?
+
+<li> (Q81644495) Suppose \(G \leq \mathrm{Aut}(A^{{\mathbb{Z}}^d}) \) has the property that
+every \(n\mathbb{Z}^d\)-shift-periodic point has \(G\)-orbit of size polynomial in \(n\) (or even just subexponential). Is \(G\) locally virtually central in \(\mathrm{Aut}(A^{\mathbb{Z}^d})\)? Even for \(d = 1\)?
+</ul>
+
+
+
+
+<h3> Cellular automata </h3>
+
+<ul>
+<li> (Q58966162) Prove or disprove that for \(G\) a f.g. infinite group there always exists a linear CA \(f : V^G \to V^G\) with \(V^G\) a vector shift over a one-dimensional vector alphabet over a finite field \(F\), such that \(f\) has infinite order.
+
+<li> (Q49883316) On what level of the lightface hierarchy is the set of pairs of shift-commuting homeomorphisms of \(A^{\mathbb{Z}}\) whose \(\mathbb{Z}\)-actions are topologically conjugate?
+
+<li> (Q88904753) Does the hierarchy of alternated left-right and right-left sweeps in the sense of <a href="#KaSaWo22">[Kari-Salo-Worsch, 2022]</a> collapse on a finite level?
+
+<li> (Q82791556) Does there exist an infinite mixing SFT \(X \subset A^{\mathbb{Z}}\) and \(f \in \mathrm{Aut}(X)\), such that \(\langle \sigma, f \rangle\) acts (set-theoretically) transitively on the set of nonzero homoclinic points?
+
+<li> (Q82791556) Does there exist an infinite mixing SFT \(X \subset A^{\mathbb{Z}}\) and \(f \in \mathrm{Aut}(X)\), such that \(\langle \sigma, f \rangle\) acts (set-theoretically) transitively on the set of nonzero homoclinic points?
+
+<li> (Q72881388) If two cellular automata on \(A^{\mathbb{Z}}\) have topologically conjugate actions, and one is physically universal <a href="#Ja10">[Janzing, 2010]</a>, is the other one physically universal?
+
+<li> (Q40119461) Is every group nilrigid? 
+
+<li> (Q73216310) Is the free group nilrigid? 
+</ul>
+
+
+<h3> SFTs on groups </h3>
+
+<ul>
+<li> (Q69313023) Do strongly irreducible SFTs on free groups have dense periodic points?
+<li> (Q60039472) Do contractible SFTs <a href="#PoSa24">[Poirier-Salo, 2024]</a> on free groups have dense periodic points?
+<li> (Q32530541) Is there a contractible SFT <a href="#PoSa24">[Poirier-Salo, 2024]</a> that is not equiconnected <a href="#PoSa24">[Poirier-Salo, 2024]</a>, on some finitely-generated group \(G\)?
+<li> (Q70544785) Does periodic asymptotic dimension <a href="#PoSa24">[Poirier-Salo, 2024]</a> stay finite in general residually finite group extensions?
+<li> (Q58004875) What is the periodic asymptotic dimension <a href="#PoSa24">[Poirier-Salo, 2024]</a> of the free group with two generators?
+<li> (Q73527718) Does the formula \(\mathrm{pdim}(G) \leq \mathrm{pdim}(K)+ \mathrm{pdim}(H)\) hold for periodic asymptotic dimension for (split or non-split) residually finite group extensions?
+
+<li> (Q40844502) Is the group \(\mathrm{GL}(3, \mathbb{Z})\) self-simulable? 
+<li> (Q61891253) Is the group \(\mathrm{GL}(4, \mathbb{Z})\) self-simulable? 
+<li> (Q57744315) Is the group \(\mathrm{Aut}(F_3)\) self-simulable?
+<li> (Q67892478) Is the group \(\mathrm{Aut}(F_4)\) self-simulable?
+<li> (Q30095206) Is the group \(B_4\) self-simulable?
+<li> (Q04951137) Is the group \(B_5\) self-simulable?
+<li> (Q24550767) Is the group \(B_6\) self-simulable?
+
+<li> (Q91241495) Let \(H, N\) be f.g. infinite groups with decidable word problem, and suppose \(N\) is nonamenable. Is the free extension of every effective zero-dimensional \(H\)-system to \(H \times N\) a factor of a subshift of finite type?
+<li> (Q35767585) Let \(H, N\) be f.g. infinite amenable groups. Suppose that an \(H\)-subshift \(X\) has sofic free extension in \(H \times N\). Is \(X\) necessarily sofic?
+
+<li> (Q40486487) Let \(G = H \times K\) be the direct product of two infinite finitely generated amenable groups with decidable word problem. Does \(G\) necessarily admit a nonempty strongly aperiodic SFT?
+
+<li> (Q69508105) Let \(G = \mathbb{Z}_2 \wr \mathbb{Z}\) be the lamplighter group. Is there a nonempty minimal strongly aperiodic SFT on this group?
+
+<li> (Q95122252) Let \(G = \mathbb{Z}_2 \wr \mathbb{Z}\) be the lamplighter group. Is there a nonempty mixing strongly aperiodic SFT on this group?
+
+<li> (Q67371411) Suppose \(G\) and \(H\) are quasi-isometric finitely-generated groups. If \(G\) admits a strongly aperiodic SFT, does \(H\) admit one as well?
+</ul>
+
+
+
+<h3> Topological full groups and Turing machines </h3>
+
+<ul>
+<li> (Q28144864) Is the set of subgroups of the topological full group of a full \(\mathbb{Z}\)-shift closed under free products?
+
+<li> (Q70642959) Is the commutator subgroup of the group of reversible Turing machines \(\mathrm{RTM}(n, k)\) finitely generated?
+
+<li> (Q81088309) On what level of the lightface hierarchy is the set of pairs of reversible Turing machines whose moving tape actions are topologically conjugate?
+
+<li> (Q68731251) Is there a topologically mixing minimal one-dimensional Turing machine in the moving tape model?
+
+<li> (Q66333933) Is there a physically universal <a href="#SaTo23">[Salo-Törmä, 2023]</a> one-dimensional Turing machine?
+
+<li> (Q05283500) What are the possible movement functions of reversible Turing machines (asymptotically)? (The movement function is \(m : \mathbb{N} \to \mathbb{N}\), where \(m(n)\) is the maximal number of steps that the head can move in \(n\) time steps.)
+
+<li> (Q00368174) Given two elements of the topological full group of a full \(\mathbb{Z}\)-shift, is it decidable whether they satisfy a non-trivial relation?
+</ul>
+
+
+<h3> Game of Life </h3>
+
+Let \(X = \{0,1\}^{\mathbb{Z}^2}\) and \(g : X \to X\) the Game of Life.
+For a rectangular pattern \(P \in \{0,1\}^{\{0,1,...,m-1\} \times \{0,1,...,n-1\}}\)
+denote by \(\mathrm{pad}_i(P)\) the pattern \(Q \in \{0,1\}^{\{-i,-i+1,...,m+i-1\} \times \{-i,-i+1,...,n+i-1\}}\)
+obtained by padding with zeroes on each side.
+
+<ul>
+<li> (Q28820954) Let \(i \in \mathbb{N}\) be minimal such that
+\([\mathrm{pad}_i(P)] \cap g(X) \neq \emptyset \implies \forall j: [\mathrm{pad}_j(P)] \cap g(X) \neq \emptyset \)
+What is the value of \(i\)?
+
+<li> (Q52773486) Is it decidable whether a given finite-support configuration has a
+finite-support preimage in the action of Game of Life? 
+
+<li> (Q37342605) What is the minimal \(n\) such that some \(n \times n\)-periodic configuration has a Game of Life preimage, but no  (spatially) periodic preimage?
+
+<li> (Q99848042) Is Game of Life generically nilpotent? 
+
+<li> (Q15988843) Is Game of Life sensitive to initial conditions? 
+
+<li> (Q97141311\(p\)) Let \(X_p\) be the subshift of temporally \(p\)-periodic configurations for Game of Life. Are points of finite support dense in this subshift?
+
+<li> (Q36263295\(p\)) Let \(X_p\) be the subshift of temporally \(p\)-periodic configurations for Game of Life. Is this subshift strongly irreducible?
+</ul>
+
+
+
+<h3> CA with random initial conditions </h3>
+
+A cellular automaton \(f\) on \(A^{\mathbb{Z}}\) is <em>linear</em> if it respects an abelian group structure on \(A\).
+<ul>
+<li> (Q64157361) We say a CA \(f\) is <em>Cesàro randomizing</em> if for every full support Bernoulli measure \(\mu\) on \(A^{\mathbb{Z}}\), the Cesàro averages of the measures \(f^n(\mu)\) tend to the uniform Bernoulli measure. Is Cesàro randomization decidable for linear CA?
+
+<li> (Q87474795) We say a CA \(f\) is <em>strongly randomizing</em> if for every full support Bernoulli measure \(\mu\) on \(A^{\mathbb{Z}}\), the measure \(f^n(\mu)\) tends to the uniform Bernoulli measure. Is strong randomization decidable for linear CA?
+
+<li> (Q50740965) Given a finite poset \(P\) with a minimal element \(0\) and a freezing monotone CA \(f\) on \(P^{\mathbb{Z}^2}\), meaning \(f(x) \leq x\) pointwise for all \(x \in P^{\mathbb{Z}^2}\) and \(f\) preserves the order, is it decidable whether for all full-support Bernoulli measures \(\mu\), \(f^n(\mu)\) tends to the Dirac measure on \(0^{\mathbb{Z}^2}\)?
+
+<li> (Q56787677) Given a finite poset \(P\) with a minimal element \(0\) and a freezing monotone CA \(f\) on \(P^{\mathbb{Z}^2}\), meaning \(f(x) \leq x\) pointwise for all \(x \in P^{\mathbb{Z}^2}\) and \(f\) preserves the order, is it decidable whether there exists a full-support Bernoulli measure \(\mu\), such that \(f^n(\mu)\) tends to the Dirac measure on \(0^{\mathbb{Z}^2}\)?
+</ul>
+
+
+<h3> Unconventional symbolic dynamical systems </h3>
+
+<ul>
+<li> (Q69923565) Let \(X, Y\) be mixing \(\mathbb{Z}\)-SFTs. Let \(X', Y'\) be obtained by removing their periodic points. Suppose there is a continuous shift-commuting bijection from \(X'\) onto \(Y'\). Are \(X\) and \(Y\) topologically conjugate? 
+
+<li> (Q02501119) Let \(X, Y\) be respectively the binary full shift and the subshift of \(3\)-colorings of \(\mathbb{Z}\). Let \(X', Y'\) be obtained by removing their periodic points. Does \(X'\) embed into \(Y\)?
+
+<li> (Q88708532) Let \(X, Y\) be respectively the binary full shift and the subshift of \(3\)-colorings of \(\mathbb{Z}\). Let \(X', Y'\) be obtained by removing their periodic points. Does \(X'\) factor onto \(Y'\)?
+
+<li> (Q92427765) Let \(X, Y\) be respectively the binary full shift and the subshift of \(3\)-colorings of \(\mathbb{Z}\). Let \(X', Y'\) be obtained by removing their periodic points. Does \(X'\) factor onto \(Y\)?
+
+<li> (Q61569144) Is topological conjugacy of \(\frac{\mathrm{sofic}}{\mathrm{sofic}}\)-systems <a href="#KoSa21">[Kopra-Salo, 2021]</a> semidecidable?
+
+<li> (Q03967332) What kind of numbers appear as topological entropies of \(\frac{\mathrm{sofic}}{\mathrm{sofic}}\)-systems <a href="#KoSa21">[Kopra-Salo, 2021]</a>? Are they logarithms of roots of Perron numbers?
+
+<li> (Q86347885) Given two eventually periodic points of a \(\frac{\mathrm{sofic}}{\mathrm{sofic}}\)-system, what kind of number is their distance in the metric defined in <a href="#KoSa21">[Kopra-Salo, 2021]</a>, and can it be computed?
+
+<li> (Q31253998) Are all \(\frac{\mathrm{subshift}}{\mathrm{sofic}}\)-systems finite-dimensional?
+
+<li> (Q00684980) Are all \(\frac{\mathrm{sofic}}{\mathrm{subshift}}\)-systems finite-dimensional?
+
+<li> (Q25384319) What can be said about the number of periodic points in a \(\frac{\mathrm{sofic}}{\mathrm{sofic}}\)-system? (Are there finitely many periodic points of a given period? Is the Artin-Mazur \(\zeta\)-function rational?)
+
+</ul>
+
+
+
+<h3> Groups </h3>
+
+<ul>
+<li> (Q05259301) Does every strongly polycyclic group admit a midpointed translation-invariant convex geometry <a href="#Sa22">[Salo, 2022]</a>?
+
+<li> (Q80146349\(d\)) Here \(d \geq 2\). What are the maximal translation-invariant midpointed extensions of the standard convex geometry of \(\mathbb{Z}^d\)? <a href="#Sa22">[Salo, 2022]</a>
+
+<li> (Q87501041) Let \(G\) be a torsion-free finitely-generated infinite group. Let \(S\) be a finite subset of \(G\). We say \(T \subset G\) is <em>closed for \(S\)-filling</em> if whenever \(gS \cap T = gS'\) where \(S' \sqcup \{s\} = S\), we have \(gs \in T\). Suppose that there is a finite subset \(T' \subset G\) such that the smallest set \(T \subset G\) which contains \(T'\) and is closed under \(S\)-filling is infinite. Is \(S\) necessarily contained in \(a\langle b \rangle c\) for some \(a, b, c \in G\)?
+
+<li> (Q62353942) Let \(G\) be a torsion-free finitely-generated infinite group. Let \(S\) be a finite subset of \(G\). For finite systems, \(T_1, T_2 \subset G\) we write \(T_1 \sim_S T_2\) if there exists \(g \in G\) and two distinct elements \(s_1, s_2 \in S\) such that the set difference \(T_1 \;\Delta\; T_2\) is \(\{gs_1, gs_2\}\), and both sets contain \(gS \setminus \{gs_1, gs_2\}\). If some finite \(T \subset G\) has an infinite connected component in the graph with edges \(\sim_S\), is \(S\) necessarily contained in \(a\langle b \rangle c\) for some \(a, b, c \in G\)?
+
+<li> (Q30995752) Let \(G \leq \prod_{n \geq 2} A_{2n+1}\) be the Neumann group (generated by diagonal initial 3-cycles and diagonal full cycles). Does \(G * G\) admit a faithful action such that the connected components of the Schreier graph have uniformly subquadratic growth?
+</ul>
+
+
+
+<h3> Subshifts on abelian groups </h3>
+
+<ul>
+<li> (Q27452691) Is the last sentence of Lemma 3 in <a href="#Sa17">[Salo, 2017]</a> true?
+
+<li> (Q86709357) Given two \(\mathbb{Z}\)-subshifts of finite type such that the space is countable, what is the complexity of the conjugacy problem? Is it decidable?
+
+<li> (Q93289984) Given two sofic \(\mathbb{Z}\)-shifts such that the space is countable, what is the complexity of the conjugacy problem? Is it decidable?
+
+<li> (Q78117387) Let \(X \subset \{0, 1\}^{\mathbb{Z}^2}\) be an SFT with the closure property \(x \in X \wedge \forall \vec v : y_{\vec v} \leq x_{\vec v} \implies y \in X\). Let \(p \in [0, 1]\) be the maximal measure of the cylinder \([1]\) in a shift-invariant probability measure on \(X\). Is \(p\) necessarily rational?
+
+<li> (Q98495721) Is the sunny-side-up the \(\mathbb{Z}\)-trace of a \(\mathbb{Z}^3\)-SFT? 
+
+</ul>
+
+
+
+
+
+
+<h3> Assorted </h3>
+
+<ul>
+<li> (Q96058605) Is the head hierarchy of <a href="#SaTo17">[Salo-Törmä, 2017]</a> infinite on finitely-generated infinite torsion groups, if you allow telepathy (= shared state between far-away heads)?
+
+<li> (Q44820604) On the group \(\mathbb{Z}\), do two-headed finite-state automata define the same subshifts as three-headed finite-state automata, in the sense of <a href="#SaTo16">[Salo-Törmä, 2016]</a>?
+
+<li> (Q99641560) On the group \(\mathbb{Z}^2\), do two-headed finite-state automata define the same subshifts as three-headed finite-state automata, in the sense of <a href="#SaTo16">[Salo-Törmä, 2016]</a>?
+
+<li> (Q25731482) Give a human proof that the embedding of Thompson's \(V\) in the mapping class group of a mixing SFT constructed in <a href="#Sa21">[Salo, 2021]</a> splits.
+
+<li> (Q38471943) Is there a universal algebraic variety \(V\) (with finitely many operations, and preferably as "natural" as possible) which is not shallow, yet all internal \(V\)-algebras in the category of subshifts on \(\mathbb{Z}\) can be cellwised. <a href="#SaTo21">[Salo-Törmä, 2021]</a>
+
+<li> (Q84253285) Let \(X\) be a compact metric space. Let \(G \) be a group acting on \(X\), and \(H\) a semigroup acting on \(X\). Suppose the actions commute, \(H\) acts expansively, and \(G\) acts faithfully with all points periodic. Is \(G\) necessarily finite?
+
+<li> (Q83394179\(n\)) Fill the \(n\)th empty square in Table 1 in <a href="#SaTo15">[Salo-Törmä, 2015]</a>.
+
+<li> (Q62356761) Are all sofic \(\mathbb{Z}\)-shifts \(X\) realizable through surjectivity of nonuniform cellular automata, in the sense that we can find a set of local rules such that the set of sequences over these rules which give a surjective map is exactly \(X\) (up to renaming symbols)?
+
+<li> (Q80139192) Is the smallest subshift whose language contains the regular language \(0^*1^* + 1^*0^*\) realizable in the previous sense?
+
+<li> (Q96181689) Is the smallest subshift whose language contains the regular language \((00 + 01)^*\) realizable in the previous sense?
+
+<li> (Q63239731) Is the smallest subshift whose language contains the regular language \(0^*1^*0^*\) realizable in the previous sense?
+
+<li> (Q51522054) Which subshifts are realizable in this sense, using only local rules of linear CA for some abelian group structure on the alphabet?
+
+<li> (Q77059155) Which subshifts are winning shifts of \(\mathbb{N}\)-SFTs, in the sense of <a href="#SaTo14">[Salo-Törmä, 2014]</a>?
+
+<li> (Q09685989) Which subshifts are winning shifts of mixing \(\mathbb{N}\)-SFTs, in the sense of <a href="#SaTo14">[Salo-Törmä, 2014]</a>?
+
+<li> (Q68900134) Let \(X = \{0,1\}^{\mathbb{N}}\) be Cantor space. We construct another topological space by taking the clopen sets of \(X\) as points \(Y\), and for each \(x \in X\) we take \([x] = \{y \in Y \;|\; x \in y\}\) and the complements of such sets as a subbasis for a topology. Is this space definable by topological properties, and is it somehow "dual" to Cantor space?
+
+<li> (Q46864016) Let \(X\) be an internal Jónsson-Tarski algebra in the category of subshifts over a group \(G\) (with block maps as morphisms). Suppose \(G\) has exponential growth. Is  \(X\) necessarily the one-point subshift?
+
+<li> (Q61373495) Is there a modular lattice subshift on \(\mathbb{Z}\) which is of finite type and mixing, and cannot be conjugated to a subshift \( Y \subset B^{\mathbb{Z}} \) where \(B\) is a modular lattice, so that the operations of \(X\) correspond to the cellwise operations of \(Y\).
+
+<li> (Q05365023) Is the picture language class UFA <a href="#KaSa11">[Kari-Salo, 2011]</a> closed under union?
+
+<li> (Q48675137) Are the picture language classes NFA and FNFA <a href="#KaSa11">[Kari-Salo, 2011]</a> equal in dimension three and higher?
+
+<li> (Q13409404) Characterize the subsets \(D \subset \mathbb{Z}^2\) such that for \(X\) the Ledrappier subshift we have \(X|D = \{0,1\}^{\mathbb{Z}^2}\).
+
+<li> (Q45457810\(S\)) Here \(S \Subset \mathbb{Z}^2\) is finite. Characterize the subsets \(D \subset \mathbb{Z}^2\) such that for all TEP subshifts \(X\) in the sense of <a href="#Sa22">[Salo, 2022]</a>, over any alphabet \(A\), we have \(X|D = A^{\mathbb{Z}^2}\).
+
+<li> (Q16620019) Compile a list of open problems in symbolic dynamics. (Existing lists are missing many important problems.)
+
+</ul>
+
+
+
+<br><br><br>
+
+<h2>References</h2>
+<br><br>
+[Janzing, 2010] <span id="Ja10"> Janzing, Dominik. "Is there a physically universal cellular automaton or Hamiltonian?." arXiv preprint arXiv:1009.1720 (2010).</span>
+<br><br>
+[Kari-Salo, 2011] <span id="KaSa11">Kari, Jarkko, and Ville Salo. "A survey on picture-walking automata." Algebraic Foundations in Computer Science: Essays Dedicated to Symeon Bozapalidis on the Occasion of His Retirement (2011): 183-213.</span>
+<br><br>
+[Salo-Törmä, 2014] <span id="SaTo14">Salo, Ville, and Ilkka Törmä. "Playing with subshifts." Fundamenta Informaticae 132.1 (2014): 131-152.</span>
+<br><br>
+[Salo-Törmä, 2015] <span id="SaTo15">Salo, Ville, and Ilkka Törmä. "Category theory of symbolic dynamics." Theoretical Computer Science 567 (2015): 21-45.</span>
+<br><br>
+
+[Salo-Törmä, 2016] <span id="SaTo16">Salo, Ville, and Ilkka Törmä. "Plane-walking automata." Cellular Automata and Discrete Complex Systems: 20th International Workshop, AUTOMATA 2014, Himeji, Japan, July 7-9, 2014, Revised Selected Papers 20. Springer International Publishing, 2015.</span>
+
+
+
+<br><br>
+[Salo-Törmä, 2017] <span id="SaTo17">Salo, Ville, and Ilkka Törmä. "Independent finite automata on Cayley graphs." Natural Computing 16 (2017): 411-426.</span>
+<br>
+<br>
+[Salo, 2017] <span id="Sa17">Salo, Ville. "Decidability and universality of quasiminimal subshifts." Journal of Computer and System Sciences 89 (2017): 288-314.</span>
+<br>
+<br>
+[Cyr-Franks-Kra-Petite, 2018] <span id="CyFrKrPe18">Cyr, V., Franks, J., Kra, B., & Petite, S. (2018). Distortion and the automorphism group of a shift. Journal of Modern Dynamics, 13.</span>
+<br><br>
+[Salo, 2019] <span id="Sa19">Salo, Ville. "Alternation diameter of a product object." arXiv preprint arXiv:1901.03613 (2019).</span>
+
+<br>
+<br>
+[Kari-Salo-Worsch, 2020] <span id="KaSaWo22">Kari, Jarkko, Ville Salo, and Thomas Worsch. "Sequentializing cellular automata." Natural Computing 19 (2020): 759-772.</span>
+
+<br>
+<br>
+[Salo, 2021] <span id="Sa21"> Salo, Ville. "Thompson's \(V\) in MCG of mixing SFT by PW-linear homeos." arXiv preprint arXiv:2103.15539 (2021).</span>
+<br>
+<br>
+[Kopra-Salo, 2021] <span id="KoSa21">Kopra, Johan, and Ville Salo. "Sofically presented dynamical systems." arXiv preprint arXiv:2105.06767 (2021).</span>
+
+<br>
+<br>
+[Salo-Törmä, 2021] <span id="SaTo21">Salo, Ville, and Ilkka Törmä. "Recoding Lie algebraic subshifts." Discrete and Continuous Dynamical Systems 41.2 (2021): 1005-1021.</span>
+<br>
+<br>
+[Salo, 2022] <span id="Sa22">Salo, Ville. "Cutting corners." Journal of Computer and System Sciences 128 (2022): 35-70.</span>
+
+<br>
+<br>
+[Salo-Törmä, 2023] <span id="SaTo23">Salo, Ville, and Ilkka Törmä. "A physically universal Turing machine." Journal of Computer and System Sciences 132 (2023): 16-44.</span>
+
+
+<br>
+<br>
+
+[Poirier-Salo, 2024] <span id="PoSa24"> Poirier, Leo, and Ville Salo. "Contractible subshifts." arXiv preprint arXiv:2401.16774 (2024).</span>
+	
+	<p>
+	Latest update: February 22nd, 2024.
+	</p>
+
+
+</body>

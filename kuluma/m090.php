@@ -1,0 +1,23 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<?php
+	$filepath = __FILE__;
+	require_once "top.php";
+?>
+<body>
+<h1>m090</h1>
+<?php /* D:\allmystuff\games_own contains the m090_allin.zip which I'm using below. */ ?>
+
+<p><a href="m090_allin.zip">m090</a> is an <a href="http://www.elastomania.com/">ElastoMania</a> like game I made perhaps somewhere around 2004, mainly to see if 2D physics is as easy to implement as it sounds. Turned out it was easy to implement badly, though I was happy with it at the time. The game has no particular goal, you drive around a huge level (made by plopmania) consisting of triangles and filling hundreds of screens. Highly pointless, and a lot of fun.</p>
+
+<p>You are a triangle with three circles attached (your head and your wheels). You move with arrow keys, Q, E and space. Arrow keys move as in ElastoMania: The up arrow accelerates the &quot;back wheel&quot; marked with a blue circle forward if it is touching the ground. The down arrow is brake. The left and right arrow keys rotate you. Rotation is done around the center of the triangle, not around the center of mass (which is closer to the wheels). Though unphysical, this allows you to control your flying. Space swaps back and front wheel. The Q and E keys add some upward or downward velocity (in local coordinates) to your head (the small circle at the top of the triangle), which can be used to fly around. They have a loading time, so you can only fly in short bursts. (The WASD keys can be used to get out of a tough spot, but are not meant as a part of the movement. There may also be functionalities in other keys. I don't think I have the source code anymore so I cannot check.)</p>
+
+<p>The game makes a recording of each time you play, which you can look at by dragging and dropping the generated .rec file onto the executable. There is also a cutter tool that can be used to cut these recordings. I have no idea how it works. One video is included, I don't know who's playing or how long it is.</p>
+
+<p>I'm happy to receive questions, comments or such about the game at vosalo(at)utu.fi. If you actually play the game, you can send videos there also.</p>
+
+<p>Latest update July 28th, 2017.</p>
+</body>
+</html>
+
+

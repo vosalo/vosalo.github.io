@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<?php
+	$filepath = __FILE__;
+	require_once "top.php";
+?>
+<body>
+<h1> Findit </h1>
+
+<p> <a href="https://play.google.com/store/apps/details?id=com.kestomaailma.findit">Findit</a> is a game where you are presented with a large picture and a small picture. You try to find the small picture from the larger one, and repeat forever.</p>
+
+<p>A mobile version can be downloaded <a href="https://play.google.com/store/apps/details?id=com.kestomaailma.findit">here</a>.</p>
+
+<p>I originally made this game with JavaScript (that version available <a href="finditonline.php">here</a>) to train my pattern matching skills, to have an excuse to play with random generators, and because I figured this would be an improved version of the good-old &quot;find the difference&quot; type of game, as you don't have to cross your eyes or swap rapidly back and forth because the small picture is quick to memorize.</p>
+
+
+
+The mobile version currently has 13 levels, using different pseudorandom generators. Here's rough descriptions of some of the prngs used; there are several parameters I have adjusted to my liking and do not explain in detail.
+<ul>
+<li> classic: Bernoulli distribution with low \(p\) and large pixel size. </li>
+<li> squiggles: Finitely many ranges of self-avoiding random walks (sampled naively). </li>
+<li> gol: Do n iterations of Game of Life from uniform Bernoulli distribution (plus some deterministic coloring and smoothing at the end). </li>
+<li> static: Uniform Bernoulli with small pixel size -- true white noise. </li>
+<li> big circles: Add circles of all sizes with large boundaries as long as it's easy to find space for them. </li>
+<li> small circles: Pick a random Delone set of positions (naively). Draw disjoint circles of the same sizes. </li>
+<li> grid-ish: &quot;Drunken grid&quot; or &quot;integrals of random walks around generators of \( \mathbb{Z}^2 \)&quot;. A random walk \(p\) is performed around \((1, 0)\) and a path with velocity \(p\) is drawn from left to right. This is repeated n times for each four basic symmetric generators. </li>
+<li> hairy: Recursively generated trees + several hours of picking parameters. (There is a three-level L-system structure, but it is not so easy to spot.) </li>
+<li> fellas: Randomly generated stick figures, caveman style. </li>
+<li> smiles: Randomly generated smiley faces. </li>
+<li> perlin: Two-layer Perlin noise -driven hue with high saturation and value. I'm using Unity's own Perlin noise. </li>
+<li> blue graph: A random embedding of a graph, smoothed. </li>
+<li> dancing pills: Ellipsoids of different colors, randomly twitching around. </li>
+</ul>
+
+<p>I'm happy to receive comments and criticism about the game at vosalo(at)utu.fi.</p>
+
+<p>Latest update July 28th, 2017.</p>
+</body>
+</html>
+
+

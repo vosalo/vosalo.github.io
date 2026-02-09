@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<?php
+	$filepath = __FILE__;
+	require_once "top.php";
+?>
+<body>
+<p>Here I list some of my personal programming projects (games mostly). The page is a work-in-progress. You can send emails related to these things (or other things) to vosalo(at)utu.fi. </p>
+
+<p>Recent finished games:
+<ul>
+  <li><a href="stereopsnek.html">stereopsnek</a></li>
+	<ul>
+	<li> A three-dimensional game with only a few pixels. You see the 3d effect by crossing your eyes.
+	</ul>
+  <li><a href="conwaysoldiers.html">A simple Conway's Soldiers in JS</a></li>
+  <li><a href="findit.php">Findit</a></li>
+</ul>
+</p>
+
+<p>Some works in progress:
+<ul>
+  <li><a href="spider.php">Spider</a></li>
+</ul>
+</p>
+
+<p>Old finished projects:
+<ul>
+  <li><a href="m090.php">m090</a> (from around 2003?)</li>
+  <li><a href="onokki.php">onokki</a> (from around 2006?)</li>
+</ul>
+</p>
+
+<?php /*<p>I also make games with other people, sometimes under the name <a href="http://www.arbitrary.xyz">Arbitrary Entertainment</a>, sometimes with subsets of those people. See that page for a list of our official games.*/ ?>
+
+I do <a href="https://globalgamejam.org/users/oklopol">Game Jamming</a>. I have collaborated on the following projects:
+<ul>
+  <li> Roots of Greatness, FGJ 2023: <a href="https://v3.globalgamejam.org/2023/games/roots-greatness-8">executable &amp; source</a> </li>
+	<ul>
+	<li> By doing eugenics, you have to produce three historically important figures. In theory you are supposed to avoid incest, but the game doesn't really punish for it. I made a general visualizer for incestuous family trees for this, with dynamic. The others had a physical jam, I joined virtually because my kid was sick. Unfortunately we did not have time to really test the game, and the gene system is pretty unintuitive, so usually you just reproduce randomly until you have the first two, and the third is just impossible.
+	</ul>
+  <li> Mind Over It Doesn't Matter, FGJ 2022: <a href="https://www.youtube.com/watch?v=uNsEdlyk_Ws&ab_channel=TheSamooja">video</a>  <a href="https://v3.globalgamejam.org/2022/games/mind-over-it-doesnt-matter-2">executable &amp; source</a> </li>
+	<ul>
+	<li> A chess FPS. It's roughly the rules of chess, but the combinatorics is implemented with rough physical rules, e.g. bishops don't have to move <it>exactly</it> diagonally, and you can miss when you try to capture, and end up just having two pieces in the same square. Plus you can get power-ups. You can play against AI or hotkey.
+	</ul>
+  <li> nEverlost, FGJ 2021: <a href="https://www.youtube.com/watch?v=3_Sdc8ejpQk&ab_channel=VilleSalo">video</a>  <a href="https://v3.globalgamejam.org/2021/games/everlost-1">executable &amp; source</a> </li>
+	<ul>
+	<li> Our main game for this year. Two player hotkey 2d platformer. The twist is that pieces of type x disappear when player x gets too far from them, which in theory leads to puzzles. We only made a few very simple levels though. The atmosphere is great, and there's some generative music, sort of.
+	</ul>
+  <li> Lose and find, FGJ 2021: <a href="https://v3.globalgamejam.org/2021/games/lose-and-find-0">executable &amp; source</a> </li>
+	<ul>
+	<li> I made this game in one hour. One player hides in some stupid Unity terrain in n seconds, the other then has to find them.
+	</ul>
+  <li> Stay@Home, FGJ 2019: <a href="https://globalgamejam.org/2019/games/stayhome">executable &amp; source</a> </li>
+	<ul>
+	<li> A graph-theoretic game where n imaginary yous avoid n pursuiters, with the twist that when pursuiters meet the imaginary yous have to, as well. I.e. lie to your friends you're at the bar.
+	</ul>
+  <li> Turbo Germinator, FGJ 2018: <a href="https://www.youtube.com/watch?v=EcXq0iKJimQ">video</a>, <a href="https://globalgamejam.org/2018/games/turbo-germinator">executable &amp; source</a> </li>
+	<ul>
+	<li> A basic 2d platformer. Controls are rather nonstandard in that you can walk on walls. I play it well, no one else does. Would need a lot of polishing to be intuitive.
+	</ul>
+  <li> Aria of Effect, FGJ 2017: <a href="https://www.youtube.com/watch?v=yUUk1SjXvsw">video</a>, <a href="https://globalgamejam.org/2017/games/aria-effect">executable &amp; source</a> </li>
+	<ul>
+	<li> Sing at correct frequencies to break objects at the opera.
+	</ul>
+  <li> Saints and Goats, FGJ 2016: <a href="https://www.youtube.com/watch?v=T0AJZV-6WAc">video</a>, <a href="https://globalgamejam.org/2016/games/saints-and-goats">executable &amp; source</a> </li>
+	<ul>
+	<li> Everyone scans a QR code, and joins the game with their phone. The game itself is relatively trivial (you kill goats etc.), and more about the atmosphere.
+	</ul>
+  <li> What do ∪ see bro?, FGJ 2014: <a href="https://globalgamejam.org/2014/games/what-do-%E2%88%AA-see-bro">executable &amp; source</a> </li>
+	<ul>
+	<li> A simple 3d platformer. You jump around on the platforms and kill critters. One player can see the critters, and the other can kill them. Controls are rather nonstandard, I can play with them, not sure others can.
+	</ul>
+</ul>
+Everything in these games is done in 48 hours and we are pretty DIY, so there usually isn't much time for final polishing. Network-related stuff (so the oldest two games) might not actually work anymore, but you can mess with the source if you like.</p>
+</body>
+</html>
+
+

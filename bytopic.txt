@@ -1,0 +1,311 @@
+automorphism groups
+
+ * Word problems and embedding-obstructions in cellular automata groups on groups
+ * Finitary Ryan's and local \(\mathcal{Q}\) entropy for \(\mathbb{Z}^d\) subshifts
+ * More on wreath products of cellular automata
+ * Distortion element in the automorphism group of a full shift
+ * Gate lattices and the stabilized automorphism group
+ * Automorphism groups of random substitution subshifts
+
+construction of SFTs
+
+ * Minimal sofic shift on a group that is not finitely generated
+ * SFT covers for actions of the first Grigorchuk group
+ * Shifts on the lamplighter group
+ * Soficity of free extensions of effective subshifts
+ * Self-simulable groups
+
+dynamics of cellular automata
+
+ * Symbol Frequencies in Surjective Cellular Automata
+ * Descriptive Complexity of Sensitivity of Cellular Automata
+ * On von Neumann regularity of cellular automata
+
+lightface classification of properties of cellular automata and subshifts
+
+realization problems for invariants of subshifts
+
+all sorts of "universality" results
+
+ * Appendix: A universal Turing machine with zero topological entropy...
+
+the category of subshifts and its internal algebras
+
+computationally non-universal classes of subshifts of finite type
+
+ * Avoshifts, Unishifts and Nondeterministic Cellular Automata
+ * Solitaire of Independence
+ * Triangle solitaire
+
+mixing properties of subshifts of finite type
+
+ * Contractible subshifts
+
+properties of large groups acting on Cantor space
+finite-state "group-walking" automata
+nilpotent and "cold" dynamics (dynamics with only transient behavior)
+
+ * Cellular Automata and Bootstrap Percolation
+ 
+Game of Life and other individual complex systems
+
+ * Structure and computability of preimages in the Game of Life
+
+aperiodic tilings
+
+ * Snakes can be fooled into thinking they live in a tree
+
+just-do-it style construction of subshift not of finite type
+
+ * Nonexpansive chaotic almost minimal systems on residually finite groups
+
+topological full groups and generalizations
+
+ * On the growth of actions ofs free products
+ * The group of reversible Turing machines: subgroups, generators and computability
+
+software and computer search
+
+ * Diddy: a Python toolbox for infinite discrete dynamical systems
+ * Finding codes on infinite grids automatically
+ * What can oracles teach us about the ultimate fate of life?
+
+winning shifts
+
+ * Automatic winning shifts
+
+other
+
+ * Sofically presented dynamical systems
+ * Conjugacy of transitive SFTs minus periodic points
+
+
+
+s
+
+
+
+
+
+
+
+with Sebastián Barbieri and Mathieu Sablik, 57 pages
+Thompson's V in MCG of mixing SFT by PW-linear homeos
+5 pages, 10 pages of diagrams, 6 pages of Python
+Veelike actions and the MCG of a mixing SFT
+5 pages
+Graph and wreath products in topological full groups of full shifts
+11 pages
+2020
+Graph and wreath products of cellular automata
+31 pages
+Simulations and the Lamplighter Group
+46 pages
+Conjugacy of reversible cellular automata and one-head machines
+37 pages
+Examples of Non-Busemann Horoballs
+22 pages
+A Physically Universal Turing Machine
+with Ilkka Törmä, 45 pages + 5 pages of @RULE + 1 page of Lua
+Four heads are better than three
+14 pages
+presented in AUTOMATA 2020
+Universal CA groups with few generators
+2 pages
+Cutting Corners
+54 pages
+play solitaire here
+errata here
+2019
+Gardens of Eden in the Game of Life
+with Ilkka Törmä, 16 pages + 5 pages of code
+Trees in positive entropy subshifts
+8 pages
+Recoding Lie algebraic subshifts
+with Ilkka Törmä, 18 pages
+errata here
+Trees are nilrigid
+6 pages
+Entropy pair realization
+15 pages
+A note on directional closing
+4 pages
+Alternation diameter of a product object
+23 pages
+On winning shifts of marked uniform substitutions
+with Jarkko Peltomäki, 17 pages
+published in RAIRO - Theoretical Informatics and Applications
+short version presented in RuFiDiM 2017
+2018
+Universal gates with wires in a row
+15 pages + 3 page appendix
+Try to not
+Minimal subshift with a language pivot property
+6 pages
+Universal Groups of Cellular Automata
+46 pages
+Published in Colloquium Mathematicum
+When are group shifts of finite type?
+8 pages
+Nilpotent Endomorphisms of Expansive Group Actions
+with Ilkka Törmä, 54 pages
+published in International Journal of Algebra and Computation
+Von Neumann regularity, split epicness and elementary cellular automata
+13 pages + appendix.
+Accompanying Python scripts: checking rules and checking numbers
+Sequentializing cellular automata
+with Jarkko Kari and Thomas Worsch, 23 pages
+accepted in AUTOMATA 2018
+No Tits alternative for cellular automata
+16 pages
+accepted in Groups, Geometry and Dynamics
+2017
+Decidability and Universality of Quasiminimal Subshifts
+57 pages
+accepted in Journal of Computer and System Sciences
+errata/notes here
+Strict Asymptotic Nilpotency in Cellular Automata
+13 pages
+presented in AUTOMATA 2017 as invited talk, 13 pages
+slides here
+Characterizing Asymptotic Randomization in Abelian Cellular Automata
+with Benjamin Hellouin de Menibus and Guillaume Theyssier, 33 pages
+published in Ergodic Theory and Dynamical Systems
+On Pointwise Periodicity in Tilings, Cellular Automata and Subshifts
+with Tom Meyerovitch, 23 pages
+accepted in Groups, Geometry and Dynamics
+A One-Dimensional Physically Universal Cellular Automaton
+with Ilkka Törmä, 17 pages
+accepted in Computability in Europe 2017
+Transitive action on finite points of a full shift and a finitary Ryan’s theorem
+35 pages
+accepted in Ergodic Theory and Dynamical Systems
+notes here
+Finite generating sets for reversible gate sets under general conservation laws
+with Tim Boykett and Jarkko Kari, 26 pages
+accepted in Theoretical Computer Science
+Distortion in One-Head Machines and Cellular Automata
+with Pierre Guillon, 19 pages
+presented in AUTOMATA 2017
+Independent finite automata on Cayley graphs
+with Ilkka Törmä, 16 pages
+published in Natural Computing
+2016
+Subshifts with sparse traces
+43 pages
+Accepted in Studia Mathematica
+The group of reversible Turing machines
+with Sebastián Barbieri and Jarkko Kari, 26 pages
+presented in AUTOMATA 2016
+Strongly Universal Reversible Gate Sets
+with Tim Boykett and Jarkko Kari, 16 pages
+presented in Reversible Computation 2016
+Distributed Testing of Excluded Subgraphs
+with Pierre Fraigniaud, Ivan Rapaport and Ioan Todinca, 16 pages
+accepted to DISC, 2016
+A note on subgroups of automorphism groups of full shifts
+12 pages
+accepted in Ergodic Theory and Dynamical Systems
+notes here
+PSPACE-Completeness of Majority Automata Networks
+with Eric Goles, Pedro Montealegre and Ilkka Törmä, 14 pages
+published in Theoretical Computer Science
+Toeplitz subshift whose automorphism group is not finitely generated
+22 pages
+accepted in Colloquium Mathematicum
+2015
+Solving the Induced Subgraph problem in the randomized multiparty simultaneous messages model
+with Jarkko Kari, Martin Matamala and Ivan Rapaport, 14 pages
+accepted in SIROCCO 2015
+Groups and monoids of cellular automata
+29 pages
+presented in AUTOMATA 2015 as invited talk
+errata/notes here
+Group-Walking Automata
+with Ilkka Törmä, 14 pages
+presented in AUTOMATA 2015
+Category Theory of Symbolic Dynamics
+with Ilkka Törmä, 45 pages
+published in Theoretical Computer Science
+Factor Colorings of Linearly Recurrent Words
+with Ilkka Törmä, 7 pages
+notes here
+2014
+Complexity of Conjugacy, Factoring and Embedding for Countable Sofic Shifts of Rank 2
+with Ilkka Törmä, 14 pages
+presented in AUTOMATA 2014
+Plane-Walking Automata
+with Ilkka Törmä, 17 pages
+presented in AUTOMATA 2014
+Trace Complexity of Chaotic Reversible Cellular Automata
+with Jarkko Kari and Ilkka Törmä, 13 pages
+presented in Reversible Computing 2014
+Realization Problems for Nonuniform Cellular Automata
+21 pages
+published in Theoretical Computer Science
+extended version of Realizing Subshifts as Sets of Surjective and Injective Nonuniform Cellular Automata
+errata here
+Block Maps between Primitive Uniform and Pisot Substitutions
+with Ilkka Törmä, 21 pages
+published in Ergodic Theory and Dynamical Systems
+Color Blind Cellular Automata
+with Ilkka Törmä, 28 pages
+published in Journal of Cellular Automata
+2013
+Hard Asymptotic Sets for One-Dimensional Cellular Automata
+6 pages
+Surjective Two-Neighbor Cellular Automata on Prime Alphabets
+with Jarkko Kari and Ilkka Törmä, 8 pages
+presented in AUTOMATA 2013
+notes here
+Commutators of Bipermutive and Affine Cellular Automata
+with Ilkka Törmä, 16 pages
+presented in AUTOMATA 2013
+Color Blind Cellular Automata
+with Ilkka Törmä, 14 pages
+presented in AUTOMATA 2013
+Constructions with Countable Subshifts of Finite Type
+with Ilkka Törmä, 38 pages
+extended version of On Derivatives and Subpattern Orders of Countable Subshifts
+published in Fundamenta Informaticae
+errata here
+Playing with Subshifts
+with Ilkka Törmä, 22 pages
+published in Fundamenta Informaticae
+2012
+Realizing Subshifts as Sets of Surjective and Injective Nonuniform Cellular Automata (work-in-progress paper)
+8 pages
+presented in RuFiDiM 2012 as a work-in-progress paper
+Playing with Subhifts (work-in-progress paper)
+with Ilkka Törmä, 8 pages
+presented in RuFiDiM 2012 as a work-in-progress paper
+On Nilpotency and Asymptotic Nilpotency of Cellular Automata
+11 pages
+presented in Automata/JAC 2012
+Topology Inspired Problems for Cellular Automata, and a Counterexample in Topology
+with Ilkka Törmä, 19 pages
+presented in Automata/JAC 2012
+errata here
+On Derivatives and Subpattern Orders of Countable Subshifts
+with Ilkka Törmä, 15 pages
+presented in Automata/JAC 2012
+Computational Aspects of Cellular Automata on Countable Sofic Shifts
+with Ilkka Törmä, 13 pages
+presented in MFCS 2012 by Ilkka
+errata here
+Geometry and Dynamics of the Besicovitch and Weyl Spaces
+with Ilkka Törmä, 15 pages
+presented in DLT 2012 as a short paper
+On Shift Spaces with Algebraic Structure
+with Ilkka Törmä, 12 pages
+presented in CiE 2012
+A Characterization of Cellular Automata Generated by Idempotents on the Full Shift
+12 pages
+presented in CSR 2012
+On Stable and Unstable Limit Sets of Finite Families of Cellular Automata
+with Ilkka Törmä, 12 pages
+presented in LATA 2012
+2011
+A Survey on Picture-Walking Automata
+with Jarkko Kari, 31 pages
+appeared in Algebraic Foundations in Computer Science - Essays Dedicated to Symeon Bozapalidis on the Occasion of His Retirement

@@ -1,0 +1,462 @@
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>stereopsnek</title>
+
+<style>
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 350px;
+  background-color: #588;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+</head>
+
+<body style="font-family:consolas, fixedsys;">
+
+<table width="300" id="ikitaulu">
+<tr><td colspan="2">
+<canvas id="canvas" width="700" height="125" onclick="clicko();" tabindex='1'></canvas>
+</td></tr>
+
+<tr><td colspan="2">
+<div id="leng">
+snik snak snek, dis game good as heck
+</div>
+</td></tr>
+
+<tr><td colspan="2">
+<div id="info">
+This is a remake of a game I made in Visual Basic some decades ago. I did not know the words "stereopsis" or "snek" back then (for different reasons), so it was called crossworm. You should now have enough information to see it, if you are a human with suitable eyes. To play the game, press IJKL to move, standard snake rules apple. (Make sure the canvas has focus: click on any of the red dots if nothing is happening.)
+<br>
+</div>
+</td></tr>
+
+
+
+<tr>
+<td>
+Depth <select onchange="selectus(this.options[this.selectedIndex].value);">">
+	<option value="height1">1</option>
+	<option value="height2">2</option>
+	<option value="height3">3</option>
+	<option selected value="height4">4</option>
+	<option value="height5">5</option>
+	<option value="height6">6</option>
+</select>
+</td>
+</tr>
+<tr>
+<td>
+Ball radius <select onchange="selectus2(this.options[this.selectedIndex].value);">">
+	<option value="div4">smal</option>
+	<option value="div3">mid</option>
+	<option selected value="div2">big</option>
+	<option value="div15">BIG</option>
+</select>
+</td>
+</tr>
+<tr>
+<td>
+Ball sep <select onchange="selectus3(this.options[this.selectedIndex].value);">">
+	<option value="sep30">30</option>
+	<option value="sep40">40</option>
+	<option value="sep50">50</option>
+	<option selected value="sep60">60</option>
+	<option value="sep70">70</option>
+	<option value="sep80">80</option>
+</select>
+</td>
+</tr>
+<tr>
+<td>
+Blue central line <select onchange="selectus4(this.options[this.selectedIndex].value);">">
+	<option value="y">yes please</option>
+	<option selected value="n">no thank you</option>
+</select>
+</td>
+</tr>
+</table>
+
+<script>
+
+var canvas = document.getElementById("canvas");
+canvas.focus();
+
+function init() {
+	adjusts = [];
+	tick = 0;
+	wormdep = 1;
+	wonde = false;
+	
+	horskip = 4;
+	verskip = 1;
+	
+	dirx = 1;
+	diry = 0;
+	started = false;
+	
+	worm = [[Math.floor(width/2)-2,Math.floor(height/2)], [Math.floor(width/2)-1,Math.floor(height/2)], [Math.floor(width/2),Math.floor(height/2)]];	
+	initgrids();
+	
+	randapple();
+}
+
+function firstinit(reallyfirst) {
+	if (reallyfirst) record = 3;
+	if (reallyfirst) blue = false;
+	
+	height = 12;
+	width = 21;
+	offx = 0;
+	offy = 0;
+	if (reallyfirst) cellsize = 60;
+	if (reallyfirst) crossheight = 4;
+	if (reallyfirst) divi = 2;
+	
+	canvas.width = offx + (width)*cellsize;
+	canvas.height = offy + (height)*cellsize;
+
+	depths = [];
+	for (var y = 0; y < height; y++) {
+		depths.push([]);
+		for (var x = 0; x < width; x++) {
+			depths[y].push(0);
+		}
+	}
+
+}
+
+// Call after setting worm, before putting an apple.
+function initgrids() {
+	content = [];
+	shoulddepths = [];
+	for (var y = 0; y < height; y++) {
+		content.push([]);
+		shoulddepths.push([]);
+		var sum = 0;
+		for (var x = 0; x < width; x++) {
+			var v;
+			if (getIndex(worm, [x,y]) != -1) {
+				v = 1;
+			} else {
+				v = 0;
+			}
+			content[y].push(v);
+			sum += v;
+			shoulddepths[y].push(sum);
+		}
+	}
+}
+
+function puttogrids(x, y, v) {
+	if (content[y][x] == v) return;
+	var prev = content[y][x];
+	var change = v - prev;
+	content[y][x] = v;
+	for (var z = x; z < width; z++) {
+		shoulddepths[y][z] += change;
+	}
+}
+
+function randapple() {
+	while (true) {
+		applex = horskip + Math.floor(Math.random()*(width-horskip*2));
+		appley = verskip + Math.floor(Math.random()*(height-verskip*2));
+		if (getIndex(worm, [applex, appley]) == -1) break;
+	}
+	puttogrids(applex, appley, 2);
+}
+
+function selectus(s) {
+	if (s == "height1") crossheight = 1;
+	if (s == "height2") crossheight = 2;
+	if (s == "height3") crossheight = 3;
+	if (s == "height4") crossheight = 4;
+	if (s == "height5") crossheight = 5;
+	if (s == "height6") crossheight = 6;
+	init();
+}
+
+function selectus2(s) {
+	if (s == "div4") divi = 4;
+	if (s == "div3") divi = 3;
+	if (s == "div2") divi = 2;
+	if (s == "div15") divi = 1.5;
+	init();
+}
+
+function selectus3(s) {
+	if (s == "sep30") cellsize = 30;
+	if (s == "sep40") cellsize = 40;
+	if (s == "sep50") cellsize = 50;
+	if (s == "sep60") cellsize = 60;
+	if (s == "sep70") cellsize = 70;
+	if (s == "sep80") cellsize = 80;
+	firstinit(false);
+	init();
+}
+
+function selectus4(s) {
+	if (s == "y") blue = true;
+	if (s == "n") blue = false;
+	init();
+}
+
+function clicko(event) {
+	
+}
+
+function drawcirc(x, y, r, c) {
+	var ctx = canvas.getContext("2d");
+	ctx.beginPath();
+	ctx.arc(x, y, r/2, 0, 2 * Math.PI, false);
+	ctx.fillStyle = c;
+	ctx.fill();
+	ctx.strokeStyle = "black";
+	ctx.stroke();
+}
+
+function drawline(x, y, x2, y2) {
+	var ctx = canvas.getContext("2d");
+	ctx.beginPath();
+	ctx.moveTo(x, y);
+	ctx.lineTo(x2, y2);
+	ctx.strokeStyle = "black";
+	ctx.stroke();
+}
+
+function presso(e) {
+	e.preventDefault();
+	if ((e.key == 'i' || e.key == 38) && diry != 1) {
+		started = true;
+		diry = -1;
+		dirx = 0;
+	}
+	if ((e.key == 'j' || e.key == 37) && dirx != 1) {
+		started = true;
+		dirx = -1;
+		diry = 0;
+	}
+	if ((e.key == 'k' || e.key == 40) && diry != -1) {
+		started = true;
+		diry = 1;
+		dirx = 0;
+	}
+	if ((e.key == 'l' || e.key == 39) && dirx != -1) {
+		started = true;
+		dirx = 1;
+		diry = 0;
+	}
+	//console.log([dirx, diry]);
+}
+
+function getIndex(list, val) {
+    for (var i = 0; i < list.length; i++) {
+        if (list[i].equals(val)) {
+            return i;
+        }
+    }
+	return -1;
+}
+
+// NB. JavaScript is a joke
+Array.prototype.equals = function (array) {
+    // if the other array is a falsy value, return
+    if (!array)
+        return false;
+
+    // compare lengths - can save a lot of time 
+    if (this.length != array.length)
+        return false;
+
+    for (var i = 0, l=this.length; i < l; i++) {
+        // Check if we have nested arrays
+        if (this[i] instanceof Array && array[i] instanceof Array) {
+            // recurse into the nested arrays
+            if (!this[i].equals(array[i]))
+                return false;       
+        }           
+        else if (this[i] != array[i]) { 
+            // Warning - two different object instances will never be equal: {x:20} != {x:20}
+            return false;   
+        }           
+    }       
+    return true;
+}
+
+function drawit(colo) {
+
+	var ctx = canvas.getContext("2d");
+	ctx.fillStyle = "#FFFFFF";
+	ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+	//for (var i = 0; i < worm.length; i++) {
+	//	drawcirc((worm[i][0]+1)*cellsize, (worm[i][1]+1)*cellsize, cellsize/2, colo);
+	//}
+
+	var wormhead = worm[worm.length-1];
+	var headtot = depths[wormhead[1]][width-1];
+	var headx = -headtot/2*crossheight + offx/2 + (wormhead[0]+1/2)*cellsize + depths[wormhead[1]][wormhead[0]]*crossheight;
+	var newadjusts = [];
+	for (var y = 0; y < height; y++) {
+		var tot = depths[y][width-1];
+		var thatxwouldbe = -tot/2*crossheight + offx/2 + (wormhead[0]+1/2)*cellsize + depths[y][wormhead[0]]*crossheight;
+		newadjusts.push(headx - thatxwouldbe);
+	}	
+	if (adjusts.equals([])) adjusts = newadjusts;
+	else {
+		for (var y = 0; y < height; y++) {
+			var mov = 0.5;
+			if (Math.abs(adjusts[y] - newadjusts[y]) < mov) adjusts[y] = newadjusts[y];
+			else adjusts[y] = adjusts[y] + Math.sign(newadjusts[y] - adjusts[y])*mov;
+		}
+	}
+	
+	for (var x = 0; x < width; x++) {
+		for (var y = 0; y < height; y++) {
+			/*if (false && getIndex(worm, [x, y]) == -1) {
+				//console.log([x, y]);
+				//console.log("ken");
+				drawcirc(offx/2 + x*cellsize, offy/2 + y*cellsize, cellsize/2, colo);
+			} else {
+				//console.log([x, y]);
+				//console.log("bbn");
+				var cnt = 0;
+				for (var z = 0; z <= x; z++) {
+					if (getIndex(worm, [z, y]) != -1 || [z, y].equals([applex, appley])) cnt++;
+				}
+				//console.log(cnt);
+				drawcirc(offx/2 + (x+1/2)*cellsize+cnt*crossheight, offy/2 + (y+1/2)*cellsize, cellsize/2, colo);
+			}*/
+			//console.log(offx/2 + (x+1/2)*cellsize + depths[y][x]*crossheight, offy/2 + (y+1/2)*cellsize, cellsize/2, colo);
+			
+			var tot = depths[y][width-1];
+			if (blue && x == Math.floor(width/2)) celo = "#0000FF";
+			else celo = colo;
+			drawcirc(adjusts[y] + -tot/2*crossheight + offx/2 + (x+1/2)*cellsize + depths[y][x]*crossheight, offy/2 + (y+1/2)*cellsize, cellsize/divi, celo);
+			
+			//drawcirc(adjusts[y] + offx/2 + (x+1/2)*cellsize + depths[y][x]*crossheight, offy/2 + (y+1/2)*cellsize, cellsize/divi, colo);
+		}
+	}
+	
+	textify();
+}
+
+
+function textify(){
+
+	var td = document.getElementById("leng");
+	var dd = "Your snek is not moving."
+	if (started) dd = "Your snek is moving."
+	td.textContent = "Your snek has length " + worm.length + ".\n Your snek record is " + record + ".\n " + dd;
+}
+
+function advanceit() {
+	dd = worm[worm.length-1];
+	dd = [dd[0] + dirx, dd[1] + diry];
+	if (dd[0] >= width || dd[0] < 0 ||dd[1] >= height || dd[1] < 0) {
+		//console.log(dd[0], dd[1], width, height);
+		init();
+		return;
+	}
+	worm.push(dd);
+	puttogrids(dd[0], dd[1], wormdep);
+	wormdep = 1; // + 0.5*Math.sin(tick/10);
+	console.log(wormdep);
+	if (!dd.equals([applex, appley])) {
+		puttogrids(worm[0][0], worm[0][1], 0);
+		worm.shift();
+	} else {
+		randapple();
+	}
+	if (getIndex(worm, dd) < worm.length-1) init();
+	if (worm.length > record) record = worm.length;
+}
+
+function lerpit(everyth) {
+	for (var x = 0; x < width; x++) {
+		for (var y = 0; y < height; y++) {
+			var should = shoulddepths[y][x];
+			var curr = depths[y][x];
+			var mov = 1/everyth;
+			if (Math.abs(should - curr) < mov) 
+				depths[y][x] = should;
+			else
+				depths[y][x] = curr + Math.sign(should - curr)*mov;
+		}
+	}
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function playit() {
+	var everyth = 5;
+	while (true) {
+		await sleep(100);
+		drawit("#FF0000");
+		if (started && tick%everyth == 0)
+			advanceit();
+		tick++;
+		lerpit(everyth);
+	}
+}
+
+firstinit(true);
+init();
+playit();
+
+canvas.addEventListener("keydown", presso);
+
+</script>
+
+</body>
+
+</html>
+
+
+

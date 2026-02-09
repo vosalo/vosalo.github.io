@@ -1,0 +1,170 @@
+body {
+    font-size: 14px;
+    font-family: sans-serif;
+    background-color: #555;
+    background-image: url(pics/back.png);
+    background-attachment: fixed;
+}
+
+h1, h2, h3 {
+    font-weight: normal;
+    margin: 20px;
+    padding: 0px;
+}
+
+h1 {
+    font-size: 250%;
+    color: #000000;
+    margin: 20px 0px;
+}
+
+h2 {
+    font-size: 200%;
+    margin-bottom: 30px;
+}
+
+h3 {
+    font-size: 150%;
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+
+dt {
+    font-weight: bold;
+}
+
+p {
+    padding-top: 0px;
+    margin-top: 0px;
+}
+
+em {
+    font-style: italic;
+    font-weight: normal;
+}
+
+strong {
+    font-style: normal;
+    font-weight: bold;
+}
+
+a:link, a:visited {
+    text-decoration: none;
+    color: #106BCD;
+}
+
+a:hover, a:active {
+    text-decoration: underline;
+    color: #FFC125;
+}
+
+dd {
+    margin-bottom: 10px;
+}
+
+img {
+    vertical-align: top;
+    padding: 0px;
+    border-width: 0px;
+}
+
+.item {
+    /*font-size: 13px;*/
+    /*border-width: 0px;
+    background-color: white;*/
+    margin-bottom: 10px;
+}
+
+.derp {
+    padding: 40px;
+    margin: 0px 0px 20px 0px;
+    color: #222;
+    background-color: #ECECEC;
+    border-radius: 7px;
+    /*background-color: #EFEBDA;
+    background-image: url(../pics/bgcaptrain.png);*/
+    /*box-shadow: 0 0 10px 0;*/
+}
+
+.pubtitle {
+    font-weight: bold;
+}
+
+#col {
+    max-width: 1000px;
+    margin: 0px auto;
+    padding: 0px;
+}
+
+#menu {
+    overflow: hidden;
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+    font-weight: bold;
+    background-color: black;
+    border-radius: 7px 7px 0px 0px;
+}
+
+#menu li {
+    float: left;
+    text-align: center;
+    margin: 0px;
+    padding: 0px;
+}
+
+#menu li a {
+    display: block;
+    margin: 0px;
+    padding: 8px 10px 8px 20px;
+}
+
+#menu a:link, #menu a:visited {
+    text-decoration: none;
+    color: #EEEEEE;
+}
+
+#menu a:hover {
+    text-decoration: none;
+    color: #FFC125;
+}
+
+#main {
+    border-radius: 0px 0px 7px 7px;
+}
+
+#photo_id {
+    float: right;
+    border-width: 0px;
+    border-radius: 7px;
+    margin: 0px 0px 40px 40px;
+    padding: 0px;
+}
+
+ul {
+	margin: 7px;
+	padding: 6px;
+}
+
+ul li {
+  margin: 5px;
+}
+
+.collapse {
+	background-color: #cccccc;
+	border: none;
+	outline: none;
+}
+
+.active,
+.collapse:hover {
+	background-color: #	;
+}
+
+.text {
+	background-color: #ececec;
+	display: none;
+	margin: 10px;
+}
+
+.text.open { display: block; }

@@ -1,0 +1,302 @@
+
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Conway's Soldiers</title>
+
+<style>
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 350px;
+  background-color: #588;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+</head>
+
+<body style="font-family:consolas, fixedsys;">
+
+<table width="300" id="ikitaulu">
+<tr><td colspan="2">
+<canvas id="canvas" width="700" height="125" onclick="clicko();" tabindex='1'></canvas>
+</td></tr>
+<tr><td colspan="2">
+<div id="wonned">You have not won.</div>
+</td></tr>
+<tr>
+<td>
+Difficulty <select selectedIndex=1 onchange="selectus(this.options[this.selectedIndex].value);">">
+	<option value="show1">trivial (1)</option>
+	<option value="show2">super easy (2)</option>
+	<option value="show3">very easy (3)</option>
+	<option value="show4">easy (4)</option>
+	<option value="show5">normal (5)</option>
+</select>
+</td>
+</tr>
+<tr><td colspan="2">
+<div id="info">
+<br>
+Instructions: 
+<br>
+1. Click on a soldier.
+<br>
+2. Click on a cell two steps away to jump a fellow soldier.
+<br>
+3. If you reach the marked cell, you win. Else goto 1.
+<br>
+4. Also press p to pop a move, r to reset current level.
+</div>
+</div>
+</td></tr>
+</table>
+
+<script>
+
+var canvas = document.getElementById("canvas");
+
+var goalheight = 1;
+height = 20;
+width = 25;
+cutoff = 7;
+cellsize = 25;
+
+init();
+drawit();
+
+function init() {
+
+	wonde = false;
+	previouses = [];
+
+	canvas.width = width*cellsize;
+	canvas.height = height*cellsize;
+	
+	round = "choose";
+
+	grid = [];
+	for (var j = 0; j < height; j++) {
+		grid.push([]);
+		for (var i = 0; i < width; i++) {
+			if (j < cutoff)
+				grid[grid.length-1].push(0);
+			else
+				grid[grid.length-1].push(1);
+		}
+	}
+}
+
+function selectus(s) {
+	goalheight = parseInt(s.substring(4,5), 10);
+	init();
+	drawit();
+}
+
+function arr_copy(arr, depth) {
+	if (depth == 0) return arr;
+	var ret = [];
+	for (var i = 0; i < arr.length; i++) {
+		ret.push(arr_copy(arr[i], depth-1));
+	}
+	return ret;
+}
+
+function clicko(event) {
+
+	event = event || window.event;
+
+    x = Math.floor((event.pageX - 10) / cellsize); // canvas.offsetLeft
+    y = Math.floor((event.pageY - 10) / cellsize);
+	
+	if (round == "choose") {
+		if (x >= 0 && x < width && y >= 0 && y < height ) {
+			if (grid[y][x] == 1) {
+				stor = arr_copy(grid, 2);
+				grid[y][x] = 2;
+				chosenx = x;
+				choseny = y;
+				round = "move";
+			}
+		}
+	}
+	else if (round == "move") {
+		if (x >= 0 && x < width && y >= 0 && y < height ) {
+			
+			dirs = [[1,0], [0,1], [-1,0], [0,-1]];
+			for (index = 0; index < dirs.length; index++) {
+				xx = x + dirs[index][0]*2;
+				yy = y + dirs[index][1]*2;
+				if (yy < 0 || xx < 0 || yy >= grid.length || xx >= grid[0].length) continue;
+
+				if (grid[yy][xx] == 2 && grid[y + dirs[index][1]][x + dirs[index][0]] == 1) {
+					previouses.push(stor);
+					grid[y][x] = 1;
+					grid[y + dirs[index][1]][x + dirs[index][0]] = 0;
+					grid[yy][xx] = 0;
+					if (y == cutoff - goalheight && x == Math.floor(width/2))
+						wonde = true;
+					round = "choose";
+				}
+			}
+			if (round == "move")
+			{
+				grid[choseny][chosenx] = 1;
+				round = "choose";
+			}
+		}
+	}
+	drawit();
+}
+
+function drawcirc(x, y, r, c) {
+	var ctx = canvas.getContext("2d");
+	ctx.beginPath();
+	ctx.arc(x, y, r/2, 0, 2 * Math.PI, false);
+	ctx.fillStyle = c;
+	ctx.fill();
+	ctx.strokeStyle = "black";
+	ctx.stroke();
+}
+
+function drawline(x, y, x2, y2) {
+	var ctx = canvas.getContext("2d");
+	ctx.beginPath();
+	ctx.moveTo(x, y);
+	ctx.lineTo(x2, y2);
+	ctx.strokeStyle = "black";
+	ctx.stroke();
+}
+
+function presso(e) {
+	e.preventDefault();
+	if (e.key == 'p' && previouses.length > 0) {
+		round = "choose";
+		grid = previouses[previouses.length-1];
+		previouses.pop();
+	}
+	if (e.key == 'r') {
+		init();
+		drawit();
+	}
+	drawit();
+}
+
+function drawit() {
+
+	var ctx = canvas.getContext("2d");
+	ctx.fillStyle = "#FFFFFF";
+	ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+	for (var x = 0; x < width; x++) {
+		for (var y = 0; y < height; y++) {
+			if (grid[y][x] == 1) {
+				drawcirc(x*cellsize+cellsize/2, y*cellsize+cellsize/2, cellsize, "#FF0000")
+			}
+			if (grid[y][x] == 2) {
+				drawcirc(x*cellsize+cellsize/2, y*cellsize+cellsize/2, cellsize, "#FFFF00")
+			}
+		}
+	}
+	
+	drawcirc(Math.floor(width/2)*cellsize+cellsize/2, (cutoff-goalheight)*cellsize+cellsize/2, cellsize/2-1, "#00FF00");
+	
+	if (round == "move") {
+		dirs = [[1,0], [0,1], [-1,0], [0,-1]];
+		for (index = 0; index < dirs.length; index++) {
+			if (chosenx + dirs[index][0]*2 >= 0 && chosenx + dirs[index][0]*2 < width &&
+			    choseny + dirs[index][1]*2 >= 0 && choseny + dirs[index][1]*2 < height &&
+				grid[choseny + dirs[index][1]][chosenx + dirs[index][0]] == 1) {
+				
+				drawcirc((chosenx + dirs[index][0]*2)*cellsize+cellsize/2,
+						 (choseny + dirs[index][1]*2)*cellsize+cellsize/2, cellsize/4-1, "#0000FF");
+				drawline((chosenx + dirs[index][0])*cellsize+cellsize/2-6,
+						 (choseny + dirs[index][1])*cellsize+cellsize/2-6,
+						 (chosenx + dirs[index][0])*cellsize+cellsize/2+6,
+						 (choseny + dirs[index][1])*cellsize+cellsize/2+6,
+						 "#0000FF");
+				drawline((chosenx + dirs[index][0])*cellsize+cellsize/2+6,
+						 (choseny + dirs[index][1])*cellsize+cellsize/2-6,
+						 (chosenx + dirs[index][0])*cellsize+cellsize/2-6,
+						 (choseny + dirs[index][1])*cellsize+cellsize/2+6,
+						 "#0000FF");
+				
+				if (grid[choseny + dirs[index][1]*2][chosenx + dirs[index][0]*2] == 1) {
+				drawline((chosenx + dirs[index][0]*2)*cellsize+cellsize/2-6,
+						 (choseny + dirs[index][1]*2)*cellsize+cellsize/2-6,
+						 (chosenx + dirs[index][0]*2)*cellsize+cellsize/2+6,
+						 (choseny + dirs[index][1]*2)*cellsize+cellsize/2+6,
+						 "#0000FF");
+				drawline((chosenx + dirs[index][0]*2)*cellsize+cellsize/2+6,
+						 (choseny + dirs[index][1]*2)*cellsize+cellsize/2-6,
+						 (chosenx + dirs[index][0]*2)*cellsize+cellsize/2-6,
+						 (choseny + dirs[index][1]*2)*cellsize+cellsize/2+6,
+						 "#0000FF");
+				}
+			}
+		}
+	}
+	
+	textify();
+}
+
+function textify(){
+
+	var td = document.getElementById("wonned");
+	if (wonde)
+		td.textContent = "You have now won. Good job.";
+	else
+		td.textContent = "You have not won.";
+}
+
+drawit();
+canvas.addEventListener("keydown", presso);
+
+</script>
+
+</body>
+
+</html>
+
+
+

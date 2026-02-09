@@ -1,0 +1,292 @@
+
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Conway's Angel Problem</title>
+
+<style>
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 350px;
+  background-color: #588;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+</head>
+
+<body style="font-family:consolas, fixedsys;">
+
+<table width="300" id="ikitaulu">
+<tr><td colspan="2">
+<canvas id="canvas" width="700" height="700" onclick="clicko();" tabindex='1'></canvas>
+</td></tr>
+<tr><td colspan="2">
+<div id="wonned">You have not won.</div>
+</td></tr>
+<tr>
+<td>
+Difficulty <select onchange="selectus(this.options[this.selectedIndex].value);">">
+	<option value="hots">Hotseat</option>
+	<option selected value="angel">Play as devil</option>
+	<option value="devil">Play as angel</option>
+</select>
+Move length <select onchange="selectos(this.options[this.selectedIndex].value);">">
+	<option value="move1">1</option>
+	<option selected value="move2">2</option>
+</select>
+</td>
+</tr>
+<tr><td colspan="2">
+<div id="info">
+Instructions (for the angel): Use your mouse or arrow keys to move.
+</div>
+<div id="info2">
+This is an implementation of Conway's <a href="https://en.wikipedia.org/wiki/Angel_problem">angel problem</a>. 
+<br>
+If you play as devil, the angel uses an approximation of Kloster's (computable but intractable) strategy (Máthé's simpler strategy is not high in the arithmetical hierarchy, but it is not explicitly computable). The angel is not guaranteed to win: Kloster's strategy takes exponential time; while it might be possible to do the search efficiently, it'd presumably be a lot more work.
+<br>
+I have not yet implemented a sensible strategy for the devil.
+</div>
+</div>
+</td></tr>
+</table>
+
+<script>
+
+console.log("ke");
+
+var canvas = document.getElementById("canvas");
+
+function init() {
+
+	wonde = false;
+	previouses = [];
+	
+	offsetx = 0;
+	offsety = 0;
+	cellsize = 20;
+
+	canvaswidth = 700;
+	canvasheight = 700;
+
+	gridleft = -2;
+	gridwidth = 5;
+	gridtop = -2;
+	gridheight = 5;
+	grid = [[1,0,0,0,1],
+	[0,0,0,0,0], 
+	[0,0,0,0,0], 
+	[0,0,0,0,0], 
+	[1,0,0,0,1]];
+	
+	round = "angel";
+	
+	angelx = 0;
+	angely = 0;
+	
+}
+
+// This is amazingly ugly, I apologize.
+function ensure_inside(x, y) {
+	if (x >= gridleft && y >= gridtop && x - gridleft < gridwidth && y - gridtop < gridheight) return; 
+	new_gridleft = Math.min(gridleft, x);
+	if (new_gridleft == x)
+		new_gridwidth = gridwidth + (gridleft - x);
+	else
+		new_gridwidth = Math.max(gridwidth, x - gridleft + 1);
+	new_gridtop = Math.min(gridtop, y);
+	if (new_gridtop == y)
+		new_gridheight = gridheight + (gridtop - x);
+	else
+		new_gridheight = Math.max(gridheight, y - gridtop + 1);
+		
+	console.log(gridleft, gridtop, gridwidth, gridheight);
+	console.log(new_gridleft, new_gridtop, new_gridwidth, new_gridheight);
+	newgrid = [];
+	for (var y = 0; y < new_gridheight; y++) {
+		newgrid.push([]);
+		for (var x = 0; x < new_gridwidth; x++) {
+			if (new_gridtop + y >= gridtop && new_gridtop + y - gridtop < gridheight &&
+				new_gridleft + x >= gridleft && new_gridleft + x - gridleft < gridwidth) {
+				var oldy = new_gridtop + y - gridtop;
+				var oldx = new_gridleft + x - gridleft;
+				newgrid[y].push(grid[oldy][oldx]);
+			} else {
+				newgrid[y].push(0);
+			}
+		}
+	}
+	gridleft = new_gridleft
+	gridtop = new_gridtop
+	gridwidth = new_gridwidth;
+	gridheight = new_gridheight;
+	grid = newgrid;
+}
+
+function set(x, y, v) {
+	ensure_inside(x, y);
+	grid[y - gridtop][x - gridleft] = v;
+}
+
+function selectus(s) {
+	mode = s;
+	init();
+	drawit();
+}
+
+function arr_copy(arr, depth) {
+	if (depth == 0) return arr;
+	var ret = [];
+	for (var i = 0; i < arr.length; i++) {
+		ret.push(arr_copy(arr[i], depth-1));
+	}
+	return ret;
+}
+
+function get(x, y) {
+	if (x < gridleft || x - gridleft >= gridwidth || y < gridtop || y - gridtop >= gridheight) return 0;
+	return grid[y - gridtop][x - gridleft];
+}
+
+function clicko(event) {
+
+	event = event || window.event;
+
+    x = Math.floor(offsetx + ((event.pageX - 10 - canvaswidth/2) / cellsize + 0.5));
+    y = Math.floor(offsety + ((event.pageY - 10 - canvasheight/2) / cellsize + 0.5));
+	
+	if (round == "angel") {
+		if (Math.abs(x - angelx) <= 2 && Math.abs(y - angely) <= 2) {
+			angelx = x;
+			angely = y;
+		}
+		round = "devil";
+	}
+	else if (round == "devil") {
+		set(x, y, 1);
+		round = "angel";
+	}
+	drawit();
+}
+
+function drawcirc(x, y, r, c) {
+	var ctx = canvas.getContext("2d");
+	ctx.beginPath();
+	ctx.arc(x, y, r/2, 0, 2 * Math.PI, false);
+	ctx.fillStyle = c;
+	ctx.fill();
+	ctx.strokeStyle = "black";
+	ctx.stroke();
+}
+
+function drawline(x, y, x2, y2) {
+	var ctx = canvas.getContext("2d");
+	ctx.beginPath();
+	ctx.moveTo(x, y);
+	ctx.lineTo(x2, y2);
+	ctx.strokeStyle = "black";
+	ctx.stroke();
+}
+
+function presso(e) {
+/*
+	e.preventDefault();
+	if (e.key == 'p' && previouses.length > 0) {
+		round = "choose";
+		grid = previouses[previouses.length-1];
+		previouses.pop();
+	}
+	if (e.key == 'r') {
+		init();
+		drawit();
+	}
+	drawit();
+*/
+}
+
+function drawit() {
+	var ctx = canvas.getContext("2d");
+	ctx.fillStyle = "#FFFFFF";
+	ctx.fillRect(0, 0, canvas.width, canvas.height);
+	//console.log("e");
+
+	/* size is 600x600, (300, 300) thus corresponds to (offsetx, offsety)
+	and cellsize is cellsize, so 300 corresponds to 300/cellsize jumps... */
+
+	for (var x = Math.floor(-canvaswidth/2/cellsize)-1; x < Math.ceil(canvaswidth/2/cellsize+1); x++) {
+		for (var y = Math.floor(-canvasheight/2/cellsize)-1; y < Math.ceil(canvasheight/2/cellsize+1); y++) {
+			drawcirc(canvaswidth/2 + x*cellsize, canvasheight/2 + y*cellsize, 1, "#000000");
+			if (get(offsetx+x, offsety+y) == 1) {
+				drawcirc(canvaswidth/2 + x*cellsize, canvasheight/2 + y*cellsize, cellsize, "#FF0000");
+				console.log ("a");
+			}
+		}
+	}
+	
+	drawcirc(canvaswidth/2 + (angelx - offsetx)*cellsize, canvasheight/2 + (angely - offsety)*cellsize, cellsize/2, "#00FF00");
+		
+	textify();
+}
+
+function textify(){
+
+	/*var td = document.getElementById("wonned");
+	if (wonde)
+		td.textContent = "You have now won. Good job.";
+	else
+		td.textContent = "You have not won.";*/
+}
+
+init();
+drawit();
+canvas.addEventListener("keydown", presso);
+
+</script>
+
+</body>
+
+</html>
+
+
+

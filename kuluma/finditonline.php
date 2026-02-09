@@ -1,0 +1,201 @@
+<html>
+
+<?php
+	$filepath = __FILE__;
+	require_once "top.php";
+?>
+
+<body style="font-family:consolas, fixedsys;">
+
+<table width="250" id="ikitaulu"><tr><td>
+<div id="pojoho">0 points</div>
+<div id="aikuri">0</div>
+<br/>
+<div id="paras">best: 0</div>
+</td>
+<td id="pesonen">
+<canvas id="canvas" width="800" height="800" style="position: fixed; x:0; y:0;" onclick="clicko();"></div>
+</td></tr></table>
+
+<script>
+
+var canvas = document.getElementById("canvas");
+
+var xsize = 0;
+var ysize = 0;
+
+var findxsize = 0;
+var findysize = 0;
+
+var xplace = 0;
+var yplace = 0;
+
+var downing = 100;
+
+var points = 0;
+var alku = nyt();
+var paras = 0;
+
+var aika = 30;
+
+var answering = 1;
+
+var grid = new Array(500);
+for (var i = 0; i < 500; i++) {
+  grid[i] = new Array(500);
+  for (var j = 0; j < 500; j++) {
+    grid[i][j] = 0;
+  }
+}
+
+function randomizeit() {
+  for (var i = 0; i < xsize; i++) {
+    for (var j = 0; j < ysize; j++) {
+      grid[i][j] = 0;
+    }
+  }
+  for (var i = 2; i < xsize-2; i++) {
+    for (var j = 2; j < ysize-2; j++) {
+      if (Math.random() > 0.98) {
+        x = i;
+        y = j;
+        while (Math.random() < 0.98) {
+          grid[x][y] = 1;
+          if (Math.random() > 0.7) x++;
+          if (Math.random() > 0.7) x--;
+          if (Math.random() > 0.7) y++;
+          if (Math.random() > 0.7) y--;
+          if (x < 0 || x >= xsize || y < 0 || y >= ysize) break;
+        }
+      }
+    }
+  }
+  xplace = parseInt(Math.random()*(xsize - findxsize));
+  yplace = parseInt(Math.random()*(ysize - findysize));
+}
+
+function nyt() {
+  return new Date() / 1000;
+}
+
+function clicko(event) {
+  if (answering) {
+    event = event || window.event;
+    var canvas = document.getElementById('canvas'),
+      x = Math.floor((event.pageX - canvas.offsetLeft) / 3) - xplace,
+      y = Math.floor((event.pageY - canvas.offsetTop - downing) / 3) - yplace;
+    if (x >= 0 && x < findxsize && y >= 0 && y < findysize && nyt() - alku < aika) {
+      hardenize();
+      showanswer("#00FF00");
+    } else {
+      startover();
+      showanswer("#FF0000");
+    }
+    answering = 0;
+  } else {
+    newpuzzle();
+    answering = 1;
+  }
+}
+
+function startover() {
+  points = 0;
+  xsize = 60;
+  ysize = 40;
+  findxsize = 40;
+  findysize = 30;
+}
+
+function hardenize() {
+  points++;
+  xsize = points + 60;
+  ysize = parseInt(points/1.5) + 60;
+  findxsize = 40 - parseInt(points/5);
+  findysize = 30 - parseInt(points/5/1.5);
+  if (findxsize < 15) findxsize = 20;
+  if (findysize < 15) findysize = 20;
+}
+
+function drawborder(x1, y1, x2, y2, color) {
+  drawRexor(x1, y1, x2, y1+1, color);
+  drawRexor(x1, y1, x1 + 1, y2, color);
+  drawRexor(x2, y1, x2 + 1, y2, color);
+  drawRexor(x1, y2, x2, y2 + 1, color);
+}
+
+function showanswer(color) {
+  drawRexor(xplace*3,downing+yplace*3,xplace*3+findxsize*3,downing+yplace*3+1,color);
+  drawRexor(xplace*3,downing+yplace*3,xplace*3+1,downing+yplace*3+findysize*3,color);
+  drawRexor(xplace*3+findxsize*3,downing+yplace*3,xplace*3+findxsize*3+1,downing+yplace*3+findysize*3,color);
+  drawRexor(xplace*3,downing+yplace*3+findysize*3,xplace*3+findxsize*3,downing+yplace*3+findysize*3+1,color);
+}
+
+function newpuzzle() {
+  randomizeit();
+  drawit();
+  alku = nyt();
+  if (points > paras) paras = points;
+  updateparas();
+  showstuff();
+}
+
+function showstuff() {
+  var td = document.getElementById("pojoho");
+  td.innerHTML = points + " points";
+}
+
+function updateparas() {
+  var td = document.getElementById("paras");
+  td.innerHTML = "best: " + paras;
+}
+
+function drawit() {
+  drawRexor(0,0,800,800,"#FFFFFF");
+  for (var i = 0; i < xsize; i++) {
+    for (var j = 0; j < ysize; j++) {
+      if (grid[i][j] == 0)
+        drawRexor(3*i, downing+3*j, 3*i+3, downing+3*j+3, "#FFFFFF");
+      if (grid[i][j] == 1)
+        drawRexor(3*i, downing+3*j, 3*i+3, downing+3*j+3, "#000000");
+    }
+  }
+  drawborder(0,downing,3*xsize,downing+3*ysize,"#0000FF");
+
+  for (var i = 0; i < findxsize; i++) {
+    for (var j = 0; j < findysize; j++) {
+      if (grid[xplace+i][yplace+j] == 0)
+        drawRexor(3*i, 3*j, 3*i+3, 3*j+3, "#FFFFFF");
+      if (grid[xplace+i][yplace+j] == 1)
+        drawRexor(3*i, 3*j, 3*i+3, 3*j+3, "#000000");
+    }
+  }
+  drawborder(0,0,3*findxsize,3*findysize,"#0000FF");
+}
+
+function drawRexor(x1, y1, x2, y2, color) {
+  var ctx = canvas.getContext("2d");
+  ctx.fillStyle=color;
+  ctx.fillRect(x1,y1,x2-x1,y2-y1);
+}
+
+startover();
+randomizeit();
+drawit();
+
+setInterval(function(){
+  var td = document.getElementById("aikuri");
+  td.innerHTML = Math.floor(nyt() - alku) + "/" + aika;
+  if (nyt() - alku > aika) {
+    startover();
+    showanswer("#FF0000");;
+  }
+},200);
+
+</script>
+
+</body>
+
+</html>
+
+
+

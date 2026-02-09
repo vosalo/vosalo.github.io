@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+
+<?php
+	$filepath = __FILE__;
+	require_once "top.php";
+?>
+
+<body>
+<h1>Spider</h1>
+
+<p>Spider is a game where you control a 2-dimensional 4-legged spider. The two bottom legs consist of two parts, and the two top legs have three parts each. Each of these parts is controlled separately, so basic movement requires 20 keys. Movement takes several hours to learn, but once mastered, is quite interesting an experience. The game was inspired by <a href="http://www.foddy.net/Athletics.html">QWOP</a>, <a href="http://www.elastomania.com/">ElastoMania</a> and a certain game we thought up in the 90's but never got around to implementing.</p>
+
+<p>You can try a rather reduced 5-level version <a href="spider/index.html">here</a>. Can you find all the secrets?</p>
+
+<p>Here are some videos of me playing an old version of the game:
+<ul>
+<li> <a href="https://www.youtube.com/watch?v=2VPV-EzGzis">Early levels of the game.</a> </li>
+<li> <a href="https://www.youtube.com/watch?v=1kLYGZgMI3E">A later level.</a> </li>
+<li> <a href="https://www.youtube.com/watch?v=ED14movo9HM">One of the more difficult levels.</a> </li>
+</ul>
+There are currently about 40 levels, and the graphics has improved. Levels currently include basic movement (walking, climbing up walls and over ledges, jumping..), handling objects (keys and weapons and such), throwing balls, swimming in ball pools and building large-scale objects (like stacks of boxes). The plan is to incorporate also levels with enemies, vehicles and gadgets requiring fine-motor skills.</p>
+
+<p>I'm happy to receive questions about the game at vosalo(at)utu.fi.</p>
+
+<p>Question: How many legs should a \(d\)-dimensional spider have (under a natural generalization of Newtonian physics)? It is known that \(L_S(3) = 8\). My conjecture is that \(L_S(2) = 4\), but I have no idea about \(L_S(4)\) or other \(L_S(d)\). Knowing the biological justification for \(L_S(3) = 8\) would help. Send me an email if you know the answer.</p>
+
+<p>Latest update July 28th, 2017.</p>
+</body>
+</html>
+
+

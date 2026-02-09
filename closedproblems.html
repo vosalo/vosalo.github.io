@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Ville Salo</title>
+    <meta name="description" content="Ville Salo"/>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="shortcut icon" type="image/png" href="pics/angrydeity.png"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<script type="text/javascript" async
+	src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+
+</script>
+</head>
+
+<body>		
+
+<h1>Ville Salo's webpage</h1>
+
+<ul id="menu">
+	<li><a href="index.html">Main page</a></li>
+	<li><a href="publications.html">Publications</a></li>
+	<li><a href="openproblems.html">Open problems</a></li>
+	<li><a href="closedproblems.html">Closed problems</a></li>
+</ul>
+
+<div id="main" class="derp">
+
+	<h2>Closed problems</h2>
+	
+	<p>
+	Here I list "open problems" that "I" have "solved".<sup>1</sup>
+	</p>
+	
+	<p>
+	I usually work on my own problems rather than other people's, so this list is not necessarily representative of my research. Nevertheless I found it interesting to compile.
+	</p>
+	
+	<p>
+	If you notice a mistake on this list (or in one of the results!), you can contact me through email. I know the reference list has very bad formatting, sorry about that.
+	</p>
+	
+	<p>
+	Latest update: July 10th, 2025.
+	</p>
+	
+	<ol reversed>
+	
+		<li> There exists a non-finitely generated group which admits a minimal sofic shift.
+			<ul>
+			<li> asked in <a href="#DoMeTs25">[Doucha-Melleray-Tsankov, 2025]</a>, Question 7.18 (ii).
+			<li> I prove this in <a href="#Sa25a">[Salo, 2025a]</a>.
+			</ul>
+	
+		<li> The sensitivity of one-dimensional cellular automata is \(\Pi^0_2\)-complete.
+			<ul>
+			<li> asked in <a href="#SaTh11">[Sablik-Theyssier, 2011]</a>: "what is the exact complexity of \(\mathcal{S}_{\mathrm{ens}}\) in 1D? is it \(\Pi_2\)-complete or only at level 1 of the arithmetical hierarchy?".
+			<li> We prove this with Tom Favereau in <a href="https://villesalo.com/article/DCoSoCA.pdf">our recent preprint</a>.
+			</ul>
+		
+		<li> The sensitivity of two- and higher-dimensional cellular automata is \(\Sigma^0_3\)-complete.
+			<ul>
+			<li> asked in <a href="#SaTh11">[Sablik-Theyssier, 2011]</a>: "we believe that the set \(\mathcal{S}_{\mathrm{ens}}\) is in the arithmetical hierarchy for any dimension, but we have no proof yet starting from dimension 2."
+			<li> We prove this with Tom Favereau in <a href="https://villesalo.com/article/DCoSoCA.pdf">our recent preprint</a>.
+			<li> Actually I would say this problem is \(\Sigma^0_3\) by definition, and this technically already answers their question. However, one can read the question as asking about the exact complexity as well, and this (\(\Sigma^0_3\)-hardness) is our main result.
+			</ul>
+	
+		<li> \(\mathrm{Aut}(\{0,1\}^{\mathbb{Z}^k})\) does not embed in \(\mathrm{Aut}(\{0,1\}^{\mathbb{Z}^d})\) if \(k > d\).
+			<ul>
+			<li> Hochman asked the following in the conference "Current Trends in Dynamical Systems and the Mathematical Legacy of Rufus Bowen", see the <a href="https://pims.math.ca/files/shortsessionv3.pdf">Symbolic Topology Session</a>: "\( k < d \), the automorphism group of a full \(\mathbb{Z}^k\)-shift on two symbols embeds as a subgroup in the automorphism group of a full \(\mathbb{Z^d}\)-shift on two symbols. Is there an embedding if \(k > d\)?" Our result gives a negative answer.
+			<li> Hochman also asked in <a href="#Ho10">[Hochman, 2010]</a> the following: "Another basic question is whether the automorphism group of the full shift on two symbols in dimension \(d > 1\) can be embedded in any of the automorphism groups of a lower-dimensional SFT.". This we do not really solve, but we address interesting cases of it.
+			<li> Our solution in: <a href="#Sa25">[Salo, 2025]</a>
+			<li> Hochman officially asked 5 questions in this session, and I remember, specifically because the first question is this one, as summarizing Hochman's session as "his usual impossible questions". So quite exciting to solve it now. (Though I already previously solved question 5 from this list, and also the pivot problem from his other session.)
+			</ul>
+
+		<li> \(\mathrm{Aut}(\{0,1\}^{F_2})\) does not embed in \(\mathrm{Aut}(\{0,1\}^{\mathbb{Z}})\).
+			<ul>
+			<li> Question 7.6 of <a href="#CyKrSc24">[Barbieri-Carrasco-Vargas-Rivera-Burgos, 2025]</a>.
+			<li> Our solution in: <a href="#Sa25">[Salo, 2025]</a>
+			</ul>
+	
+		<li> Finitary Ryan's theorems can be proved on groups.
+			<ul>
+			<li> Question 7.2 of <a href="#BaCaRi25">[Barbieri-Carrasco-Vargas-Rivera-Burgos, 2025]</a>.
+			<li> Our solution in: <a href="#SaSc25">[Salo-Schmieding, 2025]</a>
+			<li> Note that the question is quite open-ended. On general groups we prove it just for some full shifts, and for \(\mathbb{Z}^d\) for contractible SFTs (with a fixed point).
+			</ul>
+
+		<li> Every finitely-generated residually finite group admits a CAM system.
+			<ul>
+			<li> F.g. case of Conjecture 6.4 of <a href="#CyKrSc24">[Cyr-Kra-Schmieding, 2024]</a>.
+			<li> Our solution in: <a href="#Sa24">[Salo, 2024]</a>
+			<li> Note that the non-f.g. case is also interesting -- perhaps even more interesting. I don't see why f.g. would be essential in such a construction, but I do use it at one point.
+			</ul>
+	
+		<li> There is a nonexpansive CAM system on \(\mathbb{Z}\).
+			<ul>
+			<li> Asked in Question 6.5 of <a href="#CyKrSc24">[Cyr-Kra-Schmieding, 2024]</a>.
+			<li> Our solution in: <a href="#Sa24">[Salo, 2024]</a>
+			<li> Proof idea: CAM subshifts are easy to make: do the usual recursive construction, but at every step, use large periodic areas of all previous levels. Now just take an abstract quotient to kill expansivity (quotient by any non-SFT equivalence relation).
+			</ul>
+	
+		<li> The lamplighter group \(\mathbb{Z}_2 \wr \mathbb{Z}\) admits a strongly aperiodic subshift of finite type.
+			<ul>
+			<li> Asked in <a href="#Co20">[Cohen, 2020]</a>.
+			<li> Our solution in: <a href="#BaSa24">[Bartholdi-Salo, 2024]</a>
+			<li> We develop an extensive simulation theory, which proves much more than this, in particular we also solve the three questions below. The lamplighter group was the primary candidate for behavior between free groups and a plane (but we show that in most respects it behaves like the plane). This group did not allow for directly using any existing techniques, as it does not contain any coarsely embedded plane (Euclidean or hyperbolic).
+			</ul>
+			
+		<li> The lamplighter group \(\mathbb{Z}_2 \wr \mathbb{Z}\) has undecidable domino problem.
+			<ul>
+			<li> Asked in <a href="#Co20">[Cohen, 2020]</a>.
+			<li> Our solution in: <a href="#BaSa24">[Bartholdi-Salo, 2024]</a>
+			</ul>
+			
+		<li> The entropies of SFTs on \(\mathbb{Z}_2 \wr \mathbb{Z}\) are precisely the upper semicomputable numbers.
+			<ul>
+			<li> Question 6.3 in <a href="#Ba21">[Barbieri, 2021]</a>.
+			<li> Our solution in: <a href="#BaSa24">[Bartholdi-Salo, 2024]</a>
+			</ul>
+			
+		<li> The entropies of SFTs on \(BS(1, 2)\) are precisely the upper semicomputable numbers.
+			<ul>
+			<li> Question 6.2 in <a href="#Ba21">[Barbieri, 2021]</a> (Barbieri asks about \(BS(1, n)\), and we concentrate on \(n = 2\), but the same idea works directly.)
+			<li> Our solution in: <a href="#BaSa24">[Bartholdi-Salo, 2024]</a>
+			<li> This group is intersimulable with the lamplighter group, in the sense of our previous paper, so we extract this from the previous theorem.	
+			</ul>
+	
+		<li> The group \(\mathbb{Z} \wr \mathbb{Z}\) embeds in the automorphism group of a full shift. In particular, there is a finitely-generated torsion free group with infinite cohomological dimension that embeds in the automorphism group of a full shift.
+			<ul>
+			<li> Implicitly asked in <a href="#KiRo90">[Kim-Roush, 1990]</a>.
+			<li> Explicitly asked (together with embeddability of \(\mathbb{Z}_2 \wr (\mathbb{Z}_2 \wr \mathbb{Z})\), which we solve in this same paper) in <a href="#Sa20b">[Salo, 2020b]</a>.
+			<li> Our solution in: <a href="#Sa23">[Salo, 2023]</a>
+			</ul>
+		<li> There is a distortion element in the automorphism group of the full shift.
+			<ul>
+			<li> Asked by several people in private communication, in writing in <a href="#CyFrKrPe18">[Cyr-Franks-Kra-Petite, 2018]</a>.
+			<li> Our solution in: <a href="#CaSa22">[Callard-Salo, 2022]</a>
+<li> Additional information: Distortion is quasi-exponential, i.e. word norm of the element grows polylogarithmically. The element is basically the SMART machine. The question was open for arbitrary subshifts.
+			</ul>
+		<li> The image of B3/S23 contains zero-homoclinics that are not in the image of zero-homoclinics.
+			<ul> <a href="https://www.conwaylife.com/forums/viewtopic.php?f=7&t=3180&start=125#p140453">ConwayLife forum post announcement (by myself and Ilkka Törmä).</a>
+			<li> This question was on the open problems list distributed on the Conwaylife Discord server, seen January 14th, 2022.
+			</ul>
+		<li> B3/S23 admits a backwards-invariant (non-full) cylinder containing a point that is spatially zero-homoclinic and temporally fixed.
+			<ul> <a href="https://www.conwaylife.com/forums/viewtopic.php?f=7&t=3180&p=139666#p140258">ConwayLife forum post announcement (by myself and Ilkka Törmä).</a>
+			<li> A weaker version of this problem was asked by Conway in <a href="https://www.conwaylife.com/wiki/Lifeline_Volume_6">Lifeline Volume 6</a>, and it was later strengthened to the modern version in a 1992 email by Conway and further clarified by contemporary Life enthusiasts.
+			<li> Out of all my results, this raised by far the most interest (as far as I know). So much so that they tried to add it to <a href="https://mathworld.wolfram.com/GameofLife.html">Game of Life page on MathWorld</a>.
+			</ul>
+		<li> B3/S23 never reaches its limit set.
+			<ul> <a href="https://www.conwaylife.com/forums/viewtopic.php?f=7&t=3180&p=139666#p139854">ConwayLife forum post announcement (by myself and Ilkka Törmä).</a>
+			<li> This was sort of implicitly open, see <a href="https://www.conwaylife.com/wiki/Grandfather_problem#Next_levels">this Wiki page</a>. Conway offered 50 dollars for showing \(g^2(X)\) is not the limit set; this was open until 2016 when mtve showed that even \(g^4(X)\) is not the limit set.
+			</ul>
+		<li> Two mixing one-dimensional SFTs are conjugate if and only if they are conjugate without their periodic points.
+			<ul>
+			<li> Asked in: <a href="#Ho13">[Hochman, 2013]</a>
+			<li> Repeated in: <a href="#Ho19">[Hochman, 2019]</a> and <a href="#BoBuMc15">[Boyle-Buzzi-McGoff, 2015]</a>, also Hochman's question 5 in the conference "Current Trends in Dynamical Systems and the Mathematical Legacy of Rufus Bowen" <a href="https://pims.math.ca/files/shortsessionv3.pdf">Symbolic Topology Session</a>.
+			<li> Our solution in: <a href="#Sa21b">[Salo, 2021b]</a>
+			</ul>
+		<li> There is a group whose effective subshifts are sofic.
+			<ul>
+			<li> Asked in: <a href="#AuBaSa17">[Aubrun-Barbieri-Sablik, 2017]</a>
+			<li> Our solution in: <a href="#BaSaSa21">[Barbieri-Sablik-Salo, 2021]</a>
+			<li> Proof idea: In \(F_2\) you can find disjoint paths starting from each group element. So in \( F_2 \times F_2 \) you can have a separate grid for each group element. A simple geometric argument shows these grids can talk.
+			</ul>
+		<li> The question of whether mapping class groups of mixing SFTs are sofic is not solvable at present.
+			<ul>
+			<li> Soficity of MCG is asked in: <a href="#BoCh18">[Boyle-Chuysurichay, 2018]</a>
+			<li> Our reduction in: <a href="#Sa21a">[Salo, 2021a]</a>
+			<li> Proof idea: Embed Thompson's \(V\). For this, biject dyadic rationals with finite words, have \(V\) act on them naturally. Perform this action between two markers.
+			</ul>
+		<li> Every right-angled Artin group embeds in the Brin-Thompson \(2V\).
+			<ul>
+			<li> Contrary conjectured in: <a href="#BeBlMa20">[Belk-Bleak-Matucci, 2020]</a>
+			<li> Our solution in: <a href="#Sa21">[Salo, 2021]</a>
+			<li> Proof idea: Conveyor belts.
+			</ul>
+		<li> The seeded tiling problem on the lamplighter group is undecidable.
+			<ul>
+			<li> Mentioned as open in a public research statement of Sebastián Barbieri. He did not remember asking it when I told him about the result, but I'm counting it anyway!
+			<li> Our solution in: <a href="#BaSa20">[Bartholdi-Salo, 2020] </a>
+			<li> Proof idea: Construct an SFT where every seeded configuration contains a gadget inside which a finite-state machine can interpret a grid. We construct two (geometrically rather different) such SFTs, the "comb" and the "sealevel".
+			<li> (Outdated by the result of <a href="#BaSa24">[Bartholdi-Salo, 2024]</a>.)
+			</ul>
+		<li> Conjugacy of reversible cellular automata is undecidable.
+			<ul>
+			<li> Asked in: <a href="#JaKa20">[Jalonen-Kari, 2020]</a>
+			<li> Our solution in: <a href="#Sa20a">[Salo, 2020a]</a>
+			</ul>
+		<li> Not all horoballs of finitely-generated groups are Busemann.
+			<ul>
+			<li> Asked in: <a href="#EpMe20">[Epperlein-Meyerovitch, 2020]</a>
+			<li> Our solution in: <a href="#Sa20">[Salo, 2020]</a>
+			<li> Proof idea: I calculated these for lamplighter and Heisenberg, and both gave examples.
+			</ul>
+		<li> Two-dimensional Turing machines can be topologically mixing in TMH.
+			<ul>
+			<li> We do not know if this question appears in the literature, but this was an open problem according to Anahí Gajardo.
+			<li> Our solution in: <a href="#SaTo20">[Salo-Törmä, 2020]</a>
+			</ul>
+		<li> Finite-support Gardens of Eden for Game of Life are a decidable set.
+			<ul>
+			<li> Asked in: Oscar Cunningham's answer to Dominik van der Zypen's question in MO <a href="#ZyCu19">[van der Zypen-Cunningham, 2019]</a>.
+			<li> Our solution in: <a href="#SaTo19">[Salo-Törmä, 2019]</a>
+			<li> Proof idea: Reduce an extension problem to one about finite-state machines, solve by computer.
+			</ul>
+		<li> Any ordinal can be realized as the CPE rank on a one-dimensional subshift.
+			<ul>
+			<li> Asked in private communication by Nishant Chandgotia.
+			<li> Our solution in: <a href="#Sa19b">[Salo, 2019a] </a>
+			<li> Westrick proves the analog for \(\mathbb{Z}^2\)-SFTs  (confirming my conjecture from <a href="#Sa19b">[Salo, 2019a]</a>).
+			</ul>
+		<li> Polygonal SFTs are not closed under conjugacy.
+			<ul>
+			<li> Asked in <a href="#FrKr20">[Franks-Kra, 2020]</a>; Pierre Guillon essentially asked it in a talk.
+			<li> Our solution in: <a href="#Sa19a">[Salo, 2019a] </a>
+			<li> Proof idea: Just recode Ledrappier, you can't fail.
+			</ul>
+		<li> ECA 57 is a universal reversible logical gate.
+			<ul>
+			<li> Conjectured in: <a href="#MaMcMo11">[Macauley-McCammond-Mortveit, 2011]</a> and essentially in <a href="#Vi12">[Vielhaber, 2012]</a>.
+			<li> Our solution in: <a href="#Sa18a">[Salo, 2018a]</a>
+			<li> Proof idea: Construct the NOT gate by computer, then it's easy to find an existing universal gate set.
+			<li> Note: The Toffoli gate seems beyond computer reach, so I don't have a human-free proof of the result. Probably could be done in GAP.
+			</ul>
+		<li> Minimal subshifts can have the language pivot property.
+			<ul>
+			<li> Asked by Michael Hochman in the conference Current Trends in Dynamical Systems and the Mathematical Legacy of Rufus Bowen, organized in Vancouver in 2017.
+			<li> Our solution in: <a href="#Sa18">[Salo, 2019]</a>
+			<li> Proof idea: Just do it / subshift construction from word concatenation.
+			</ul>
+		<li> Settled the 11 remaining cases of Von Neumann regularity of elementary cellular automata.
+			<ul>
+			<li> Asked in: <a href="#CaGa20">[Castillo-Ramirez-Gadouleau, 2020]</a>
+			<li> Our solution in: <a href="#Sa18">[Salo, 2018]</a>
+			<li> Proof idea: A more general decision algorithm is given in <a href="#SaTo15">[Salo-Törmä, 2015]</a>, I just applied it. The algorithm is based on a periodics/aperiodics argument (like the proof of the Embedding Theorem for SFTs).
+			</ul>
+		<li> Quasiminimal subshifts can be trace universal.
+			<ul>
+			<li> Conjectured false in: <a href="#DeKuBl06">[Delvenne-Kůrka-Blondel, 2006]</a>
+			<li> Our solution in: <a href="#Sa17a">[Salo, 2017a]</a>
+			</ul>
+		<li> There exist strongly randomizing cellular automata.
+			<ul>
+			<li> Asked in: <a href="#KaTa15">[Kari-Taati, 2015]</a>
+			<li> Our solution in: <a href="#HeSaTh20">[Hellouin de Menibus-Salo-Theyssier, 2020] </a>
+			</ul>
+		<li> One-dimensional CA can be physically universal
+			<ul>
+			<li> Asked in <a href="#Sc14">[Schaeffer, 2014]</a>
+			<li> Our solution in: <a href="#SaTo17">[Salo-Törmä, 2017]</a>
+			<li> Related: A physically universal Turing machine exists in two dimensions <a href="#SaTo20">[Salo-Törmä, 2020]</a>.
+			<li> Proof idea: Just do Schaeffer's construction in one dimension, replacing directions by speeds. A funny detail, we replace exact geometric positioning of gadgets by a counting argument showing possible positions exist.
+			</ul>
+		<li> Range/radius distortion is possible in the automorphism group of full shift.
+			<ul>
+			<li> Asked in: <a href="#CyFrKr16">[Cyr-Franks-Kra, 2016]</a>
+			<li> Our solution in: <a href="#GuSa17">[Guillon-Salo, 2017]</a>
+			<li> Proof idea: Take any distorted reversible Turing machine (many are known) and simulate it in any way by a reversible cellular automaton (at least two ways are known).
+			</ul>
+		<li> Majority network prediction is PSPACE-complete.
+			<ul>
+			<li> Conjectured in: <a href="#GoMo14">[Goles-Montealegre, 2014]</a>
+			<li> Our solution in: <a href="#GoMoSaTo16">[Goles-Montealegre-Salo-Törmä, 2016]</a>
+			<li> Note: We reduce the "Iterated Monotone Boolean Circuit" problem. Of course the proof that this characterizes PSPACE is basic CS, but we seem to have inspired <a href="#AbAtCiMaTo18">[Abdulla-Atig-Ciobanu-Mayr-Totzke, 2018]</a>, <a href="#Ci19">[Ciobanu, 2019]</a>, <a href="#AlLePa20">[Almanza-Leucci-Panconesi, 2020]</a> which use our problem.
+			</ul>
+		<li> Minimal subshifts need not have f.g. automorphism group.
+			<ul>
+			<li> Asked in: <a href="#DoDuMaPe16">[Donoso-Durand-Maass-Petite, 2016]</a>
+			<li> Previous solutions: <a href="#BoLiRu88">[Boyle-Lind-Rudolph, 1988]</a>
+			<li> Our solution in: <a href="#Sa17">[Salo, 2017] </a>
+			<li> Note: I calculated the automorphism groups of some "Toeplitz substitutions" (in the hole sense) out of general interest, this class was advertised to me by Luca Zamboni. Some of the simplest possible are not f.g. so I wrote this up.
+			</ul>
+		<li> Chaotic reversible CA can be trace universal.
+			<ul>
+			<li> Asked in: <a href="#DeKuBl06">[Delvenne-Kůrka-Blondel, 2006]</a>
+			<li> Our solution in: <a href="#KaSato14">[Kari-Salo-Törmä, 2014]</a>
+			<li> Note: My contribution was small, and not necessarily positive.
+			</ul>
+		<li> Affine bipermutive CA have only affine CA in their centralizer in any dimension.
+			<ul>
+			<li> Asked in: <a href="#MoBo97">[Moore-Boykett, 1997]</a>
+			<li> Our solution in: <a href="#SaTo13a">[Salo-Törmä, 2013a]</a>
+			</ul>
+		<li> The subpattern poset of a two-dimensional countable SFT can have infinite descending chains.
+			<ul>
+			<li> Asked in: <a href="#BaDuJe08">[Ballier-Durand-Jeandel, 2008]</a>
+			<li> Our solution in: <a href="#SaTo13">[Salo-Törmä, 2013]</a>
+			<li> Extensions: Törmä constructed a large class of posets in this thesis <a href="#To15">[Törmä, 2015]</a>
+			</ul>
+		<li> Higher-dimensional CA are nilrigid.
+			<ul>
+			<li> Asked in: <a href="#GuRi08">[Guillon-Richard, 2008]</a>
+			<li> Repeated in: <a href="#GuRi10">[Guillon-Richard, 2010]</a>
+			<li> Our solution in: <a href="#Sa12">[Salo, 2012]</a>
+			<li> Extensions: CA on residually finite solvable groups <a href="#SaTo20a">[Salo-Törmä, 2020a]</a> and CA on trees <a href="#Sa19c">[Salo, 2019c]</a> are nilrigid.
+			</ul>
+		<li> Cantor-Bendixson ranks of countable SFTs can be infinite
+			<ul>
+			<li> Asked in: <a href="#BaDuJe08">[Ballier-Durand-Jeandel, 2008]</a>
+			<li> First solved in: <a href="#JeVa11">[Jeandel-Vanier, 2011]</a>
+			<li> Our solution in: <a href="#SaTo12a">[Salo-Törmä, 2012a] </a>, <a href="#SaTo13">[Salo-Törmä, 2013]</a>
+			<li> The set of CB-ranks is now known: better and better upper bounds are given in <a href="#JeVa11">[Jeandel-Vanier, 2011]</a>, <a href="#SaTo13">[Salo-Törmä, 2013]</a>, <a href="#To15">[Törmä, 2015]</a>, <a href="#To18">[Törmä, 2018]</a>, and the last reaches the lower bound in <a href="#BaJe13">[Ballier-Jeandel, 2013]</a>.
+			</ul>
+		<li> There is no CA on a full shift which is transitive in the Besicovitch topology.
+			<ul>
+			<li> Asked by: <a href="#Ma98">[Manzini, 1998]</a>
+			<li> First solved in: <a href="#BlCeFo03">[Blanchard-Cervelle-Formenti, 2003]</a>
+			<li> Our solution in: <a href="#SaTo12">[Salo-Törmä, 2012]</a>
+			<li> Note: Based on measure theory. To my knowledge not obviously equivalent to the Kolmogorov complexity theoretic proof.
+			</ul>
+		<li> There is a shift-invariant nonatomic measure on the full shift with the Besicovitch topology.
+			<ul>
+			<li> Asked in: <a href="#GaFoMaMa97">[Gattaneo-Formenti-Margara-Mazoyer, 1997]</a>
+			<li> Our solution in: <a href="#SaTo12">[Salo-Törmä, 2012]</a>
+			</ul>
+		<li> \( \mathrm{NFA} = \mathrm{FNFA} \) in two dimensions (these are picture language classes)
+			<ul>
+			<li> Originally asked in: <a href="#Ro78">[Rosenfeld, 1978]</a>
+			<li> Repeated in: <a href="#KaMo01">[Kari-Moore, 2001]</a> and <a href="#LiMoNo98">[Lindgren-Moore-Nordahl, 1998]</a>
+			<li> Our solution in: <a href="#master">[My master's thesis]</a> and <a href="#KaSa11">[Kari-Salo, 2011]</a>
+			</ul>
+		<li> \( \mathrm{AFA} \subsetneq \mathrm{FAFA} \) in two dimensions (these are picture language classes)
+			<ul>
+			<li> Originally asked in: <a href="#KaMo01">[Kari-Moore, 2001]</a>
+			<li> Our solution in: <a href="#master">[My master's thesis]</a>
+			<li> Proof: Just fly over a word to simulate a two-head machine.
+			</ul>
+		<li> \( \mathrm{RLG} \subsetneq \mathrm{DREC} \) (these are picture language classes)
+			<ul>
+			<li> Question in: <a href="#GiRe96">[Giammarresi-Restivo, 1996]</a>
+			<li> Our solution in: <a href="#master">[My master's thesis]</a>
+			</ul>
+		<li> The picture language classes \(\mathrm{RE}\) and \(\mathrm{REG}\) are incomparable.
+			<ul>
+			<li> Question in: <a href="#GiRe96">[Giammarresi-Restivo, 1996]</a>
+			<li> Our solution in: <a href="#master">[My master's thesis]</a>
+			</ul>
+	</ol>
+	
+	<p>
+	<sup>1</sup> More precisely, this is a partial (and possibly total) list of problems that were asked by someone other than me, and I am on the author list of a publically available paper/preprint where this question is solved, or (in at least one case) reduced to other better-known problems. In most cases I believe I was essentially involved in solving the problem, but in some cases I was somewhat useless (at least in the parts of the paper related to the specific problem) and this is clarified in a comment. Not all the solutions have been peer-reviewed (at least officially). Most of these questions were asked in a public forum in writing, a few I just heard privately. Some were not first solved by me, and if I know a previous reference I give it. In some cases our "solution" just points out a (not necessarily, but possibly, obvious) connection between existing results, and this has been clarified. In some cases I have also included some additional information and related open problems (but with no particular consistency). If I immediately see a one- or two-sentence summary of the proof, I give it. I have aimed for completeness rather than only included "important" results, indeed I found it best to keep evaluation of the comparative difficulty and interestingness to a minimum (whether a one sentence summary exists is not an indication of this). These are roughly in ascending order by age.
+	</p>
+
+<br>
+	
+<b>References to questions and additional info</b>
+<br>
+<br>
+[Rosenfeld 1978] <span id="Ro78">Rosenfeld, Azriel Picture Languages (Formal models for picture recognition), Academic press, New York, 1979.</span>
+<br>
+<br>
+[Boyle-Lind-Rudolph, 1988] <span id="BoLiRu88"> Mike Boyle, Douglas Lind, and Daniel Rudolph. The automorphism group of a shift of finite type. Transactions of the American Mathematical Society, 306(1):pp. 71–114, 1988</span>
+<br>
+<br>
+[Kim-Roush, 1990] <span id="KiRo90"> Hang Kim, Fred Roush. Pure Mathematics and Applications, 1990, vol. 1, issue 4, 203-230</span>
+<br>
+<br>
+[Giammarresi-Restivo, 1996] <span id="GiRe96">D. Giammarresi and A. Restivo, Two-Dimensional Languages, in: A. Salomaa and G. Rozenberg, eds., Handbook of Formal Languages, Vol. 3 (Springer, Berlin, 1996)</span>
+<br>
+<br>
+[Gattaneo-Formenti-Margara-Mazoyer, 1997] <span id="GaFoMaMa97">G. Cattaneo, E. Formenti, L. Margara, and J. Mazoyer. A shift-invariant metric on \(S^{\mathbb{Z}}\) inducing a non-trivial topology. In Mathematical foundations of computer science 1997 (Bratislava), volume 1295 of Lecture Notes in Comput. Sci., pages 179–188. Springer, Berlin, 1997.</span>
+<br>
+<br>
+[Moore-Boykett, 1997] <span id="MoBo97">Cristopher Moore and Timothy Boykett. Commuting cellular automata. Complex Systems, 11(1):55–64, 1997.</span>
+<br>
+<br>
+[Manzini, 1998] <span id="Ma98">G. Manzini. Characterization of sensitive linear cellular automata with respect to the counting distance. In MFCS'98, volume 1450 of LNCS, pages 825–833. Springer-Verlag, 1998.</span>
+<br>
+<br>
+[Lindgren-Moore-Nordahl, 1998] <span id="LiMoNo98">K. Lindgren, C. Moore and M.G. Nordahl, Complexity of Two-Dimensional Patterns, in: Journal of Statistical Physics 91, pp. 909-951, 1998</span>
+<br>
+<br>
+[Kari-Moore, 2001] <span id="KaMo01">J. Kari, C. Moore, New Results on Alternating and Non-Deterministic Two Dimensional Finite-State Automata, in: A. Ferreira, H. Reichel, eds., 18th Ann. Symp. on Theoretical Aspects of Computer Science, Lecture Notes in Computer Science, vol. 2010, Springer, Berlin, 2001 </span>
+<br>
+<br>
+[Delvenne-Kůrka-Blondel, 2006] <span id="DeKuBl06"> J.-C. Delvenne, P. Kůrka, V. Blondel, Decidability and universality in symbolic dynamical systems, Fund. Inform. 74 (4) (2006) 463–490.</span>
+<br>
+<br>
+[Blanchard-Cervelle-Formenti, 2003] <span id="BlCeFo03"> F. Blanchard, J. Cervelle, and E. Formenti. Periodicity and transitivity for cellular automata in Besicovitch topologies. In Mathematical foundations of computer science 2003, volume 2747 of Lecture Notes in Comput. Sci., pages 228–238. Springer, Berlin, 2003 </span>
+<br>
+<br>
+[Ballier-Durand-Jeandel, 2008] <span id="BaDuJe08"> Alexis Ballier, Bruno Durand, and Emmanuel Jeandel. Structural aspects of tilings. In Pascal Weil Susanne Albers, editor, Proceedings of the 25th Annual Symposium on the Theoretical Aspects of Computer Science, pages 61–72, Bordeaux, France, February 2008. IBFI Schloss Dagstuhl. </span>
+<br>
+<br>
+[Guillon-Richard, 2008] <span id="GuRi08"> Guillon, Pierre; Richard, Gaetan. Nilpotency and Limit Sets of Cellular Automata. In: Proceedings of the 33rd international symposium on Mathematical Foundations of Computer Science, MFCS ’08, Springer-Verlag, Berlin, Heidelberg, pp. 375–386, 2008.</span>
+<br>
+<br>
+[Guillon-Richard, 2010] <span id="GuRi10">Guillon, Pierre; Richard, Gaetan. Asymptotic behavior of dynamical systems and cellular automata. arXiv preprint arXiv:1004.4743 (2010).</span>
+<br>
+<br>
+[Hochman, 2010] <span id="Ho10">Hochman, Michael. On the automorphism groups of multidimensional shifts of finite type. Ergodic Theory and Dynamical Systems 30.3 (2010): 809-840.</span>
+<br>
+<br>
+[Jeandel-Vanier, 2011] <span id="JeVa11">Emmanuel Jeandel and Pascal Vanier. \(\Pi^0_1\) sets and tilings. In Theory and Applications of Models of Computation (TAMC), volume 6648 of Lecture Notes in Computer Science, pages 230–239, 2011.</span>
+<br>
+<br>
+[Macauley-McCammond-Mortveit, 2011] <span id="MaMcMo11">Matthew Macauley, Jon McCammond, and Henning S. Mortveit. Dynamics groups of asynchronous cellular automata. Journal of Algebraic Combinatorics, 33(1):11–35, Feb 2011.</span>
+<br>
+<br>
+[Sablik-Theyssier, 2011] <span id="SaTh11">Mathieu Sablik, and Guillaume Theyssier. "Topological dynamics of cellular automata: dimension matters." Theory of Computing Systems 48.3 (2011): 693-714.</span>
+<br>
+<br>
+[Vielhaber, 2012] <span id="Vi12">M. Vielhaber. Computing by Temporal Order: Asynchronous Cellular Automata. AUTOMATA & JAC 2012: 166-176.</span>
+<br>
+<br>
+[Hochman, 2013] <span id="Ho13">Hochman, Michael. Isomorphism and embedding of Borel systems on full sets. Acta Appl. Math., 126:187–201, 2013.</span>
+<br>
+<br>
+[Ballier-Jeandel, 2013] <span id="BaJe13">Alexis Ballier and Emmanuel Jeandel. Structuring multi-dimensional subshifts. ArXiv e-prints, September 2013.</span>
+<br>
+<br>
+[Goles-Montealegre, 2014] <span id="GoMo14">Eric Goles and Pedro Montealegre. Computational complexity of threshold automata networks under different updating schemes. Theoretical Computer Science, 559(0):3–19, 2014.</span>
+<br>
+<br>
+[Schaeffer, 2014] <span id="Sc14">Luke Schaeffer. A physically universal cellular automaton. Electronic Colloquium on Computational Complexity (ECCC), 21:84, 2014</span>
+<br>
+<br>
+[Boyle-Buzzi-McGoff, 2015] <span id="BoBuMc15">Mike Boyle, Jérôme Buzzi, and Kevin McGoff. Bowen's entropy-conjugacy conjecture is true up to finite index. Proc. Amer. Math. Soc., 143(7):2991–2997, 2015.</span>
+<br>
+<br>
+[Törmä, 2015] <span id="To15">Törmä, Ilkka Structural and Computational Existence Results for Multidimensional Subshifts. PhD dissertation, University of Turku, 2015.</span>
+<br>
+<br>
+[Kari-Taati, 2015] <span id="KaTa14">Kari, Jarkko; Taati, Siamak Statistical mechanics of surjective cellular automata. Journal of Statistical Physics, 160(5):1198–1243, 2015.</span>
+<br>
+<br>
+[Salo-Törmä, 2015] <span id="SaTo15">Ville Salo and Ilkka Törmä. Category theory of symbolic dynamics. Theor.
+Comput. Sci., 567:21–45, 2015.</span>
+<br>
+<br>
+[Donoso-Durand-Maass-Petite, 2016] <span id="DoDuMaPe16"> Sebastian Donoso, Fabien Durand, Alejandro Maass, and Samuel Petite. On automorphism groups of low complexity subshifts. Ergodic Theory and Dynamical Systems, 36(01):64–95, 2016.</span>
+<br>
+<br>
+[Cyr-Franks-Kra, 2016] <span id="CyFrKr16">Cyr, V., Franks, J., Kra, B.: The spacetime of a shift automorphism. ArXiv e-prints (October 2016)</span>
+<br>
+<br>
+[Aubrun-Barbieri-Sablik, 2017] <span id="AuBaSa17">N. Aubrun, S. Barbieri, and M. Sablik. A notion of effectiveness for subshifts on finitely generated groups. Theoretical
+Computer Science, 661:35–55, 2017.</span>
+<br>
+<br>
+[Boyle-Chuysurichay, 2018] <span id="BoCh18">Mike Boyle and Sompong Chuysurichay. The mapping class group of a shift of finite type. J. Mod. Dyn., 13:115–145, 2018.</span>
+<br>
+<br>
+[Cyr-Franks-Kra-Petite, 2018] <span id="CyFrKrPe18">Van Cyr, John Franks, Bryna Kra, and Samuel Petite. Distortion and the automorphism group of a shift. Journal of Modern Dynamics, 13(1):147-161, 2018.</span>
+<br>
+<br>
+[Törmä 2018] <span id="To18">Törmä, Ilkka Cantor-Bendixson ranks of countable SFTs. arXiv preprint arXiv:1803.03605 (2018).</span>
+<br>
+<br>
+[Abdulla-Atig-Ciobanu-Mayr-Totzke, 2018] <span id="AbAtCiMaTo18">Parosh Aziz Abdulla, Mohamed Faouzi Atig, Radu Ciobanu, Richard Mayr, Patrick Totzke Universal safety for timed Petri nets is PSPACE-complete. arXiv preprint arXiv:1806.08170 (2018).</span>
+<br>
+<br>
+[Salo, 2019c] <span id="Sa19c">Salo, Ville Trees are nilrigid. arXiv preprint arXiv:1905.06093 (2019).</span>
+<br>
+<br>
+[Hochman, 2019] <span id="Ho19">Michael Hochman. Every Borel automorphism without finite invariant measures admits a twoset generator. J. Eur. Math. Soc. (JEMS), 21(1):271–317, 2019.</span>
+<br>
+<br>
+[van der Zypen-Cunningham, 2019] <span id="ZyCu19"> Dominik van der Zypen / Oscar Cunningham Decision problems for which it is unknown whether they are decidable – MathOverflow. https://mathoverflow.net/q/345388. Accessed: 2019-11-15.</span>
+<br>
+<br>
+[Ciobanu, 2019] <span id="Ci19">Ciobanu, Radu. "Verification problems for timed and probabilistic extensions of Petri Nets." (2019).</span>
+<br>
+<br>
+[Cohen, 2020] <span id="Co20">Cohen, D. B. (2020). Lamplighters admit weakly aperiodic SFTs. Groups, Geometry, and Dynamics, 14(4), 1241-1252.</span>
+<br>
+<br>
+[Salo, 2020b] <span id="Sa20b">Salo, Ville. Graph and wreath products of cellular automata. arXiv preprint arXiv:2012.10186 (2020).</span>
+<br>
+<br>
+[Salo-Törmä, 2020a] <span id="SaTo20a">Salo, Ville; Törmä, Ilkka Nilpotent endomorphisms of expansive group actions. International Journal of Algebra and Computation, 2020, doi.org/10.1142/S021819672150020X.</span>
+<br>
+<br>
+[Castillo-Ramirez-Gadouleau, 2020] <span id="CaGa20"> Castillo-Ramirez, Alonso; Gadouleau, Maximilien Elementary, finite and linear vN-regular cellular automata. Inform. and Comput. 274 (2020), 104533, 12 pp.</span>
+<br>
+<br>
+[Jalonen-Kari, 2020] <span id="JaKa20">Joonatan Jalonen and Jarkko Kari. On the conjugacy problem of cellular automata. Information and Computation, 274:104531, 2020. AUTOMATA
+2017.</span>
+<br>
+<br>
+[Franks-Kra, 2020] <span id="FrKr20">Franks, John; Kra, Bryna Polygonal Z2-subshifts. Proc. Lond. Math. Soc. (3) 121 (2020), no. 2, 252–286.</span>
+<br>
+<br>
+[Epperlein-Meyerovitch, 2020] <span id="EpMe20">Jeremias Epperlein and Tom Meyerovitch. Iterated Minkowski sums, horoballs and north-south dynamics. arXiv e-prints, page arXiv:2009.09221, September 2020.</span>
+<br>
+<br>
+[Almanza-Leucci-Panconesi, 2020] <span id="AlLePa20">Almanza, Matteo; Leucci, Stefano; Panconesi, Alessandro Tracks from hell—When finding a proof may be easier than checking it. Theoretical Computer Science 839 (2020): 21-29.</span>
+<br>
+<br>
+[Belk-Bleak-Matucci, 2020] <span id="BeBlMa20">James Belk, Collin Bleak, and Francesco Matucci. Embedding right-angled Artin groups into BrinThompson groups. Math. Proc. Cambridge Philos. Soc., 169(2):225–229, 2020</span>
+<br>
+<br>
+[Barbieri, 2021] <span id="Ba21">Barbieri, Sebastián. On the entropies of subshifts of finite type on countable amenable groups. Groups, Geometry, and Dynamics 15, no. 2 (2021): 607-638.</span>
+<br>
+<br>
+[Cyr-Kra-Schmieding, 2024] <span id="CyKrSc24">Van Cyr, Bryna Kra, Scott Schmieding. Chaotic almost minimal actions. arXiv preprint 2404.15476v1</span>
+<br>
+<br>
+[Barbieri-Carrasco-Vargas-Rivera-Burgos, 2025] <span id="BaCaRi25">Sebastián Barbieri, Nicanor Carrasco-Vargas, Paola Rivera-Burgos. The automorphism group of a strongly irreducible subshift on a group. arXiv preprint 2501.14463</span>
+<br>
+<br>
+[Doucha-Melleray-Tsankov, 2025] <span id="DoMeTs25">Michal Doucha, Julien Melleray, Todor Tsankov. Dense and comeager conjugacy classes in zero-dimensional dynamics. arXiv preprint 2507.05474</span>
+
+
+
+<br><br><br>
+
+<b>References to the solutions</b>
+<br>
+<br>
+[My master's thesis] <span id="master">My master's thesis, Classes of Picture Languages Defined by Tiling Systems, Automata and Closure Properties, 2011.</span>
+<br>
+<br>
+[Kari-Salo, 2011] <span id="KaSa11">Kari, Jarkko; Salo, Ville A survey on picture-walking automata. Algebraic foundations in computer science, 183–213, Lecture Notes in Comput. Sci., 7020, Springer, Heidelberg, 2011.</span>
+<br>
+<br>
+[Salo-Törmä, 2012] <span id="SaTo12">Salo, Ville; Törmä, Ilkka Geometry and dynamics of the Besicovitch and Weyl spaces. Developments in language theory, 465–470, Lecture Notes in Comput. Sci., 7410, Springer, Heidelberg, 2012.</span>
+<br>
+<br>
+[Salo-Törmä, 2012a] <span id="SaTo12b">Salo, Ville; Törmä, Ilkka On Derivatives and Subpattern Orders of Countable Subshifts. AUTOMATA & JAC 2012: 23-36.</span>
+<br><br>
+[Salo, 2012] <span id="Sa12">Salo, Ville On Nilpotency and Asymptotic Nilpotency of Cellular Automata. AUTOMATA & JAC 2012: 86-96.</span>
+<br>
+<br>
+[Salo-Törmä, 2013] <span id="SaTo13">Salo, Ville; Törmä, Ilkka Constructions with countable subshifts of finite type. Fund. Inform. 126 (2013), no. 2-3, [On cover: nos. 3-4], 263–300.</span>
+<br>
+<br>
+[Salo-Törmä, 2013a] <span id="SaTo13a">Salo, Ville; Törmä, Ilkka Commutators of bipermutive and affine cellular automata. Cellular automata and discrete complex systems, 155–170, Lecture Notes in Comput. Sci., 8155, Springer, Heidelberg, 2013.</span>
+<br>
+<br>
+[Kari-Salo-Törmä, 2014] <span id="KaSaTo14">Kari, Jarkko; Salo, Ville; Törmä, Ilkka Trace complexity of chaotic reversible cellular automata. Reversible computation, 54–66, Lecture Notes in Comput. Sci., 8507, Springer, Cham, 2014.</span>
+<br>
+<br>
+[Salo, 2017] <span id="Sa17">Salo, Ville Toeplitz subshift whose automorphism group is not finitely generated. Colloq. Math. 146 (2017), no. 1, 53–76.</span>
+<br>
+<br>
+[Goles-Montealegre-Salo-Törmä, 2016] <span id="GoMoSaTo16">Goles, Eric; Montealegre, Pedro; Salo, Ville; Törmä, Ilkka PSPACE-completeness of majority automata networks. Theoret. Comput. Sci. 609 (2016), part 1, 118–128.</span>
+<br>
+<br>
+[Guillon-Salo, 2017] <span id="GuSa17">Guillon, Pierre; Salo, Ville Distortion in one-head machines and cellular automata. Cellular automata and discrete complex systems, 120–138, Lecture Notes in Comput. Sci., 10248, Springer, Cham, 2017.</span>
+<br>
+<br>
+[Salo-Törmä, 2017] <span id="SaTo17">Salo, Ville; Törmä, Ilkka A one-dimensional physically universal cellular automaton. Unveiling dynamics and complexity, 375–386, Lecture Notes in Comput. Sci., 10307, Springer, Cham, 2017.</span>
+<br>
+<br>
+[Hellouin de Menibus-Salo-Theyssier, 2020] <span id="HeSaTh20">Hellouin de Menibus, B.; Salo, V.; Theyssier, G. Characterizing asymptotic randomization in abelian cellular automata. Ergodic Theory Dynam. Systems 40 (2020), no. 4, 923–952.</span>
+<br>
+<br>
+[Salo, 2017a] <span id="Sa17a">Salo, Ville Decidability and universality of quasiminimal subshifts. J. Comput. System Sci. 89 (2017), 288–314.</span>
+<br>
+<br>
+[Salo, 2018] <span id="Sa18">Salo, Ville Von Neumann regularity, split epicness and elementary cellular automata. CoRR abs/1804.03913 (2018). Accepted in AUTOMATA 2021.</span>
+<br>
+<br>
+[Salo, 2019] <span id="Sa19">Salo, Ville Minimal subshifts with a language pivot property. CoRR abs/1901.04688 (2019).</span>
+<br>
+<br>
+[Salo, 2018a] <span id="Sa18a">Salo, Ville Universal gates with wires in a row. CoRR abs/1809.08050 (2018).</span>
+<br>
+<br>
+[Salo, 2019a] <span id="Sa19a">Salo, Ville A note on directional closing. arXiv preprint arXiv:1902.02076 (2019).</span>
+<br>
+<br>
+[Salo, 2019b] <span id="Sa19b">Salo, Ville Entropy pair realization. arXiv preprint arXiv:1904.01285 (2019).</span>
+<br>
+<br>
+[Salo-Törmä, 2019] <span id="SaTo19">Salo, Ville; Törmä, Ilkka Gardens of Eden in the Game of Life. arXiv preprint arXiv:1912.00692 (2019).</span>
+<br>
+<br>
+[Salo-Törmä, 2020] <span id="SaTo20">Salo, Ville; Törmä, Ilkka A Physically Universal Turing Machine. arXiv preprint arXiv:2003.10328 (2020).</span>
+<br>
+<br>
+[Salo, 2020] <span id="Sa20">Salo, Ville Examples of Non-Busemann Horoballs. arXiv preprint arXiv:2010.07645 (2020).</span>
+<br>
+<br>
+[Salo, 2020a] <span id="Sa20a">Salo, Ville Conjugacy of reversible cellular automata. arXiv preprint arXiv:2011.07827 (2020).</span>
+<br>
+<br>
+[Bartholdi-Salo, 2020] <span id="BaSa20">Bartholdi, Laurent; Salo, Ville Simulations and the Lamplighter group. arXiv preprint arXiv:2010.14299 (2020).</span>
+<br>
+<br>
+[Salo, 2021] <span id="Sa21">Salo, Ville Graph and wreath products in topological full groups of full shifts. arXiv preprint arXiv:2103.06663 (2021).</span>
+
+<br>
+<br>
+[Salo, 2021a] <span id="Sa21a">Salo, Ville. Veelike actions and the MCG of a mixing SFT. arXiv preprint arXiv:2103.15505 (2021).</span>
+<br>
+<br>
+[Barbieri-Sablik-Salo, 2021] <span id="BaSaSa21">Barbieri, Sebastián; Sablik, Mathieu; Salo, Ville. Groups with self-simulable zero-dimensional dynamics. arXiv preprint arXiv:2104.05141 (2021).</span>
+<br>
+<br>
+[Salo, 2021b] <span id="Sa21b">Salo, Ville Conjugacy of transitive SFTs minus periodics. arXiv preprint arXiv:2104.09860 (2021).</span>
+<br>
+<br>
+[Callard-Salo, 2022] <span id="CaSa22">Callard, Antonin; Salo, Ville. Distortion element in the automorphism group of a full shift. arXiv preprint arXiv:2208.00685 (2022).</span>
+<br>
+<br>
+[Salo, 2023] <span id="Sa23">Salo, Ville. More on wreath products of cellular automata. arXiv preprint arXiv:2305.17946</span>
+<br>
+<br>
+[Bartholdi-Salo, 2024] <span id="BaSa24">Bartholdi, Laurent; Salo, Ville. Shifts on the lamplighter group. arXiv preprint arXiv:2402.14508 (2024).</span>
+<br>
+<br>
+[Salo, 2024] <span id="Sa24">Salo, Ville. Nonexpansive chaotic almost minimal systems on residually finite groups. arXiv preprint arXiv:2408.03052</span>
+<br>
+<br>
+[Salo, 2025] <span id="Sa25">Salo, Ville. Word problems and embedding-obstructions in cellular automata groups on groups. You can find this on my website.
+<br>
+<br>
+[Salo-Schmieding, 2025] <span id="SaSc25">Salo, Ville; Schmieding, Scott. Finitary Ryan's and local \(\mathcal{Q}\) entropy for \(\mathbb{Z}^d\) subshifts. arXiv preprint arXiv:2503.03058</span>
+<br>
+<br>
+[Salo, 2025a] <span id="Sa25a">Salo, Ville. Minimal sofic shift on a group that is not finitely generated. arXiv preprint arXiv:2507.06599</span>
+<br>
+<br>
+</span>
+
+</body>

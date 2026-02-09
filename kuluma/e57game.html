@@ -1,0 +1,436 @@
+
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Try to not</title>
+
+<style>
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 350px;
+  background-color: #588;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+</head>
+
+<body style="font-family:consolas, fixedsys;">
+
+<table width="300" id="ikitaulu">
+<tr><td colspan="2">
+<div id="errors">You have 32 reds (that's 32 too many).</div>
+</td></tr>
+<tr><td colspan="2">
+<div id="ssos" style="word-break: break-word;">Moves not shown.</div>
+</td></tr>
+<tr><td colspan="2">
+<canvas id="canvas" width="700" height="125" onclick="clicko();" tabindex='1'></canvas>
+</td></tr>
+<tr><td>
+Select puzzle <select onchange="selecto(this.options[this.selectedIndex].value);" onfocus="this.selectedIndex = -1;">">
+	<option value="rnd0">trivial</option>
+	<option value="abcabcabcabc" selected="selected">JKL</option>
+	<option value="bacabacabaca">KJLJ</option>
+	<option value="rnd1">1 random move</option>
+	<option value="rnd2">2 random moves</option>
+	<option value="rnd3">3 random moves</option>
+	<option value="rnd4">4 random moves</option>
+	<option value="rnd5">5 random moves</option>
+	<option value="rnd6">6 random moves</option>
+	<option value="rnd7">7 random moves</option>
+	<option value="rnd8">8 random moves</option>
+	<option value="rnd9">9 random moves</option>
+	<option value="rnd10">10 random moves</option>
+	<option value="NOT">NOT</option>
+</select>
+</td>
+<td>
+How many rows shown? <select selectedIndex=1 onchange="selectus(this.options[this.selectedIndex].value);">">
+	<option value="show1">1 row visible</option>
+	<option value="show2">2 rows visible</option>
+	<option value="show3">3 rows visible</option>
+	<option value="show4">4 rows visible</option>
+	<option value="show5">5 rows visible</option>
+	<option value="show6">6 rows visible</option>
+	<option value="show7">7 rows visible</option>
+	<option value="show8">8 rows visible</option>
+</select>
+</td>
+</tr>
+<tr><td colspan="2">
+<div id="info">
+<br>
+Instructions: 
+<br>
+1. Select level and number of rows shown.
+<br>
+2. Click on the canvas above for focal reasons.
+<br>
+3. Press J, K and L to apply elementary CA 57 in cells 1, 2 and 3 (resp.) in the (up to 32) bottommost bit strings. The rule is: flip if white-on-right or <del>black</del> white-bereft-on-the-left.
+<br>
+4. Try to get rid of those pesky dots by equating the top and bottom bit strings.
+<br>
+5. Other keys: backspace, S, P.
+<br>
+6. <div class="tooltip">This game sucks, why does it even exist??
+  <span class="tooltiptext">Glad you asked! The e57 rule is a universal gate, meaning any reversible transformation of an infinite binary string that only modifies finitely many bits can be performed by applying e57 in different cells. Using a bit of elementary group theory, this reduces to solving the NOT puzzle. I prove this in a paper, and in said paper I solve the puzzle by computer because I figured this game would not be very human-friendly. I think I was right, but send me an email if you can solve NOT by hand with 8 rows visible.</span>
+</div>
+</div>
+</td></tr>
+</table>
+
+<script>
+
+var canvas = document.getElementById("canvas");
+
+var showmoves = false;
+var rowsvisible = 1;
+
+setcanvasheight();
+
+winpausetimer = null;
+pausing = true;
+
+function selecto(s) {
+	wdis = words(5);
+	if (s.substring(0,3) == "rnd") {
+		
+		var nn = parseInt(s.substring(3,s.length), 10);
+		var sss = rndgeno(nn);
+		//document.write(sss);
+		for (var j = 0; j < sss.length; j++) {
+			if (sss[j] == "a") {
+				allappe57(wdis, 1)
+			}
+			if (sss[j] == "b") {
+				allappe57(wdis, 2)
+			}
+			if (sss[j] == "c") {
+				allappe57(wdis, 3)
+			}
+		}
+	} else if (s == "NOT") {
+		for (var i = 0; i < 32; i++) {
+			wdis[i][2] = 1 - wdis[i][2];
+		}
+	} else {
+		for (var j = 0; j < s.length; j++) {
+			if (s[j] == "a") {
+				allappe57(wdis, 1)
+			}
+			if (s[j] == "b") {
+				allappe57(wdis, 2)
+			}
+			if (s[j] == "c") {
+				allappe57(wdis, 3)
+			}
+		}
+	}
+	triviallevel = (s == "rnd0");
+	ss = [];
+	textify();
+	drawit();
+}
+
+function setcanvasheight() {
+	canvas.height = rowsvisible*75 + 20;
+}
+
+function selectus(s) {
+	rowsvisible = parseInt(s.substring(4,s.length), 10);
+	setcanvasheight();
+	textify();
+	drawit();
+}
+
+function rndgeno(nn) {
+	ret = [];
+	for (var i = 0; i < nn; i++) {
+		var r = Math.floor(Math.random() * 3);
+		var rr = "";
+		if (r == 0) rr = "a";
+		if (r == 1) rr = "b";
+		if (r == 2) rr = "c";
+		if (ret.length > 0 && rr == ret[ret.length-1]) {i--; continue;}
+		ret.push(rr);
+	}
+	return ret;
+}
+
+function words(n) {
+	if (n == 0) {
+		return [[]];
+	} else {
+		var ret = new Array();
+		words(n-1).forEach(function (element) {
+			ret.push(element.concat([0]));
+			ret.push(element.concat([1]));
+		});
+	}
+	return ret;
+}
+
+function clicko(event) {
+  // not in use
+  /*if (answering) {
+    event = event || window.event;
+    var canvas = document.getElementById('canvas'),
+      x = Math.floor((event.pageX - canvas.offsetLeft) / 3) - xplace,
+      y = Math.floor((event.pageY - canvas.offsetTop - downing) / 3) - yplace;
+    if (x >= 0 && x < findxsize && y >= 0 && y < findysize && nyt() - alku < aika) {
+      hardenize();
+      showanswer("#00FF00");
+    } else {
+      startover();
+      showanswer("#FF0000");
+    }
+    answering = 0;
+  } else {
+    newpuzzle();
+    answering = 1;
+  }*/
+}
+
+function drawRexor(x1, y1, x2, y2, color) {
+  var ctx = canvas.getContext("2d");
+  ctx.fillStyle=color;
+  ctx.fillRect(x1,y1,x2-x1,y2-y1);
+}
+
+function drawRexorUF(x1, y1, x2, y2, color) {
+  var ctx = canvas.getContext("2d");
+  ctx.fillStyle="#000000";
+  ctx.fillRect(x1,y1,x2-x1,y2-y1);
+  ctx.fillStyle=color;
+  ctx.fillRect(x1+1,y1+1,x2-x1-2,y2-y1-2);
+}
+
+function drawcirc(x, y, r, c) {
+	var ctx = canvas.getContext("2d");
+	ctx.beginPath();
+	ctx.arc(x, y, r, 0, 2 * Math.PI, false);
+	ctx.fillStyle = c;
+	ctx.fill();
+	ctx.strokeStyle = "black";
+	ctx.stroke();
+}
+
+function drawwd(x, y, s, w) {
+	for (var i = 0; i < w.length; i++) {
+		if (w[i] == "1") {
+			drawRexorUF(x+s*i,y,x+s*(i+1),y+s,"#000000");
+		} else {
+			drawRexorUF(x+s*i,y,x+s*(i+1),y+s,"#FFFFFF");
+		}
+	}
+}
+
+function drawit() {
+
+	counterors();
+	var ctx = canvas.getContext("2d");
+	if (erors == 0 && Date.now() - winpausetimer < 500) {
+		ctx.fillStyle = "#55FF66";
+		ctx.fillRect(0, 0, canvas.width, canvas.height);
+	} else {
+		ctx.fillStyle = "#FFFFFF";
+		ctx.fillRect(0, 0, canvas.width, canvas.height);
+	}
+
+	var s = 25;
+	for (var x = 0; x < 4; x++) {
+	for (var y = 0; y < rowsvisible; y++) {
+		var i = x*8+y;
+		drawwd((7*x+1)*s, (3*y+1)*s, s, wds[i]);
+		drawwd((7*x+1)*s, (3*y+2)*s, s, wdis[i]);
+		for (var j = 0; j < 5; j++) {
+			if (wds[i][j] != wdis[i][j]) {
+				drawcirc((7*x+1.5+j)*s, (3*y+2.5)*s, s/5, "#FF0000")
+			}
+		}
+		
+	}
+	}
+	
+}
+
+function appe57(w, i) {
+	if (w[i-1] == "0" && w[i+1] == "1") return;
+	if (w[i] == "0") w[i] = "1";
+	else w[i] = "0";
+}
+
+function allappe57(ws, j) {
+	for (var i = 0; i < 32; i++) {
+		appe57(ws[i], j)
+	}
+}
+
+function add(s, a) {
+	if (s.length == 0) return [a];
+	if (s[s.length-1] != a) return s.concat([a]);
+	//document.write ("mene" + s + "kene");
+	return s.slice(0, s.length-1);
+}
+
+function counterors() {
+	erors = 0;
+	for (var i = 0; i < 32; i++) {
+		if (i % 8 >= rowsvisible) continue;
+		for (var j = 0; j < 5; j++) {
+			if (wds[i][j] != wdis[i][j]) {
+				erors++;
+			}
+		}
+	}
+}
+
+function splid(s) {
+	// return s;
+	var red = [];
+	for  (var i = 0; i < s.length; i++) {
+		if (s[i] == "a")
+			red.push("J");
+		if (s[i] == "b")
+			red.push("K");
+		if (s[i] == "c")
+			red.push("L");
+		//if ((i+1) % 40 == 0) red.push(" ");
+	}
+	return red;
+}
+
+function textify() {
+	//document.getElementById("erors") + "kenmu";
+
+	var td = document.getElementById("ssos");
+	//document.write(td + "winv");
+	if (showmoves) {
+		if (ss.length == 0)
+			td.textContent = "Moves: -.";
+		else
+			td.textContent = "Moves: " + splid(ss).join("") + ".";
+	} else {
+		td.textContent = "Moves not shown.";
+	}
+	if (!pausing) {
+		td.textContent = "Not pausing to celebrate. " + td.textContent;
+	}
+	
+	counterors();
+	var tdd = document.getElementById("errors");
+	if (erors > 0) {
+		tdd.textContent = "You have " + erors + " reds (that's " + erors + " too many).";
+		winpausetimer = null;
+	} else {
+		if (!triviallevel)
+			tdd.innerHTML = "You're Winner! <img src=\"award.png\" alt=\"Grats.\" style=\"width:15px;height:15px;\">";
+		else
+			tdd.textContent = "No reds.";
+		winpausetimer = Date.now();
+	}
+		
+}
+
+function presso(e) {
+	if (pausing && winpausetimer != null && Date.now() - winpausetimer < 500) {
+		return;
+	}
+	e.preventDefault();
+	if (e.key == 'j') {
+		allappe57(wdis, 1);
+		ss = add(ss, "a");
+	}
+	if (e.key == 'k') {
+		allappe57(wdis, 2);
+		ss = add(ss, "b");
+	}
+	if (e.key == 'l') {
+		allappe57(wdis, 3);
+		ss = add(ss, "c");
+	}
+	if (e.key == 'p') {
+		pausing = !pausing;
+	}
+	if (e.key == "Backspace") {
+		if (ss.length > 0) {
+			var a = ss[ss.length - 1];
+			if (a == 'a') {
+				allappe57(wdis, 1);
+			} else if (a == 'b') {
+				allappe57(wdis, 2);
+			} else if (a == 'c') {
+				allappe57(wdis, 3);
+			}
+			ss = add(ss, a);
+		}
+	}
+	if (e.key == 's') {
+		showmoves = !showmoves;
+	}
+	textify();
+	drawit();
+}
+
+canvas.addEventListener("keydown", presso);
+
+var ss = [];
+
+erors = 32;
+
+wds = words(5);
+wdis = words(5);
+
+selecto("abcabcabcabc");
+
+drawit();
+
+</script>
+
+</body>
+
+</html>
+
+
+

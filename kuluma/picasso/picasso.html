@@ -1,0 +1,531 @@
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Unleast your inner cubist</title>
+
+<style>
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 350px;
+  background-color: #588;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
+</head>
+
+<body style="font-family:consolas, fixedsys;">
+
+<tr><td colspan="2">
+<canvas id="canvas" width="1400" height="450" onmousedown="mousedown(event)" onmouseup="mouseup(event)" onmousemove="mousemove(event)" tabindex='1'></canvas>
+</td></tr>
+
+<div id="info">
+<br>
+Instructions: 
+<br>
+In the top view, draw any function you like with your mouse. Press shift while drawing to remove support.
+<br>
+Choose minimal and maximal sizes of cubes by clicking on the two cube shapes.
+<br>
+At all times, the best cubes found so far will be shown under the function.
+<br>
+Arrow keys and z/x move the view.
+<br>
+Press q/w to stop/restart search.
+</div>
+
+<tr><td colspan="2">
+<canvas id="canvas2" width="600" height="600" onmouseoover="mouseover(event)" tabindex='1'></canvas>
+</td></tr>
+
+
+
+<script src="BigInt_BigRat.min.js"></script>
+<script src="PL.js"></script>
+
+<script>
+
+var canvas = document.getElementById("canvas");
+
+
+var f_maxheight = 50; // this corresponds to value 1, if it matters
+var f_y = 90; // height where f_y is drawn on canvas
+
+var min_y = 300; // height at which the min cube is drawn
+var min_x = 20; // the number of cells in each piece of min cube
+var max_y = 350; // height at which max cube is drawn
+var max_x = 40; // the number of cells in each piece of max cube
+
+var xscale = 100; // how many unit cells fit in canvas
+var cell_size = canvas.width/xscale; // pixels per unit distance
+var xpos = 0; // what cell is at center of canvas
+
+// f_graph is the function, stored as a list of nonoverlapping intervals in asc order
+var f_graph = [];
+f_graph.push([0, 1]);
+var downed = null;
+var upped = null;
+
+var cube_attempts = [];
+var cutoff = 10; // only 10 best shown
+
+
+
+function mousedown(event) {
+	// console.log("moi");
+
+	event = event || window.event;
+
+    x = event.pageX;
+    y = event.pageY;
+	
+	if (Math.abs(y - min_y) < 10) {
+		min_x = (x - 10)/cell_size/3;
+	}
+	
+	if (Math.abs(y - max_y) < 10) {
+		max_x = (x - 10)/cell_size/3;
+	}
+	if (Math.abs(y - f_y) < 30) {
+		downed = (x - canvas.width/2)/cell_size + xpos;
+		upped = downed;
+	}
+	
+	update();
+}
+
+function mouseover(event) {
+}
+
+function insert_cube_attempt(p, w) {
+	
+	badness = calculate_badness(p, w);
+	added = false;
+	for (i = 0; i < cube_attempts.length; i++) {
+		if (cube_attempts[i][2] > badness) {
+			cube_attempts.insert(i, [p, w, badness]);
+			added = true;
+			break;
+		}
+	}
+	if (!added)
+		cube_attempts.push([p, w, badness]);
+	if (cube_attempts.length > cutoff) {
+		cube_attempts.pop();
+	}
+}
+
+function calculate_badness(r, l){
+	a = integrate(r, r+l);
+	b = integrate(r+l, r+2*l);
+	c = integrate(r+2*l, r+3*l);
+	return Math.max(Math.abs(b - a), Math.abs(c - b));
+}
+
+function mousemove(event) {
+
+	event = event || window.event;
+
+    x = event.pageX;
+    y = event.pageY;
+	
+	if (downed != null && Math.abs(y - f_y) < 30) {
+		upped = (x - canvas.width/2)/cell_size + xpos;
+	}
+	
+}
+
+function mouseup(event) {
+
+	event = event || window.event;
+
+    x = event.pageX;
+    y = event.pageY;
+	
+	if (Math.abs(y - f_y) < 30 && downed != null) {
+		if (upped < downed) {
+			[downed, upped] = [upped, downed];
+		}
+		// always at least two actual pixels
+		minimum = 2/cell_size;
+		if (upped - downed < minimum) upped = downed + minimum; 
+		if (keysDown.has("ShiftLeft"))
+			remove_interval(downed, upped);
+		else
+			add_interval(downed, upped);
+	
+	}
+	
+	downed = null;
+	upped = null;
+	
+	recalculate_badness();
+}
+
+function remove_bad_cube_attempts() {
+	for (i = 0; i < cube_attempts.length; i++) {
+		if (cube_attempts[i][1] > max_x || cube_attempts[i][1] < min_x) {
+			cube_attempts[i][2] = 100000;
+		}
+		if (cube_attempts[i][0] < xpos - canvas.width/cell_size/2 || cube_attempts[i][0] + 3*cube_attempts[i][1] > xpos + canvas.width/cell_size/2) {
+			cube_attempts[i][2] = 100000;
+		}
+	}
+	cube_attempts.sort((a) => a[2]);
+	
+}
+
+function recalculate_badness() {
+	for (i = 0; i < cube_attempts.length; i++) {
+		cube_attempts[i][2] = calculate_badness(cube_attempts[i][0], cube_attempts[i][1]);
+	}
+	cube_attempts.sort((a) => a[2]);
+}
+
+function add_interval(a, b) {
+	add_interval_by_leftmost_(a, b);
+	//console.log(f_graph);
+	merge();
+}
+
+function remove_interval(a, b) {
+	for (i = 0; i < f_graph.length; i++) {
+		if (interval_overlap(f_graph[i], [a, b])) {
+			news = interval_setminus(f_graph[i], [a, b]);
+			f_graph.splice(i, 1, ...news);
+			i += news.length - 1; // we may have to redo, or jump ahead
+		}
+	}
+}
+
+// assuming intervals overlap, remove l2 from l and return remaining intervals
+function interval_setminus(l, l2) {
+	if (l2[0] <= l[0] && l2[1] >= l[1]) {
+		return [];
+	}
+	if (l2[0] > l[0] && l2[1] >= l[1]) {
+		return [[l[0], l2[0]]];
+	}
+	if (l2[0] <= l[0] && l2[1] < l[1]) {
+		return [[l2[1], l[1]]];
+	}
+	return [[l[0], l2[0]], [l2[1], l[1]]];
+}
+
+function merge(start = 0) {
+	//console.log("merge", f_graph);
+	for (i = start; i < f_graph.length-1; i++) {
+		if (interval_overlap(f_graph[i], f_graph[i+1])) {
+			l = interval_union(f_graph[i], f_graph[i+1]);
+			//console.log(l)
+			f_graph.splice(i, 2, l);
+			//console.log(f_graph);
+			return merge(i); // merge more
+		}
+	}
+}
+
+function interval_overlap(l, l2) {
+	if (l[0] > l2[0]) return interval_overlap(l2, l);
+	return l[1] >= l2[0];
+}
+
+// union of intervals, which are assumed to overlap
+function interval_union(l, l2) {
+	if (l[0] > l2[0]) return interval_union(l2, l);
+	if (l[1] >= l2[1]) return l;
+	return [l[0], l2[1]];
+}
+
+// add interval in sorted order by leftmost point, but do not remove overlaps yet
+function add_interval_by_leftmost_(a, b) {
+	if (f_graph == []) {
+		
+		f_graph.push([a, b]);
+		//console.log("push", f_graph);
+		return;
+	}
+	if (f_graph[0][0] > a) {
+		f_graph.unshift([a, b]);
+		//console.log("unshift", f_graph);
+		return;
+	}
+	if (f_graph.at(-1)[0] < a) {
+		f_graph.push([a, b]);
+		//console.log("push be", f_graph);
+		return;
+	}
+	for (i = 0; i < f_graph.length; i++) {
+		if (f_graph[i][0] > a) {
+			f_graph.insert(i, [a, b]);
+			//console.log("inser", f_graph);
+			return;
+		}
+	}
+	
+	
+}
+
+document.addEventListener('mousemove', (event) => {
+const { clientX, clientY } = event;
+//console.log(`Mouse position: X: ${clientX}, Y: ${clientY}`);
+});
+
+function drawcirc(x, y, r, c) {
+	var ctx = canvas.getContext("2d");
+	ctx.beginPath();
+	ctx.arc(x, y, r/2, 0, 2 * Math.PI, false);
+	ctx.fillStyle = c;
+	ctx.fill();
+	ctx.strokeStyle = "black";
+	ctx.lineWidth = 1;
+	ctx.stroke();
+}
+
+function drawline(x, y, x2, y2) {
+	var ctx = canvas.getContext("2d");
+	ctx.beginPath();
+	ctx.moveTo(x, y);
+	ctx.lineTo(x2, y2);
+	ctx.lineWidth = 1;
+	ctx.strokeStyle = "black";
+	ctx.stroke();
+}
+
+function integrate(a, b) {
+	s = 0;
+	f_graph.forEach((v, i) => {
+		s += overlap_length(a, b, v[0], v[1]);
+	});
+	return s;
+}
+
+function overlap_length(a, b, c, d) {
+	if (a > c) return overlap_length(c, d, a, b);
+	// now we may assume [a, b] is to the left (or equal) to [c, d]
+	if (d <= b) { // in this case [c, d] is completely inside
+		return d - c;
+	}
+	if (c >= b) { // in this case they don't intersect at all, [c, d] is completely to the right
+		return 0;
+	}
+	return b - c;
+}
+
+function try_to_add() {
+	mminx = min_x;
+	mmaxx = max_x;
+	if (mminx > mmaxx) [mminx, mmaxx] = [mmaxx, mminx];
+	l = mminx + Math.random()*(mmaxx - mminx); // length of attempt in cells
+	//console.log(l);
+	canvas_left_cell = xpos - canvas.width/2/cell_size;
+	canvas_width_cell = canvas.width/cell_size; // width of canvas in cells
+	random_left_max = canvas_width_cell - l*3;
+	if (random_left_max > 0) {
+		r = Math.random()*random_left_max + canvas_left_cell;
+		// so our cube is now at r, r+l, r+2l, r+3l
+		insert_cube_attempt(r, l);
+	}
+}
+
+function update() {
+	remove_bad_cube_attempts();
+
+	// find cubes
+	//console.log(cube_attempts.length);
+	
+	for (i = 0; i < 50; i++){
+		try_to_add();
+	}
+
+	/// keys
+	//console.log(kewown);
+	
+	if (keysDown.has("KeyZ")) {
+		cell_size *= 1.05;
+	}
+	if (keysDown.has("KeyX")) {
+		cell_size /= 1.05;
+	}
+	if (keysDown.has("ArrowLeft")) {
+		xpos -= 20/cell_size;
+	}
+	if (keysDown.has("ArrowRight")) {
+		xpos += 20/cell_size;
+	}
+
+	/// graphics
+
+	var ctx = canvas.getContext("2d");
+	ctx.fillStyle = "#FFFFFF";
+	ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+	/*drawline(10, min_y, 10 + min_x*cell_size*3, min_y);
+	drawline(10, min_y-5, 10, min_y+5);
+	drawline(10 + min_x*cell_size, min_y-5, 10 + min_x*cell_size, min_y+5);
+	drawline(10 + min_x*cell_size*2, min_y-5, 10 + min_x*cell_size*2, min_y+5);
+	drawline(10 + min_x*cell_size*3, min_y-5, 10 + min_x*cell_size*3, min_y+5);*/
+	
+	drawcube(10, 10 + min_x*cell_size*3, min_y);
+	//console.log(max_x);
+	//console.log(max_y);
+	drawcube(10, 10 + max_x*cell_size*3, max_y);
+	drawline(0, f_y, canvas.width, f_y);
+	
+	for (var i in f_graph) {
+		drawCell(f_graph[i][0], f_graph[i][1]);
+	}
+	if (downed != null) {
+		if (keysDown.has("ShiftLeft")){
+		//console.log("fas");
+			drawUnCell(downed, upped);
+			}
+		else{
+		//console.log("as");
+			drawCell(downed, upped);
+			}
+	}
+	
+	//console.log(cube_attempts);
+	for (i = 0; i < cube_attempts.length; i++) {
+		[p, w, _] = cube_attempts[i];
+		pp = (p-xpos)*cell_size+canvas.width/2;
+		drawcube(pp, pp + w*cell_size*3, f_y + i*10 + 10);
+	}
+	
+}
+
+function drawcube(x, x2, y) {
+	drawline(x, y, x2, y);
+	drawline(x, y-5, x, y+5);
+	dd = (x2 - x) / 3;
+	drawline(x+dd, y-5, x+dd, y+5);
+	drawline(x+dd*2, y-5, x+dd*2, y+5);
+	drawline(x+dd*3, y-5, x+dd*3, y+5);
+}
+
+const keysDown = new Set();
+
+document.addEventListener("keydown", (e) => {
+    keysDown.add(e.code);
+	
+	if (e.code == 'KeyQ') {
+		clearInterval(intervalId);
+	}
+	if (e.code == 'KeyW') {
+		intervalId = setInterval(update, 100);
+	}
+});
+
+document.addEventListener("keyup", (e) => {
+    keysDown.delete(e.code);
+	if (e.code == "Space") {
+		var [z1, z2] = cubes_from_list([[0, 1]]);
+	}
+});
+
+function drawCell(a, b) {
+	var ctx = canvas.getContext("2d");
+	if (b < a) {
+		[a, b] = [b, a];
+	}
+	//console.log(v);
+	var centereda = a - xpos; // how many cells from center?
+	var pixel_centera = centereda * cell_size; // how far from center in pixels
+	var centeredb = b - xpos; 
+	
+	var pixel_centerb = centeredb * cell_size; 
+	ctx.rect(pixel_centera + canvas.width/2, f_y, pixel_centerb - pixel_centera, -f_maxheight);
+	ctx.fillStyle = "black";
+	ctx.fill();
+	//console.log(pixel_centera + canvas.width/2, f_y, pixel_centerb + canvas.width/2, f_y - f_maxheight)
+}
+
+function drawUnCell(a, b) {
+	var ctx = canvas.getContext("2d");
+	ctx.beginPath();
+	if (b < a) {
+		[a, b] = [b, a];
+	}
+	//console.log(v);
+	var centereda = a - xpos; // how many cells from center?
+	var pixel_centera = centereda * cell_size; // how far from center in pixels
+	var centeredb = b - xpos; 
+	
+	var pixel_centerb = centeredb * cell_size; 
+	ctx.rect(pixel_centera + canvas.width/2, f_y, pixel_centerb - pixel_centera, -f_maxheight);
+	ctx.strokeStyle = "red";
+	ctx.lineWidth = 3;
+	ctx.stroke();
+	ctx.strokeStyle = "black";
+	//console.log(pixel_centera + canvas.width/2, f_y, pixel_centerb + canvas.width/2, f_y - f_maxheight)
+}
+
+Array.prototype.insert = function ( index, ...items ) {
+    this.splice( index, 0, ...items );
+};
+
+//drawit();
+//canvas.addEventListener("keydown", presso);
+//canvas.onmousedown(mousedown);
+//canvas.onmousedown(mouse);
+
+
+
+
+
+
+
+
+
+var intervalId = setInterval(update, 100);
+
+</script>
+
+</body>
+
+</html>
+
+
+
