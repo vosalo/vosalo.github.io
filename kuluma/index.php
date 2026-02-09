@@ -35,6 +35,14 @@
 
 I do <a href="https://globalgamejam.org/users/oklopol">Game Jamming</a>. I have collaborated on the following projects:
 <ul>
+  <li> Bee like us, FGJ 2026: <a href="https://globalgamejam.org/games/2026/bee-us-0">executable &amp; source</a> </li>
+	<ul>
+	<li> Help some bees find flowers. I was the only programmer this year, and was working remote with very limited time. But it works.
+	</ul>
+  <li> Shelldiver, FGJ 2025: <a href="https://globalgamejam.org/games/2025/shelldiver-5">executable &amp; source</a> </li>
+	<ul>
+	<li> Swim around in a procedurally generated level, get some nice tats (upgrades) and try to find love.
+	</ul>
   <li> Roots of Greatness, FGJ 2023: <a href="https://v3.globalgamejam.org/2023/games/roots-greatness-8">executable &amp; source</a> </li>
 	<ul>
 	<li> By doing eugenics, you have to produce three historically important figures. In theory you are supposed to avoid incest, but the game doesn't really punish for it. I made a general visualizer for incestuous family trees for this, with dynamic. The others had a physical jam, I joined virtually because my kid was sick. Unfortunately we did not have time to really test the game, and the gene system is pretty unintuitive, so usually you just reproduce randomly until you have the first two, and the third is just impossible.
