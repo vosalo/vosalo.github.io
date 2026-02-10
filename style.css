@@ -20,7 +20,7 @@ h1 {
 
 h2 {
     font-size: 200%;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 h3 {
@@ -87,22 +87,19 @@ img.photo {
   height: auto;
 }
 
+
+
+
 .item {
-    /*font-size: 13px;*/
-    /*border-width: 0px;
-    background-color: white;*/
     margin-bottom: 10px;
 }
 
 .derp {
-    padding: 40px;
-    margin: 0px 0px 20px 0px;
+    padding: clamp(4px, 3vw, 24px);
+    margin: 0px 0px 0px 0px;
     color: #222;
     background-color: #ECECEC;
     border-radius: 7px;
-    /*background-color: #EFEBDA;
-    background-image: url(../pics/bgcaptrain.png);*/
-    /*box-shadow: 0 0 10px 0;*/
 }
 
 .pubtitle {
@@ -177,7 +174,7 @@ ul li {
 
 .active,
 .collapse:hover {
-	background-color: #	;
+	background-color: #ceeeee;
 }
 
 .text {
