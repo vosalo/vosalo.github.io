@@ -68,6 +68,25 @@ img {
     border-width: 0px;
 }
 
+/* Default: image will never overflow its container */
+img.responsive {
+max-width: 100%;
+height: auto;
+display: block;
+}
+
+/* Optional: on very small screens, cap the image width */
+@media (max-width: 600px) {
+img.responsive {
+  max-width: 220px; /* adjust to taste */
+}
+}
+
+img.photo {
+  width: clamp(160px, 35vw, 320px);
+  height: auto;
+}
+
 .item {
     /*font-size: 13px;*/
     /*border-width: 0px;
