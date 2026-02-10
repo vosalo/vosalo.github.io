@@ -89,17 +89,38 @@ img.photo {
 
 
 
+.page{
+  max-width: 1200px;
+  margin: 0 auto;          /* centers the whole column */
+  padding: 0 16px;         /* breathing room on small screens */
+  box-sizing: border-box;
+}
+
+/* make these fill the centered column */
+#menu,
+.derp{
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* center the title text */
+.page h1{
+  text-align: center;
+}
+
+
 
 .item {
     margin-bottom: 10px;
 }
 
 .derp {
+	max-width: 1200px;
     padding: clamp(4px, 3vw, 24px);
     margin: 0px 0px 0px 0px;
     color: #222;
     background-color: #ECECEC;
-    border-radius: 7px;
+    border-radius: 0px;
 }
 
 .pubtitle {
@@ -113,6 +134,8 @@ img.photo {
 }
 
 #menu {
+	width: 100%;
+	max-width: 1200px;
     overflow: hidden;
     margin: 0px;
     padding: 0px;
@@ -120,6 +143,10 @@ img.photo {
     font-weight: bold;
     background-color: black;
     border-radius: 7px 7px 0px 0px;
+}
+
+.derp, #menu {
+  box-sizing: border-box;
 }
 
 #menu li {
@@ -148,6 +175,7 @@ img.photo {
 #main {
     border-radius: 0px 0px 7px 7px;
 }
+
 
 #photo_id {
     float: right;
