@@ -60,11 +60,9 @@
 <br>
 Instructions: 
 <br>
-No instructions needed!
+Draw blacks on the top line with mouse. Or hold shift to erase. Press arrow keys to move. Press S to switch between drawing max, projective, or directly to RGB. Sorry about the glitch if you move...
 <br>
-<label> Here you can adjust threshold:</label>
-<input type="text" id="thresholdinput" placeholder="0.1">
-<button onclick="getValue()">Submit</button>
+
 </div>
 
 <tr><td colspan="2">
@@ -81,8 +79,7 @@ No instructions needed!
 
 
 <script>
-var pressed = false;
-var projective = false;
+var mode = "discrete";
 var canvas = document.getElementById("canvas");
 
 
@@ -613,12 +610,12 @@ function zeroesdraw() {
 			if (right >= left && right >= curr) data[i++] = 255;
 			else data[i++] = 0;*/
 			
-			if (!pressed) {
+			if (mode != "discrete") {
 				// what does inte[y*X + x + sbuff] actually correspond to?
 				var r = left / (2*y) * cell_size;
 				var g = curr / (2*y) * cell_size;
 				var b = right / (2*y) * cell_size;
-				if (projective) {
+				if (mode == "projective") {
 					if (r+g+b <= 0.001) {r = 1; g = 1; b = 1;}
 					else {
 						var max = Math.max(r, b, g);
@@ -682,13 +679,16 @@ Array.prototype.insert = function ( index, ...items ) {
     this.splice( index, 0, ...items );
 };
 
+// pressed false = 
 function presso(e) {
 	if (e.code == "KeyS") {
-		pressed = !pressed;
+		if (mode == "discrete") mode = "projective";
+		else if (mode == "projective") mode = "integrals";
+		else mode = "discrete";
 	}
-	if (e.code == "KeyP") {
+	/*if (e.code == "KeyP") {
 		projective = !projective;
-	}
+	}*/
 }
 
 function unpresso(e) {
