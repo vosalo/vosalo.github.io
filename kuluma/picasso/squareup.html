@@ -168,7 +168,7 @@ function fromscreen2(x, y) {
 	//console.log(height, "mus-");
 	//console.log(height, xx, f_maxheight, cell_size, );
 	//console.log("fromscreen2 from", x, y, "to", xx - height*f_maxheight/cell_size, xx + height*f_maxheight/cell_size);
-	return [xx[0] - height/f_maxheight, xx[0] + height/f_maxheight];
+	return [xx[0] - height/cell_size /*f_maxheight*/, xx[0] + height/cell_size /*/f_maxheight*/];
 	//return [xx[0] - 1, xx[0] + 1];
 	
 }
@@ -436,7 +436,7 @@ function update() {
 		ccc ++;
 		//if (ccc % 50 == 0)
 	//		console.log(toscreen([viz_x, 0])[0], toscreen([viz_x2, 0])[0], f_y + 15 + 10);
-		drawsquare(ctx, toscreen([viz_x, 0])[0], toscreen([viz_x2, 0])[0], f_y, [0, 0, 255], 3);
+		drawsquare(ctx, toscreen([viz_x, 0])[0], toscreen([viz_x2, 0])[0], f_y, [0, 0, 0], 3);
 		//drawcube(ctx, 100,400, f_y + 15 + 10);
 	}
 	//console.log(f_graph);
@@ -640,9 +640,9 @@ function zeroesdraw() {
 function toscreen2(pt) {
 	// from PL representation (endpoints of first interval in cube)
 	// to center point of cube
-	let center = pt[0].valueOf() + (pt[1].valueOf() - pt[0].valueOf())*1.5;
+	let center = pt[0].valueOf() + (pt[1].valueOf() - pt[0].valueOf());
 	
-	let height = (pt[1].valueOf() - pt[0].valueOf())*1.5;
+	let height = (pt[1].valueOf() - pt[0].valueOf());
 	return toscreen([center, height]);
 }
 
