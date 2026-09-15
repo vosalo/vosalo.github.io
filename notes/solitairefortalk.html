@@ -1,0 +1,373 @@
+
+<!DOCTYPE html>
+<html>
+<head></head>
+
+<body style="font-family:consolas, fixedsys;">
+
+<div id="pojo">-</div>
+<div id="eke" style="position:absolute; left:150px;">
+  <canvas id="canvas" width="802" height="500" style="position:absolute; x:0; y:0;"></canvas>
+</div>
+<div id="ekeb" style="position:absolute; top:50px;">
+  <canvas id="canvasb" width="100" height="100" style="position:absolute; x:0; y:0;"></canvas>
+</div>
+<div id="ekeg" style="position:absolute; top:150px;">
+  <input type="text" id="dirx" input size="8" value="0"/>
+  <br/>
+  <input type="text" id="diry" input size="8" value="-1"/>
+</div>
+<div id="ekec" style="position:absolute; top:250px;">
+  <canvas id="canvasc" width="100" height="100" style="position:absolute; x:0; y:0;"></canvas>
+</div>
+
+<div id="ekec" style="position:absolute; top:450px;">
+
+In the top left box, you draw (by clicking) the corners of the shape you are interested in. The convex hull is shown in the bottom left box. In the big box on the right you can draw anything you like. The little red squares show the corners of the shape you drew.
+<br/><br/>
+If you press &lt;space&gt;, you play one move of the easy solitaire of independence with respect to that shape. If you press &lt;a&gt;, a line is drawn in the direction perpendicular to the coordinates you've put in the two textboxes and with the correct width for the shape to get determinism in that direction. If you press &lt;e&gt;, all is erased. If you press &lt;r&gt;, you toggle random application of the rules.
+
+</div>
+
+<script>
+
+/*
+<table width="100" id="ikitaulu"><tr>
+<td>
+<div id="pojo">-</div>
+</td>
+<td id="pesonen" left="802">
+<canvas id="canvas" width="802" height="802" style="position: fixed; x:0; y:0;"></canvas>
+</td>
+<td id="allo">
+<canvas id="canvasb" width="100" height="100" style="position: fixed; x:-100; y:0;"></canvas>
+</td>
+*/
+
+var canvas = document.getElementById("canvas");
+var canvasb = document.getElementById("canvasb");
+var canvasc = document.getElementById("canvasc");
+canvas.addEventListener('click', clicko);
+canvasb.addEventListener('click', clicko2);
+canvas.onkeypress=addEventListener('keypress', onkipress);
+
+canvas.addEventListener('mousemove', movo, false);
+
+var xsize = 100;
+var ysize = 50;
+var ssize = 8;
+var shxsize = 2*4+1;
+var shysize = 2*4+1;
+
+var tsize = 2; // size of red marker thingies
+
+var findxsize = 0;
+var findysize = 0;
+
+var xplace = 0;
+var yplace = 0;
+
+var m = {x:0, y:0};
+var m2 = {x:0, y:0};
+
+var random = false;
+
+//var downing = 50;
+
+function zeroit(g,x,y) {
+   for (var i = 0; i < y; i++) {
+    for (var j = 0; j < x; j++) {
+      g[i][j] = 0;
+    }
+  }
+}
+
+var grid = new Array(ysize);
+for (var i = 0; i < ysize; i++) {
+  grid[i] = new Array(xsize);
+}
+zeroit(grid,xsize,ysize);
+var shape = new Array(shysize);
+for (var i = 0; i < shysize; i++) {
+  shape[i] = new Array(shxsize);
+}
+zeroit(shape,shxsize,shysize);
+shapex = Math.floor(shxsize/2);
+shapey = Math.floor(shysize/2);
+shape[shapey][shapex] = 1;
+shape[shapey][shapex-1] = 1;
+shape[shapey+1][shapex] = 1;
+shapenu = new Array();
+shapech = new Array(shysize);
+for (var i = 0; i < shysize; i++) {
+  shapech[i] = new Array(shxsize);
+}
+shapecompute();
+
+function getMousePos(c, evt) {
+        var rect = c.getBoundingClientRect();
+        return {
+          x: evt.clientX - rect.left,
+          y: evt.clientY - rect.top
+        };
+      }
+
+function clicko(event) {
+  event = event || window.event;
+  //var x = Math.floor((event.pageX - canvas.offsetLeft) / ssize) - xplace;
+  //var y = Math.floor((event.pageY - canvas.offsetTop - downing) / ssize) - yplace;
+  m = getMousePos(canvas,event);
+  m = {x: Math.floor(m.x/ssize), y: Math.floor(m.y/ssize)};
+  grid[m.y][m.x] = 1 - grid[m.y][m.x];
+  //drawit();
+}
+
+// put the shape at x, y and check if there is exactly one empty
+// if so, return its position
+function notinshape(x,y) {
+  var cx = 0, cy = 0;
+  var c = 0;
+  var ci = 0;
+  for (var i = 0; i < shapenu.length; i++) {
+    var di = shapenu[i].x+x-shapex;
+    var dj = shapenu[i].y+y-shapey;
+    if (grid[dj][di] == 0) {
+      ci = i;
+    } else {
+      c++;
+    }
+  }
+  if (c == shapenu.length-1) {
+    var gi = (ci+1)%shapenu.length;
+	return {nextx:shapenu[gi].x+x-shapex,nexty:shapenu[gi].y+y-shapey,currx:shapenu[ci].x+x-shapex,curry:shapenu[ci].y+y-shapey}
+  }
+}
+
+function rotateat(x,y) {
+  var c = notinshape(x,y);
+  if (c) {
+    grid[c.curry][c.currx] = 1;
+    grid[c.nexty][c.nextx] = 0;
+  }
+}
+
+function onkipress(event){
+  // space plays the game
+  if (event.keyCode == 0 || event.keyCode == 32) {
+	rotateat(m.x,m.y);
+  }
+  // a draws a line
+  if (event.keyCode == 97) {
+    var xx = parseInt(document.getElementById("dirx").value);
+    var yy = -parseInt(document.getElementById("diry").value);
+	if (xx != 0 || yy != 0) {
+	  var maxdp = -10000; // dp = dot product
+	  var mindp = 10000;
+	  for (var k = 0; k < shapenu.length; k++) {
+	    var dp = (shapenu[k].x-shapex)*xx+(shapenu[k].y-shapey)*yy;
+		if (dp > maxdp) maxdp = dp;
+		if (dp < mindp) mindp = dp;
+	  }
+	  if (mindp <= maxdp) {
+	    for (var i = 0; i < xsize; i++) {
+          for (var j = 0; j < ysize; j++) {
+            var ddp = (i-m.x)*xx+(j-m.y)*yy;
+			if (ddp < maxdp && ddp >= mindp) {
+			  grid[j][i] = 1;
+			}
+          }
+        }
+	  }
+	}
+  }
+  // e erases all
+  if (event.keyCode == 101) {
+    zeroit(grid,xsize,ysize);
+  }
+  // r toggles randomness
+  if (event.keyCode == 114) {
+    random = !random;
+  }
+}
+
+function movo(event) {
+  event = event || window.event;
+  m = getMousePos(canvas,event);
+  m = {x: Math.floor(m.x/ssize), y: Math.floor(m.y/ssize)};
+  
+}
+
+function clicko2(event) {
+  event = event || window.event;
+  m2 = getMousePos(canvasb,event);
+  m2 = {x: Math.floor(m2.x/ssize), y: Math.floor(m2.y/ssize)};
+  shape[m2.y][m2.x] = 1 - shape[m2.y][m2.x];
+  shapecompute();
+}
+
+function shapecompute() {
+  // recompute shapenu
+  shapenu = new Array();
+  for (var i = 0; i < shxsize; i++) {
+    for (var j = 0; j < shysize; j++) {
+	  if (shape[j][i] == 1) {
+	    shapenu.push({x:i,y:j});
+	  }
+	}
+  }
+  // recompute convex hull
+  shapech = new Array(shysize);
+  for (var i = 0; i < shysize; i++) {
+    shapech[i] = new Array(shxsize);
+  }
+  for (var i = 0; i < shxsize; i++) {
+    for (var j = 0; j < shysize; j++) {
+      if (shape[j][i] == 1) { shapech[j][i] = 1; }
+	  else {
+	    //if (j != 0 || i != 0) continue;
+	    dirs = new Array();
+	    for (var l = 0; l < shapenu.length; l++) {
+	      var di = shapenu[l].x;
+	      var dj = shapenu[l].y;
+	      dirs.push(Math.atan2(dj-j,di-i));
+        }
+		if (!containedinhalfopenpiinterval(dirs)) {
+		  shapech[j][i] = 1;
+		}
+	  }
+	}
+  }
+}
+
+// dirs is a list of angles from pi to -pi, and we need to answer whether they all fit within one half-open interval of length pi
+// what's a good algo for this? mine is really stupid
+function containedinhalfopenpiinterval(dirs) {
+  for (var i = 0; i < dirs.length; i++) {
+    for (var j = 0; j < dirs.length; j++) {
+	  if (i == j) continue;
+	  if (Math.abs((dirs[i]-dirs[j]+70*Math.PI*2)%(Math.PI*2) - Math.PI) < 0.0000001) {
+	    return false;
+	  }
+	  for (var k = 0; k < dirs.length; k++) {
+	    if (k == i || k == j) continue;
+		// check that j is in good quadrant
+		if ((dirs[j]-dirs[i]+Math.PI*2*70)%(Math.PI*2) > Math.PI || (dirs[j]-dirs[i]+Math.PI*2*70)%(Math.PI*2) < Math.PI/2) continue;
+		// then check that k is
+		if ((dirs[k]-dirs[i]+Math.PI*2*70)%(Math.PI*2) < Math.PI || (dirs[k]-dirs[i]+Math.PI*2*70)%(Math.PI*2) > Math.PI*3/2) continue;
+		return false;
+	  }
+	}
+  }
+  return true;
+}
+
+function drawborder(c,x1, y1, x2, y2, color) {
+  drawRexor(c,x1, y1, x2, y1+1, color, color);
+  drawRexor(c,x1, y1, x1 + 1, y2, color,color);
+  drawRexor(c,x2, y1, x2 + 1, y2, color,color);
+  drawRexor(c,x1, y2, x2, y2 + 1, color,color);
+}
+
+function showstuff() {
+  var td = document.getElementById("pojo");
+  td.innerHTML = "";
+}
+
+function drawit() {
+  drawRexor(canvas,0,0,800,800,"#FFFFFF","#FFFFFF");
+  for (var i = 0; i < xsize; i++) {
+    for (var j = 0; j < ysize; j++) {
+      if (grid[j][i] == 0) {
+        //drawRexor(ssize*i, downing+ssize*j, ssize*i+ssize, downing+ssize*j+ssize, "#FFFFFF", "#FFFFFF");
+	  }
+      if (grid[j][i] == 1) {
+        //drawRexor(canvas,ssize*i, downing+ssize*j, ssize*i+ssize, downing+ssize*j+ssize, "#000000", "#FFFFFF");
+		drawRexor(canvas,ssize*i, ssize*j, ssize*i+ssize, ssize*j+ssize, "#000000", "#AAAAAA");
+	  }
+    }
+  }
+  //drawborder(canvas,0,downing,ssize*xsize,downing+ssize*ysize,"#0000FF");
+  drawborder(canvas,0,0,ssize*xsize,ssize*ysize,"#0000FF");
+ 
+}
+
+function drawmouse() {
+    for (var i = 0; i < shxsize; i++) {
+    for (var j = 0; j < shysize; j++) {
+      if (shape[j][i] == 1) {
+	    var di = i+m.x-shapex;
+		var dj = j+m.y-shapey;
+        drawRexor(canvas,ssize*di+ssize/2-tsize, ssize*dj+ssize/2-tsize, ssize*di+ssize/2+tsize, ssize*dj+ssize/2+tsize, "#FF0000", "#FFFFFF");
+	  }
+    }
+  }
+}
+
+function drawshape() {
+  drawRexor(canvasb,0,0,100,100,"#FFFFFF","#FFFFFF");
+  for (var i = 0; i < shxsize; i++) {
+    for (var j = 0; j < shysize; j++) {
+      if (shape[j][i] == 1) {
+        drawRexor(canvasb,ssize*i, ssize*j, ssize*i+ssize, ssize*j+ssize, "#000000", "#AAAAAA");
+	  }
+    }
+  }
+  drawborder(canvasb,0,0,ssize*shxsize,ssize*shysize,"#0000FF");
+  
+  drawRexor(canvasc,0,0,100,100,"#FFFFFF","#FFFFFF");
+  for (var i = 0; i < shxsize; i++) {
+    for (var j = 0; j < shysize; j++) {
+      if (shapech[j][i] == 1) {
+        drawRexor(canvasc,ssize*i, ssize*j, ssize*i+ssize, ssize*j+ssize, "#000000", "#AAAAAA");
+	  }
+    }
+  }
+  drawborder(canvasc,0,0,ssize*shxsize,ssize*shysize,"#0000FF");
+}
+
+function drawRexor(c,x1, y1, x2, y2, color, fill) {
+  var ctx = c.getContext("2d");
+  ctx.strokeStyle=color;
+  ctx.fillStyle=fill;
+  ctx.strokeRect(x1,y1,x2-x1,y2-y1);
+  ctx.fillRect(x1,y1,x2-x1,y2-y1);
+}
+
+function dorandom() {
+  var possibles = new Array();
+  for (var ii = shapex; ii < xsize-shapex; ii++) {
+    for (var ij = shapey; ij < ysize-shapey; ij++) {
+	  var ic = notinshape(ii,ij);
+	  if (ic != undefined) {
+	    for (var ih = 0; ih < shapenu.length-1; ih++) {
+		  possibles.push({atx:ii, aty:ij, times:ih});
+		}
+	  }
+	}
+  }
+  var ir = possibles[Math.floor(Math.random()*possibles.length)];
+  for (var ih = 0; ih < ir.times; ih++) {
+    rotateat(ir.atx,ir.aty);
+  }
+}
+
+drawshape();
+drawit();
+
+setInterval(function(){
+  if (random) {
+    for (var i = 0; i < 20; i++ )dorandom();
+  }
+  drawit();
+  drawshape();
+  drawmouse();
+},30);
+
+</script>
+
+</body>
+
+</html>
+
+
+

@@ -1,0 +1,9 @@
+The prelude to Theorem 7.17 after Theorem 7.15 contains some nonsense, though the actual theorems are fine.
+
+The eagle-eyed reader will notice that my claim that $A_4$ is isomorphic to the four-group is only true up to a constant factor. This error somehow arised from the following: Pairs of disjoint involutions $(0 \; 1) (2 \; 3)$ generate the four-group, and the original statement of Theorem 7.15 said ``commutators that are involutions'', which turned out difficult to realize and was turned to ``commutators that are compositions of involutions''. In S_4, a commutator that is an involution is a composition of two disjoint involutions, and these things generate the four-group. But commutators that are compositions of involutions generate all of A_4. Is there a Ryan's theorem with finitely many commutators that are involutions?
+
+Thus Proposition 7.16 is not needed, one can use the permutation (0)(1 2 3) which is even, is a commutator of two automorphisms, is a composition of involutive automorphisms, and forces the zero-point to be mapped to itself.
+
+I thank Johan Kopra for pointing out that (0)(1 2 3) can be used in the theorem, which led me to observing this error.
+
+

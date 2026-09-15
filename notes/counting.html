@@ -1,0 +1,634 @@
+
+<!DOCTYPE html>
+<html>
+<head></head>
+
+<body style="font-family:consolas, fixedsys;">
+
+<div id="pojo">-</div>
+<div id="eke" style="position:absolute; left:150px;">
+  <canvas id="canvas" width="802" height="502" style="position:absolute; x:0; y:0;"></canvas>
+</div>
+<div id="ekeb" style="position:absolute; top:50px;">
+  <canvas id="canvasb" width="100" height="100" style="position:absolute; x:0; y:0;"></canvas>
+</div>
+<div id="ekec" style="position:absolute; top:250px;">
+  <canvas id="canvasc" width="100" height="100" style="position:absolute; x:0; y:0;"></canvas>
+</div>
+
+<div id="ekec" style="position:absolute; top:470px;">
+Draw a polygon C by clicking on the grid. Draw counterclockwise and make sure it's convex -- otherwise, it won't work. You can draw a discrete shape on the grid at the top left corner.
+<br/><br/>
+Press 'e' to erase the polygon.
+<br/><br/>
+Press 'x' to draw the polygon D that's determined by the shape and C so that the contents of C \setminus D can be chosen arbitrarily and uniquely determine the contents of D. Press 'y' to get an alert telling you the number of ways to fill the polygon in a TEP subshift -- if your shape is Ledrappier and the polygon is small enough, this will also be checked by brute force for the Ledrappier subshift.
+</div>
+
+<script>
+
+/*
+<table width="100" id="ikitaulu"><tr>
+<td>
+<div id="pojo">-</div>
+</td>
+<td id="pesonen" left="802">
+<canvas id="canvas" width="802" height="802" style="position: fixed; x:0; y:0;"></canvas>
+</td>
+<td id="allo">
+<canvas id="canvasb" width="100" height="100" style="position: fixed; x:-100; y:0;"></canvas>
+</td>
+*/
+
+var canvas = document.getElementById("canvas");
+var canvasb = document.getElementById("canvasb");
+var canvasc = document.getElementById("canvasc");
+canvas.addEventListener('click', clicko);
+canvasb.addEventListener('click', clicko2);
+canvas.onkeypress=addEventListener('keypress', onkipress);
+
+canvas.addEventListener('mousemove', movo, false);
+
+var xsize = 80;
+var ysize = 40;
+var ssize = 10;
+var shxsize = 2*4+1;
+var shysize = 2*4+1;
+
+var tsize = 2; // size of red marker thingies
+
+var findxsize = 0;
+var findysize = 0;
+
+var xplace = 0;
+var yplace = 0;
+
+var m = {x:0, y:0};
+var m2 = {x:0, y:0};
+
+var random = false;
+
+var togg = false;
+
+//var downing = 50;
+
+function zeroit(g,x,y) {
+   for (var i = 0; i < y; i++) {
+    for (var j = 0; j < x; j++) {
+      g[i][j] = 0;
+    }
+  }
+}
+
+var grid = new Array(ysize);
+for (var i = 0; i < ysize; i++) {
+  grid[i] = new Array(xsize);
+}
+zeroit(grid,xsize,ysize);
+var shape = new Array(shysize);
+for (var i = 0; i < shysize; i++) {
+  shape[i] = new Array(shxsize);
+}
+zeroit(shape,shxsize,shysize);
+shapex = Math.floor(shxsize/2);
+shapey = Math.floor(shysize/2);
+shape[shapey][shapex] = 1;
+shape[shapey][shapex-1] = 1;
+shape[shapey+1][shapex] = 1;
+shapenu = new Array();
+shapech = new Array(shysize);
+for (var i = 0; i < shysize; i++) {
+  shapech[i] = new Array(shxsize);
+}
+usingLedrappier = false;
+shapecompute();
+
+poses = new Array();
+innerposes = new Array();
+
+function getMousePos(c, evt) {
+        var rect = c.getBoundingClientRect();
+        return {
+          x: evt.clientX - rect.left,
+          y: evt.clientY - rect.top
+        };
+      }
+
+function clicko(event) {
+  event = event || window.event;
+  //var x = Math.floor((event.pageX - canvas.offsetLeft) / ssize) - xplace;
+  //var y = Math.floor((event.pageY - canvas.offsetTop - downing) / ssize) - yplace;
+  m = getMousePos(canvas,event);
+  m = {x:m.x/ssize, y:m.y/ssize};
+  if (!togg) poses.push(m);
+  else innerposes.push(m);
+  //drawit();
+  draw();
+}
+
+// put the shape at x, y and check if there is exactly one empty
+// if so, return its position
+function notinshape(x,y) {
+  var cx = 0, cy = 0;
+  var c = 0;
+  var ci = 0;
+  for (var i = 0; i < shapenu.length; i++) {
+    var di = shapenu[i].x+x-shapex;
+    var dj = shapenu[i].y+y-shapey;
+    if (grid[dj][di] == 0) {
+      ci = i;
+    } else {
+      c++;
+    }
+  }
+  if (c == shapenu.length-1) {
+    var gi = (ci+1)%shapenu.length;
+	return {nextx:shapenu[gi].x+x-shapex,nexty:shapenu[gi].y+y-shapey,currx:shapenu[ci].x+x-shapex,curry:shapenu[ci].y+y-shapey}
+  }
+}
+
+function rotateat(x,y) {
+  var c = notinshape(x,y);
+  if (c) {
+    grid[c.curry][c.currx] = 1;
+    grid[c.nexty][c.nextx] = 0;
+  }
+}
+
+function onkipress(event){
+  // e erases all
+  if (event.keyCode == 101) {
+	poses = new Array();
+	innerposes = new Array();
+  }
+  // r erases the inner polygon
+  if (event.keyCode == 114) {
+    innerposes = new Array();
+  }
+  // x does something
+  if (event.keyCode == 120) {
+    computeinnerposes()
+  }
+  if (event.keyCode == 121) {
+    computeinnerposes();
+    // how many by theory:
+	var n = 0;
+	for (var i = 0; i < xsize; i++) {
+      for (var j = 0; j < ysize; j++) {
+        // this point is at ssize*i+ssize/2, ssize*j+ssize/2
+		var pt = {x:i+0.5, y:j+0.5};
+		if (inconvex(pt, poses) && !inconvex(pt, innerposes)) {
+		  //alert("".concat(pt.x," ",pt.y));
+		  n += 1;
+		}
+      } 
+    }
+	alert ("".concat("There are n^",n," ways to fill this polygon."));
+	
+    // the following is a brute force count of n
+	if (usingLedrappier) {
+      lps = new Array();
+      for (var i = 0; i < xsize; i++) {
+        for (var j = 0; j < ysize; j++) {
+          // this point is at ssize*i+ssize/2, ssize*j+ssize/2
+  		  var pt = {x:i+0.5, y:j+0.5};
+		  if (inconvex(pt, poses)) { lps.push(pt); }
+        } 
+      }
+	  if (lps.length <= 30) {
+	    var m = countlegals(lps);
+	    //alert (Math.log(m) / Math.log(2));
+	    if (Math.round(Math.pow(2,n)) == m) {
+	     alert("Confirmed with brute force for Ledrappier.");
+	    } else {
+	      alert("Oops, we're in trouble...");
+	    }
+	  } else {
+	    alert ("Too big to confirm with brute force.");
+      }
+	}
+  }
+  draw();
+}
+
+function computeinnerposes() {
+    //poses = intersection(poses, innerposes);
+	//poses = intersect_convex_by_halfplane(poses, innerposes[0], minus(innerposes[1], innerposes[0]));
+	//alert(poses.length);
+	//var poses2 = translate(poses,{x:7,y:0});
+	//poses = intersect_convex_by_halfplane(poses, {x:50,y:0}, {x:1,y:0});
+	innerposes = poses;
+	var most = {x:-10000, y:-10000};
+	for (var i = 0; i < shapenu.length; i++) {
+	  if (shapenu[i].x > most.x) { most = shapenu[i]; }
+	  if (shapenu[i].x >= most.x && shapenu[i].y > most.y) { most = shapenu[i]; }
+	}
+	//alert(most.x);
+	//alert(most.y);
+	for (var i = 0; i < shapenu.length; i++) {
+	  var v = minus(most, shapenu[i]);
+	  if (Math.abs(v.x) < 0.01 && Math.abs(v.y) < 0.01) continue;
+	  //alert("".concat(v.x," ",v.y));
+	  innerposes = intersection(innerposes, translate(poses, v));
+	}
+}
+
+
+// this is for ledrappier shape and xor only
+function countlegals(positions) {
+  return legals(positions,[]);
+}
+
+elmukelmu = [];
+
+function goodat(setted,x,y,v) {
+  //return true;
+  for (var i = 0; i < setted.length; i++) {
+    for (var j = 0; j < setted.length; j++) {
+	  /*elmukelmu = [];
+	  elmukelmu.push({x:x-1,y:y});
+	  elmukelmu.push({x:x,y:y+1});
+	  elmukelmu.push({x:x,y:y});*/
+	  var ok = true;
+	  if (Math.abs(setted[i][0] - (x-1)) < 0.001 &&
+	      Math.abs(setted[i][1] - y) < 0.001 &&
+	      Math.abs(setted[j][0] - x) < 0.001 &&
+		  Math.abs(setted[j][1] - (y+1)) < 0.001) {
+		//alert("cjeck");
+	    if ((setted[i][2] + setted[j][2] + v)%2 != 1)
+		  ok = false;
+      }
+	  if (Math.abs(setted[i][0] - (x+1)) < 0.001 &&
+	      Math.abs(setted[i][1] - y) < 0.001 &&
+	      Math.abs(setted[j][0] - (x+1)) < 0.001 &&
+		  Math.abs(setted[j][1] - (y+1)) < 0.001) {
+		//alert("cjeck");
+	    if ((setted[i][2] + setted[j][2] + v)%2 != 1)
+		  ok = false;
+      }
+	  if (Math.abs(setted[i][0] - x) < 0.001 &&
+	      Math.abs(setted[i][1] - (y-1)) < 0.001 &&
+	      Math.abs(setted[j][0] - (x-1)) < 0.001 &&
+		  Math.abs(setted[j][1] - (y-1)) < 0.001) {
+		//alert("cjeck");
+	    if ((setted[i][2] + setted[j][2] + v)%2 != 1)
+		  ok = false;
+      }
+	  if (ok == false) return false;
+	}
+  }
+  return true;
+}
+
+// positions are guys we have left to fill
+// setted are the values already set
+function legals(positions,setted) {
+  if (positions.length == 0) {
+    if (Math.random() < 0.02) {
+      //alert("derp");
+	  for (var j = 0; j < setted.length; j++) {
+	    //alert("".concat(setted[j][0]," ",setted[j][1]," ",setted[j][2]));
+	  }
+	}
+    return 1;
+  }
+  var p = positions[0];
+  var rest = positions.slice(1,positions.length);
+  var count = 0;
+  for (var i = 0; i < 2; i++) {
+	if (goodat(setted,p.x,p.y,i)) {
+	  setted.push([p.x,p.y,i]);
+	  count += legals(rest,setted);
+	  setted.pop();
+	} else {
+	  //alert("baaad");
+	}
+  }
+  return count;
+}
+
+
+
+function scalarmul(v,t) {
+  return {x:v.x*t,y:v.y*t};
+}
+
+function turnleft(t) {
+  return {x:-t.y,y:t.x};
+}
+
+function intersection(c1, c2) {
+  if (c1.length == 0 || c2.length == 0) return [];
+  var c = c1;
+  for (var i = 0; i < c2.length; i++) {
+   // the following guys define the half plane we want to intersect with
+    var a = c2[i];
+	var b = turnleft(minus(c2[i],c2[(i+1)%c2.length]));
+	//alert("".concat(a.x," ",a.y," ",b.x," ",b.y));
+	c = intersect_convex_by_halfplane(c, a, b);
+  }
+  return c;
+}
+
+function inconvex(pt,conv) {
+  if (conv.length == 0) return false;
+  for (var i = 0; i < conv.length; i++) {
+    var a = conv[i];
+	var b = turnleft(minus(conv[i],conv[(i+1)%conv.length]));
+	if (!on_halfplane(pt,a,b)) return false;
+  }
+  return true;
+}
+
+// we have a point u and a vector in direction v, 
+// and we want to find a point on the line u+Rv that has same dot product with b as a
+// so we just solve (u.x + t * v.x) * b.x + (u.y + t * v.y) * b.y = dot(a, b) = k;
+function halfplaneborder(u,v,a,b) {
+  var k = dot(a, b);
+  // (u.x + t * v.x) * b.x + (u.y + t * v.y) * b.y = dot(a, b) = k;
+  var r = u.x * b.x + u.y * b.y;
+  // t * v.x * b.x + t * v.y * b.y = k - r;
+  //t (v.x * b.x + v.y * b.y) = k - r;
+  var t = (k - r) / (v.x * b.x + v.y * b.y);
+  return {x: u.x + t*v.x, y: u.y + t*v.y};
+}
+
+function intersect_convex_by_halfplane(c, a, b) {
+  var ret = new Array();
+  var allinside = true;
+  var alloutside = true;
+  var inidx = 0;
+  for (var i = 0; i < c.length; i++) {
+    if (on_halfplane(c[i],a,b)) {
+	  alloutside = false;
+	  inidx = i;
+	}
+	else allinside = false;
+  }
+  if (allinside) return c;
+  if (alloutside) return new Array();
+  var i = inidx;
+  var currentlyin = true;
+  while (true) {
+    if (currentlyin) {
+      if (!on_halfplane(c[i],a,b)) {
+	    currentlyin = false;
+		ret.push(halfplaneborder(c[((i-1)+c.length)%c.length], minus(c[i],c[((i-1)+c.length)%c.length]),
+		                a,b));
+	  } else {
+	    ret.push(c[i])
+	  }
+	} else if (!currentlyin && on_halfplane(c[i],a,b)) {
+	  currentlyin = true;
+	  ret.push(c[i]);
+	}
+	if (!currentlyin && on_halfplane(c[(i+1)%c.length],a,b)) {
+	  ret.push(halfplaneborder(c[i], minus(c[(i+1)%c.length],c[i]),a,b));
+	}
+	i = (i+1)%c.length;
+	if (i == inidx) break;
+  }
+  return ret;
+}
+
+function minus(a,b) { return {x:a.x-b.x,y:a.y-b.y}; }
+
+function dot(a,b) {return a.x*b.x+a.y*b.y;}
+
+function on_halfplane(x,a,b) {
+  return dot(minus(x,a),b) >= 0;
+}
+
+function translate(conv,offs) {
+  var ret = new Array();
+  for (var i = 0; i < conv.length; i++) {
+    ret.push({x:conv[i].x+offs.x, y:conv[i].y+offs.y});
+  }
+  return ret;
+}
+
+function movo(event) {
+  event = event || window.event;
+  m = getMousePos(canvas,event);
+  m = {x: Math.floor(m.x/ssize), y: Math.floor(m.y/ssize)};
+  
+}
+
+function clicko2(event) {
+  event = event || window.event;
+  m2 = getMousePos(canvasb,event);
+  m2 = {x: Math.floor(m2.x/ssize), y: Math.floor(m2.y/ssize)};
+  shape[m2.y][m2.x] = 1 - shape[m2.y][m2.x];
+  shapecompute();
+  draw();
+}
+
+function shapecompute() {
+  // recompute shapenu
+  shapenu = new Array();
+  for (var i = 0; i < shxsize; i++) {
+    for (var j = 0; j < shysize; j++) {
+	  if (shape[j][i] == 1) {
+	    shapenu.push({x:i,y:j});
+	  }
+	}
+  }
+  // recompute convex hull
+  shapech = new Array(shysize);
+  for (var i = 0; i < shysize; i++) {
+    shapech[i] = new Array(shxsize);
+  }
+  usingLedrappier = true;
+  //shape[shapey][shapex] = 1;
+  //shape[shapey][shapex-1] = 1;
+  //shape[shapey+1][shapex] = 1;
+  for (var i = 0; i < shxsize; i++) {
+    for (var j = 0; j < shysize; j++) {
+	  // check for Ledrappier shape
+	  if (i == shapex && j == shapey ||
+	      i == shapex-1 && j == shapey ||
+		  i == shapex && j == shapey+1) {
+		    if (shape[j][i] != 1) usingLedrappier = false;
+		  } else {
+		    if (shape[j][i] == 1) usingLedrappier = false;
+		  }
+	  // convex hull stuff
+      if (shape[j][i] == 1) { shapech[j][i] = 1; }
+	  else {
+	    //if (j != 0 || i != 0) continue;
+	    dirs = new Array();
+	    for (var l = 0; l < shapenu.length; l++) {
+	      var di = shapenu[l].x;
+	      var dj = shapenu[l].y;
+	      dirs.push(Math.atan2(dj-j,di-i));
+        }
+		if (!containedinhalfopenpiinterval(dirs)) {
+		  shapech[j][i] = 1;
+		}
+	  }
+	}
+  }
+}
+
+// dirs is a list of angles from pi to -pi, and we need to answer whether they all fit within one half-open interval of length pi
+// what's a good algo for this? mine is really stupid
+function containedinhalfopenpiinterval(dirs) {
+  for (var i = 0; i < dirs.length; i++) {
+    for (var j = 0; j < dirs.length; j++) {
+	  if (i == j) continue;
+	  if (Math.abs((dirs[i]-dirs[j]+70*Math.PI*2)%(Math.PI*2) - Math.PI) < 0.0000001) {
+	    return false;
+	  }
+	  for (var k = 0; k < dirs.length; k++) {
+	    if (k == i || k == j) continue;
+		// check that j is in good quadrant
+		if ((dirs[j]-dirs[i]+Math.PI*2*70)%(Math.PI*2) > Math.PI || (dirs[j]-dirs[i]+Math.PI*2*70)%(Math.PI*2) < Math.PI/2) continue;
+		// then check that k is
+		if ((dirs[k]-dirs[i]+Math.PI*2*70)%(Math.PI*2) < Math.PI || (dirs[k]-dirs[i]+Math.PI*2*70)%(Math.PI*2) > Math.PI*3/2) continue;
+		return false;
+	  }
+	}
+  }
+  return true;
+}
+
+function drawborder(c,x1, y1, x2, y2, color) {
+  drawRexor(c,x1, y1, x2, y1+1, color, color);
+  drawRexor(c,x1, y1, x1 + 1, y2, color,color);
+  drawRexor(c,x2, y1, x2 + 1, y2, color,color);
+  drawRexor(c,x1, y2, x2, y2 + 1, color,color);
+}
+
+function showstuff() {
+  var td = document.getElementById("pojo");
+  td.innerHTML = "";
+}
+
+function drawConvex(c,conv,c1,c2) {
+  var ctx = c.getContext("2d");
+  for (var i = 0; i < conv.length-1; i++) {
+    ctx.beginPath();
+	ctx.strokeStyle = c1;
+	//ctx.lineWidth = i+1;
+    ctx.moveTo(conv[i].x*ssize,conv[i].y*ssize);
+    ctx.lineTo(conv[i+1].x*ssize,conv[i+1].y*ssize);
+	ctx.stroke();
+  }
+  if (conv.length > 2) {
+    ctx.beginPath();
+    ctx.strokeStyle = "#777777";
+    ctx.moveTo(conv[conv.length-1].x*ssize,conv[conv.length-1].y*ssize);
+    ctx.lineTo(conv[0].x*ssize,conv[0].y*ssize);
+    ctx.stroke();
+  }
+  ctx.lineWidth = 1;
+}
+
+function drawit() {
+  drawRexor(canvas,0,0,800,800,"#FFFFFF","#FFFFFF");
+  
+  drawConvex(canvas,poses,"#000000","#777777");
+  
+  drawConvex(canvas,innerposes,"#FF0000","#FFFF00");
+  drawConvex(canvas,elmukelmu,"#FF0000","#FFFF00" );
+  
+  for (var i = 0; i < xsize; i++) {
+    for (var j = 0; j < ysize; j++) {
+      /*if (grid[j][i] == 0) {
+        //drawRexor(ssize*i, downing+ssize*j, ssize*i+ssize, downing+ssize*j+ssize, "#FFFFFF", "#FFFFFF");
+	  }
+      if (grid[j][i] == 1) {
+        //drawRexor(canvas,ssize*i, downing+ssize*j, ssize*i+ssize, downing+ssize*j+ssize, "#000000", "#FFFFFF");
+		drawRexor(canvas,ssize*i, ssize*j, ssize*i+ssize, ssize*j+ssize, "#000000", "#AAAAAA");
+	  }*/
+	  drawRexor(canvas, ssize*i+ssize/2-0.3, ssize*j+ssize/2-0.3, ssize*i+ssize/2+0.3, ssize*j+ssize/2+0.3, "#000000", "#000000");
+    }
+  }
+  
+  //drawborder(canvas,0,downing,ssize*xsize,downing+ssize*ysize,"#0000FF");
+  drawborder(canvas,0,0,ssize*xsize,ssize*ysize,"#0000FF");
+ 
+}
+
+function drawmouse() {
+    for (var i = 0; i < shxsize; i++) {
+    for (var j = 0; j < shysize; j++) {
+      if (shape[j][i] == 1) {
+	    var di = i+m.x-shapex;
+		var dj = j+m.y-shapey;
+        drawRexor(canvas,ssize*di+ssize/2-tsize, ssize*dj+ssize/2-tsize, ssize*di+ssize/2+tsize, ssize*dj+ssize/2+tsize, "#FF0000", "#FFFFFF");
+	  }
+    }
+  }
+}
+
+function drawshape() {
+  drawRexor(canvasb,0,0,100,100,"#FFFFFF","#FFFFFF");
+  for (var i = 0; i < shxsize; i++) {
+    for (var j = 0; j < shysize; j++) {
+      if (shape[j][i] == 1) {
+        drawRexor(canvasb,ssize*i, ssize*j, ssize*i+ssize, ssize*j+ssize, "#000000", "#AAAAAA");
+	  }
+    }
+  }
+  drawborder(canvasb,0,0,ssize*shxsize,ssize*shysize,"#0000FF");
+  
+  drawRexor(canvasc,0,0,100,100,"#FFFFFF","#FFFFFF");
+  for (var i = 0; i < shxsize; i++) {
+    for (var j = 0; j < shysize; j++) {
+      if (shapech[j][i] == 1) {
+        drawRexor(canvasc,ssize*i, ssize*j, ssize*i+ssize, ssize*j+ssize, "#000000", "#AAAAAA");
+	  }
+    }
+  }
+  drawborder(canvasc,0,0,ssize*shxsize,ssize*shysize,"#0000FF");
+}
+
+function drawRexor(c,x1, y1, x2, y2, color, fill) {
+  var ctx = c.getContext("2d");
+  ctx.strokeStyle=color;
+  ctx.fillStyle=fill;
+  ctx.strokeRect(x1,y1,x2-x1,y2-y1);
+  ctx.fillRect(x1,y1,x2-x1,y2-y1);
+}
+
+function dorandom() {
+  var possibles = new Array();
+  for (var ii = shapex; ii < xsize-shapex; ii++) {
+    for (var ij = shapey; ij < ysize-shapey; ij++) {
+	  var ic = notinshape(ii,ij);
+	  if (ic != undefined) {
+	    for (var ih = 0; ih < shapenu.length-1; ih++) {
+		  possibles.push({atx:ii, aty:ij, times:ih});
+		}
+	  }
+	}
+  }
+  var ir = possibles[Math.floor(Math.random()*possibles.length)];
+  for (var ih = 0; ih < ir.times; ih++) {
+    rotateat(ir.atx,ir.aty);
+  }
+}
+
+function draw() {
+  drawshape();
+  drawit();
+}
+
+//drawshape();
+//drawit();
+draw();
+
+/*setInterval(function(){
+  drawit();
+  drawshape();
+  //drawmouse();
+},500);*/
+
+</script>
+
+</body>
+
+</html>
+
+
+

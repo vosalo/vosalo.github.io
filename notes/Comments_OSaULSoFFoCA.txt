@@ -1,0 +1,17 @@
+Written in 2016.
+
+This paper was written for no particular reason except the fact we came up with this neat definition.
+
+Let $M$ be a finitely generated monoid with generating set $F$ acting on a topological compact (Hausdorff) space $X$ by continuous functions. Then one can define a limit set for this action as follows: First, let $L_0 = X$ and $L_{i+1} = \bigcup_{f \in F} f(L_i)$. Then let $L_\infty = \bigcap_i L_i$ be the \emph{limit set of $(M,X)$ with respect to $F$}.
+
+\begin{definition}
+Let $\mu$ be a filter on $M$. The \emph{limit set of $(M, X)$ with respect to $\mu$} is $\bigcap_{A \in \mu} A \cdot X$.
+\end{definition}
+
+\begin{lemma}
+Let $F$ be a generating set for $M$ and let $\mu$ be the cofinite filter on $M$. Then the limit set of $(M,X)$ with respect to $F$ is the limit set of $(M,X)$ with respect to $\mu$.
+\end{lemma}
+
+\begin{corollary}
+The limit set of $(M, X)$ is indepependent of the chosen generators $F$.
+\end{corollary}

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Notes on "Transitive action on finite points of a full shift and a finitary Ryan’s theorem"</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<style>
+.theorem {
+display: block;
+font-style: italic;
+}
+.theorem:before {
+content: "Theorem. ";
+font-weight: bold;
+font-style: normal;
+}
+.theorem[text]:before {
+content: "Theorem (" attr(text) ") ";
+}
+.question {
+display: block;
+font-style: italic;
+}
+.question:before {
+content: "Question. ";
+font-weight: bold;
+font-style: normal;
+}
+.question[text]:before {
+content: "Question (" attr(text) ") ";
+}
+</style>
+</head>
+<body>
+
+<p>
+<h2> Notes for "Transitive action on finite points of a full shift and a finitary Ryan’s theorem" </h2>
+
+In this paper, as a corollary of my transitive action, I obtained a finite set of automorphisms whose centralizers intersect to the shift group, which led me to define the automorphism group invariant \( k(X) \). Johan Kopra has recently proved that \( k(X) = 2 \) for all transitive SFTs containing a unary point \(0^{\mathbb{Z}}\). A main part of his construction is to show that any such SFT admits an automorphism where finite-support points turn into a starfleet over a smaller subshift, i.e. spaceships that never collide again. (On the full shift where I worked with this part is trivial, and my paper rather spends its time on details of the transitive action, which does not need to be done for getting just the Ryan's theorem part.)
+<br/><br/>
+Of course, after his result, we had \(k(X) \in \{2, \infty, \bot\}\) for all subshifts \(X\) that have been considered, so my question after Lemma 7.7 in the paper (together with the conclusion of this lemma) became more interesting. Here's that question: Let \( G \) be a (discrete) group. Define \(k^*(G)\) as the minimal cardinality of a set \( S \subset G \) such that \( C_G(S) = Z(G) \). Define \( k(G) = k^*(G) \) if \(G\) has trivial center (i.e. \(|Z(G)|=1\)), and \(k(G)=\bot\) otherwise. If \(k(G)=\bot\), then the convention is that neither \(k(G)\leq n\) nor \(k(G) \geq n\) holds, for any cardinal \(n\). (The subshift version of \(k^*(G)\) would be the minimal cardinality \(k^*(X)\) of automorphisms whose centralizers intersect to the center).
+<br/><br/>
+<div class="question" text='Possible values of k'>
+Does there exist a finite group \(G\) with \(k(G) \geq 3\), and more generally does every number (other than \(1\)) appear as \(k(G)\) for some finite group \(G\)?
+</div>
+<br/>
+Johan reminded me of this question recently, so I tried my best to construct examples with prescribed \(k(G)\) value, but after my first \(12\) or so ideas did not work, and after noticing that the commutation graph provided some sort of qualitative difference between \( k(G) = 2 \) and \( k(G) \geq 3 \), I was no longer completely sure whether an example even exists, and asked this on
+<a href="https://mathoverflow.net/questions/298610/if-the-center-of-a-finite-group-is-trivial-are-there-two-elements-whose-central">MathOverflow</a>.
+<br/><br/>
+This was solved quite quickly: Derek Holt shows that all finite cardinals (except \(1\) of course) indeed appear as \( k(G) \) for some finite group (for infinite cardinals the question is easy). YCor showed a smaller construction showing that for any \(k \in \mathbb{N}\), either \( k \) or \( k+1 \) appears as \( k(G) \) for a finite group, and probably one could also show that any number appears in this construction, even if not with as simple a trick as in the construction of Derek Holt. Peter Mueller showed that \( k(\mathrm{SmallGroup}(486,176)) = 3 \) in the terminology of GAP or Magma (this group is \(3\)-generated, so \(3\) is an upper bound, and at least an exhaustive search gives the lower bound).
+<br/><br/>
+Combining these with Lemma 7.7 we obtain the following:
+<br/><br/>
+<div class="theorem" text='Minimal examples'>
+Let \( K = \{k(X) \;|\; X \mbox{ is a minimal \(\mathbb{Z}\)-subshift} \} \). Then
+\( (\mathbb{N} \setminus \{1\}) \cup \{\bot\} \subset K \subset (\mathbb{N} \setminus \{1\}) \cup \{\aleph_0, \bot\}. \)
+</div>
+<br/>
+Note that all subshifts have \(k(X) \leq \aleph_0\) because all automorphisms are cellular automata, i.e., they have local rule with a canonical finite representation with respect to any fixed expansive partition (this is the so-called Curtis–Hedlund–Lyndon theorem).
+
+In fact I am sure \( \aleph_0 \) is in \( K \), but I do not want to try to explain the construction I have in mind (and maybe there is a simpler idea). In the countable category it's easy to characterize the corresponding \( K \) in full:
+<br/><br/>
+<div class="theorem" text='Countable examples'>
+Let \( K = \{k(X) \;|\; X \mbox{ is a countable \(\mathbb{Z}\)-subshift} \} \). Then
+\( K = (\mathbb{N} \setminus \{1\}) \cup \{\aleph_0, \bot\}. \)
+</div>
+<br/>
+Let us outline this construction: Here \( \aleph_0 \) and \( \bot \) are easy: \( \aleph_0 \) is in my paper and \( k(\mathcal{L}^{-1}(0^*(12)^* + (12)^*0^*)) = \bot \) where \(0^*(12)^* + (12)^*0^*\) is a regular expression and \(\mathcal{L}^{-1}(L)\) for a language \(L\) denotes the smallest subshift whose language contains \(L\), when this exists (it does here).
+<br/><br/>
+One construction for finite values is the following: let \( \Gamma \) be a connected undirected graph with \( 0 \notin V(\Gamma) \). For any \( a \in V(\Gamma)^{\mathbb{N}} \) let
+\( x_a = ...0000 a_{0}^{2^0} a_{1}^{2^1} a_{2}^{2^2}... \)
+and let \( X = \overline{\bigcup_{a \in P} O(x_a) } \) where \( P \subset V(\Gamma)^{\mathbb{N}} \) is the set of all (cyclic) paths of the form \( u^\omega \) in the graph where \( |u| \leq m \), where \( m \) is picked large enough so that there is a cycle of length at most \( m \) which traverses every edge at least once.
+<br/><br/>
+Here's a proof sketch that \( \mathrm{Aut}(X) = \mathrm{Aut}(G) \times \langle \sigma \rangle \), which then proves the claim similarly as in Lemma 7.7 of the paper by Frucht's theorem (every group is the automorphism group of an undirected graph).
+<br/><br/>
+If \( g : \Gamma \to \Gamma \) is an automorphism, then clearly there is a corresponding automorphism \( f \) of \( X \) which simply applies \( g \) in every cell (and preserves \(0\)), no matter what the choice of \( m \) is.
+<br/><br/>
+Suppose then that \( f : X \to X \) is an automorphism, then observe that the unary points (fixed points of the dynamics) can be defined by a first-order sentence over the language of dynamics, so \(f\) preserves them. The unary point \(0^{\mathbb{Z}}\) can be defined by a second-order sentence: points left-asymptotic to it but not right-asymptotic to it are not right-asymptotic to any unary point. The points which are of the form \( x_a \) for some \( a \in P \) are then also definable, so \( f \) must preserve them. We claim that if \(m\) is large enough, then \( f \) must come from a graph automorphism as in the previous paragraph, up to a shift. More precisely, let \( g \) be the automorphism of \( \Gamma \) defined by how \( f \) permutes the unary points, and associate \( f' \) to \( g \) as in the previous paragraph. We claim that for some \(n\), \(f = \sigma^n \circ f'\). To see this, pick \(x_a\) such that \(a = u^\omega\) and \(u\) traverses every edge. Pick \(n\) so that \( f \circ \sigma^{-n} \) does not move the origin of \(x_a\), so that \( (f \circ \sigma^{-n})(x_a) = x_{a'} \) for some \(a' \in \Gamma\). Since \(f \circ \sigma^{-n}\) has a finite radius, we see that it must act as \(f'\) on \(x_{a'}\), and the only point bi-asymptotic to \(x_{a'}\) is \(x_{a'}\) itself, so \( (f \circ \sigma^{-n})(x_a) = x_{a'} \).
+<br/><br/>
+For other \(x_b\), every edge in \(b\) appears in \(a\), so we see that \((f \circ \sigma^{-n})\) also maps \(x_{b}\) to some \(x_{b'}\). Again by a radius consideration, \( (f \circ \sigma^{-n}) \) must act precisely as \(f'\).
+<br/><br/>
+For all but \( \aleph_0 \), the previous construction even gives a countable quasiminimal subshift, that is, one that has only finitely many subsystems. I do not immediately see whether countable quasiminimal subshifts can have \( k(X) = \aleph_0 \).
+
+
+<br/><br/><br/>
+
+Last update: 26.4.2018
+
+</p>
+
+</body>
+</html>
+
+

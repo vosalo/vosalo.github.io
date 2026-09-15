@@ -1,0 +1,13 @@
+This project started when me and Ilkka heard a talk by Aldo de Luca on factor-colorings of aperiodic words at the University of Turku in 2014. The big question was whether the factors of all aperiodic words can be colored in such a way that there is no monochromatic factoring.
+
+We worked on this a bit, and proved a nice, though weak, result: for linearly recurrent words, such factor colorings exist, if we slightly change the problem, and restrict the factorings to monotone ones. While this was not even close to solving the general problem, we mentioned it to Aldo de Luca.
+
+Though we initially did not plan to submit the paper anywhere, it came to be cited multiple times, since the problem was studied quite a bit by many authors. So we submitted it to a journal, and it was rejected due to being rather specialized and the journal rather high-level.
+
+We haven't had time to look at the paper after that, partially due to being in different countries, and we planned to return to this when we are both back at the University of Turku.
+
+However, now it seems quite moot: The problem has been solved completely! In
+Monochromatic factorisations of words and periodicity by Ca\"ius Wojcik and Luca Q. Zamboni
+it is shown that a word is aperiodic if and only if there is a coloring of its factors such that no factoring is monochromatic.
+
+Last update: 5.3.2017

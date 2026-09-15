@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Notes on "A note on subgroups of automorphism groups of full shifts"</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+</head>
+<body>
+
+<h2> Notes on "Surjective Two-Neighbor Cellular Automata on Prime Alphabets" </h2>
+
+<h3> A simpler proof that such CA are always permutive </h3>
+
+<p>
+Reading Hedlund after writing the paper, I realized that there is an easier (completely trivial) way to extract the result about permutivitity from Hedlund's 1969 paper; at the time of writing we seem to have missed Section 17. Here's a proof. Theorems below refer to that paper.
+
+<ul>
+<li> To any function \(F : S^n \to S\) on any alphabet \(S\) and \(n \in \mathbb{N}\), we associate integers \(L(F)\), \(M(F)\), \(R(F)\) in some way (\(L\) and \(R\) are Welch numbers).
+
+<li> By Theorem 14.9, we always have \( L(F)M(F)R(F) = S^{n-1} \) if the cellular automaton with local rule \(F\) is surjective
+
+<li> Thus if \(n = 2\) and \(|S|\) is prime and \(F\) defines a surjective CA, either \(L(F) = 1\) or \(R(F) = 1\) (or both).
+
+<li> By Theorem 17.1, if \(L(F) = 1\), then \(F\) is permutive in the first coordinate. A symmetric claim holds for \(R(F)\) and the last coordinate.
+
+<li> Thus if \(n = 2\) and \(|S|\) is prime and \(F\) defines a surjective CA, \(F\) has a permutive coordinate.
+
+</ul>
+</p>
+
+<h3> Solutions to open cases and an open question </h3>
+
+In the paper, doing manual constructions we found the binary case difficult. But computers are way smarter than us, and indeed there exist non-closing surjective binary CA with radius 5:
+
+<ul>
+<li> Soon after presenting the paper, Enrico Formenti mentioned that they had found such examples by non-exhaustive search.
+
+<li> In January 2016, we did some exhaustive searches with Jarkko Kari, and in particular listed the binary
+	<ul>
+	<li> <a href="BC_nR_nBP.txt">bi-closing non-reversible non-bipermutive nbhd size 5 CA</a> (there are \(44 \cdot 2 = 88\) of them)
+	<li> <a href="S_nC.txt">surjective non-closing nbhd size 5 CA</a>, (there are \(216 > 0\))
+	<li> <a href="R5.txt">reversible nbhd size 5 CA</a> (62) and
+	<li> <a href="R6.txt">reversible nbhd size 6 CA</a> (1052).
+	</ul>
+	We only list CA that fix \(1^{\mathbb{Z}}\), and the other half is obtained by composing with a flip. I think images of nbhds are listed in ascending order of numerical value, except R6 was accidentally reversed in the course of optimization.
+
+<li> Emmanuel Jeandel has independently listed <em>all (non-permutive) <a href="https://hal.archives-ouvertes.fr/hal-01583896/">binary surjective CA of nbhd size 6</a></em>, subsuming our work. There are apparently around 70 million surjective non-permutive CA among the \(2^{2^6} \approx 1.8 \cdot 10^{19}\) nbhd 6 CA. We haven't cross-checked our lists with his.
+
+<li> Is it possible to list reversible nbhd size 7 CA exhaustively?
+
+</ul>
+
+</ul>
+
+<br>
+
+<p>
+Last update: 8.9.2017
+</p>
+
+</body>
+</html>
+
+

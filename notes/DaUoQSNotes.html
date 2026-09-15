@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Notes on "Decidability and Universality of Quasiminimal Subshifts"</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<style>
+.theorem {
+display: block;
+font-style: italic;
+}
+.theorem:before {
+content: "Theorem. ";
+font-weight: bold;
+font-style: normal;
+}
+.theorem[text]:before {
+content: "Theorem (" attr(text) ") ";
+}
+.question {
+display: block;
+font-style: italic;
+}
+.question:before {
+content: "Question. ";
+font-weight: bold;
+font-style: normal;
+}
+.question[text]:before {
+content: "Question (" attr(text) ") ";
+}
+</style>
+</head>
+<body>
+
+<p>
+<h2> Notes and errata on "Decidability and Universality of Quasiminimal Subshifts" </h2>
+
+The main results of my paper are about abstract quasiminimal subshifts under computability restrictions, but there is also a tangent to classical systems, where I prove the following: If a substitution \(\tau\) has the following property:
+"In every point of the language of the subshift that \(\tau\) generates, in every word of length \(m\) you have a letter \(a\) such that \(|\tau^n(a)|\) tends to infinity."
+then the subshift \(\tau\) generates is quasiminimal. I conjecture in my paper that in fact <em>every</em> substitution has a quasiminimal associated subshift. In this note, we prove this conjecture.
+
+<br><br>
+
+In [Bérthé-Steiner-Thuswaldner-Yassawi], Proposition 5.15 states that for every non-erasing substitution there are only finitely many languages for points. This is the same thing as quasiminimality by an easy argument (see e.g. Lemma 11 and Proposition 6 in my paper). 
+
+<br><br>
+
+Here's their theorem in my language:
+
+<br><br>
+
+<div class="theorem" text='Quasiminimality of non-erasing substitutions'>
+Let \(\tau : \Sigma \to \Sigma^+\) be any substitution. Let \(X_{\tau} \subset \Sigma^{\mathbb{Z}}\) be the subshift consisting of the points \(x \) whose finite subwords all appear in some \(\tau^n(a), n \in \mathbb{N}, a \in \Sigma\). Then \(X_{\tau}\) is a quasiminimal subshift.
+</div>
+
+<br>
+
+<!-- Strictly speaking my conjecture stays open for erasing substitutions, but I should emphasize that the authors solve precisely the issue I was interested in; I just didn't myself assume non-erasing, because I assumed something much stronger (at least morally), and I do not know any dynamical behaviors exhibited by erasing substitutions but no non-erasing ones (whereas the growing condition I used in my paper seems quite restrictive). (On the other hand I also have no proof or reason to believe erasing substitutions do <em>not</em> generate new behaviors.) -->
+
+Theorem 7.5.1 in [Allouche-Shallit] (also [Cobham]) shows that a morphic image of the fixed point of a (possibly erasing) substitution is also the symbol-to-symbol substitutive image of a fixed point of a non-erasing substitution. It is not difficult to obtain the general result from this and the above theorem, as images of quasiminimal subshifts under non-erasing morphisms are quasiminimal. A similar idea was also suggested by Wolfgang Steiner in private communication.
+
+<br><br>
+
+<div class="theorem" text='Quasiminimality of all substitutions'>
+Let \(\tau : \Sigma \to \Sigma^*\) be any substitution. Let \(X_{\tau} \subset \Sigma^{\mathbb{Z}}\) be the subshift consisting of the points \(x \) whose finite subwords all appear in some \(\tau^n(a), n \in \mathbb{N}, a \in \Sigma\). Then \(X_{\tau}\) is a quasiminimal subshift.
+</div>
+
+<br><br>
+
+Errata:
+<ul>
+
+<li> The definition I give of the subshift of a substitution in my paper has an unfortunate typo: In Definition 10, obviously \(j\) and \(k\) should range over \(\mathbb{Z}\) rather than \(\mathbb{N}\).
+
+<li> Marie-Pierre Béal, Dominique Perrin and Antonio Restivo pointed out to me that the proof of Lemma 3 is wrong. Specifically, the proof of the "In particular" claim (that is, the last sentence) is wrong. Somehow I missed the subtleties here even though I am clearly very aware of the same difficulties when discussing quasiminimality. The only excuse I can think of is <strike>incompetence</strike> that this proof was taken from my thesis draft, and was written for primitive substitutions (for which this proof is fine), and I didn't see where the primitivity is needed so I erased it and forgot about it. I believe I have a working proof sketch of this lemma, but I haven't gotten to writing it down in the half a year that I've known about the error, so at this point I'll just add this note without a correction, hopefully I get to this in finite time. If you are interested, bug me about it and I'll have to get on it!
+
+</ul>
+
+<br><br>
+
+<h2> References </h2>
+
+[Allouche-Shallit] Allouche, Jean-Paul, and Jeffrey Shallit. <a href="https://cs.uwaterloo.ca/~shallit/asas.html">Automatic sequences: theory, applications, generalizations.</a> Cambridge university press, 2003.
+<br>
+[Bérthé-Steiner-Thuswaldner-Yassawi] Berthé, Valérie and Steiner, Wolfgang and Thuswaldner, Jörg M. and Yassawi, Reem. (2018) <a href="http://dx.doi.org/10.1017/etds.2017.144">"Recognizability for sequences of morphisms,"</a> Ergodic Theory and Dynamical Systems. Cambridge University Press, pp. 1–36. doi: 10.1017/etds.2017.144.
+<br>
+[Cobham] Cobham, Alan. <a href="https://ieeexplore.ieee.org/document/4569556/">"On the Hartmanis-Stearns problem for a class of tag machines."</a> IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory. IEEE, 1968.
+
+<br><br><br>
+
+Last update: 1 Mar 2022
+
+</p>
+
+</body>
+</html>
+
+

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Errata for "Computational Aspects of Cellular Automata on Countable Sofic Shifts"</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+</head>
+<body>
+
+<p>
+<h2> Errata for "Computational Aspects of Cellular Automata on Countable Sofic Shifts" </h2>
+
+The proof of Lemma 1 is sloppy. For a stronger statement for SFTs with a more careful proof, see Lemma 2.1.10 in my PhD thesis. In my thesis instead of countable sofics I work directly with the more general class of subshifts with a bounded language in the sense of formal languages, and deal with non-uniqueness of representations only when needed. A structure theorem for general sofics, which constructs a nice SFT cover, is proved in [Pavlov-Schraudner], but it does not quite give unique presentations. We do not cite [Pavlov-Schraudner] in the paper. We did learn about it somewhere around 2012, but may not have understood how direct the connection between the papers is.
+
+<br/><br/>
+
+The proof of Lemma 1 is not literally correct, because no tuples corresponding to periodic points are ever added to \( T \) so periodic points have no representations. Even forgiving this, I do not believe what we say is sufficient proof that the representations are truly unique for all points, as it is easy to concoct "deterministic parsing processes" which lead to some points having multiple decompositions (given by not parsing according to the process outlined). The particular process may well work, but there are some technical details that would need clarification.
+
+<br/><br/>
+
+The proof of Theorem 5 lacks some crucial details related to the handling of periodic points. I believe the idea and statement are correct, but that a full proof of would require a separate article. Presumably the statement could also be sharpened, as asymptotic sets need not be closed sets.
+
+<br/><br/>
+
+<h2> References </h2>
+
+[Pavlov-Schraudner] Classification of sofic projective subdynamics of multidimensional shifts of finite type, Ronnie Pavlov and Michael Schraudner, Trans. Amer. Math. Soc. 367 (2015), 3371-3421. 
+
+<br/><br/><br/>
+
+Last update: 9.8.2017
+</p>
+
+</body>
+</html>
+
