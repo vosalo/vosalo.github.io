@@ -600,7 +600,7 @@ function zeroesdraw() {
 				
 			}
 			
-			else if (mode == "largest") {
+			/*else if (mode == "largest") {
 				
 				if (diff[0] >= diff[1] && diff[0] >= diff[2]) r = 1;
 				else if (diff[1] > diff[2]) g = 1;
@@ -608,15 +608,20 @@ function zeroesdraw() {
 				
 				//if (y == 30 && x == 130) console.log(diff, Math.abs(diff[0]), Math.abs(diff[0]) < 20, r);
 
-			}
-			else if (mode = "atleasts") {
+			}*/
+			else if (mode == "atleasts") {
 				if (diff[0] >= diff[1] && diff[0] >= diff[2]) r = 1;
 				if (diff[1] >= diff[0] && diff[1] >= diff[2]) g = 1;
 				if (diff[2] >= diff[0] && diff[2] >= diff[1]) b = 1;
 			
 			
 			}
-							data[i++] = 255 * r; //left / (2*y) * cell_size;
+			else if (mode == "slanted") {
+				if (diff[0] >= -0.01) r = 1;
+				if (diff[1] >= -0.01) g = 1;
+				if (diff[2] >= -0.01) b = 1;			
+			}
+				data[i++] = 255 * r; //left / (2*y) * cell_size;
 				data[i++] = 255 * g; //curr / (2*y) * cell_size;
 				data[i++] = 255 * b; //right / (2*y) * cell_size;
 				// alpha
@@ -659,9 +664,15 @@ Array.prototype.insert = function ( index, ...items ) {
 // pressed false = 
 function presso(e) {
 	if (e.code == "KeyS") {
-		if (mode == "normal") mode = "largest";
-		else if (mode == "largest") mode = "atleasts";
-		else mode = "normal";
+		if (mode == "normal") mode = "atleasts"; //"largest";
+		//else if (mode == "largest") mode = "atleasts";
+		else if (mode == "atleasts") {mode = "slanted";
+		
+		}
+		else { mode = "normal";
+		
+		}
+		
 	}
 	/*if (e.code == "KeyP") {
 		projective = !projective;
