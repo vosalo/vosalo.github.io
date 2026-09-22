@@ -51,22 +51,25 @@
   visibility: visible;
   opacity: 1;
 }
+
+/* Display every canvas rendering path (including putImageData) upside down. */
+#canvas {
+  transform: rotate(180deg);
+  transform-origin: center center;
+}
 </style>
 </head>
 
 <body style="font-family:consolas, fixedsys;">
 
 <div id="info">
-<br>
-Instructions: 
-<br>
-Press 1, 2, 3 to pick a color (red, green, blue) and draw with mouse. Press arrow keys to movess. Press "S" to toggle drawing mode between "normal", "atleasts" and "slanted". Initially "normal". Recall that red + green = yellow.
+Instructions: Press 1, 2, 3 to pick a color (red, green, blue) and draw with mouse. Press arrow keys to movess. Press "S" to toggle drawing mode between "normal", "atleasts" and "slanted". Initially "normal". Recall that red + green = yellow.
 <br>
 
 </div>
 
 <tr><td colspan="2">
-<canvas id="canvas" width="1000" height="600" onmousedown="mousedown(event)" onmouseup="mouseup(event)" onmousemove="mousemove(event)" tabindex='1'></canvas>
+<canvas id="canvas" width="1000" height="550" onmousedown="mousedown(event)" onmouseup="mouseup(event)" onmousemove="mousemove(event)" tabindex='1'></canvas>
 </td></tr>
 
 
@@ -87,7 +90,7 @@ var canvas = document.getElementById("canvas");
 //import { cubes_from_list, Convex, HP } from "./PL.js";
 
 var f_maxheight = 40; // this corresponds to value 1, if it matters
-var f_y = 100; // height where f_y is drawn on canvas
+var f_y = 30; // height where f_y is drawn on canvas
 
 var min_y = 20; // height at which the min cube is drawn
 var min_x = 20; // the number of cells in each piece of min cube
@@ -109,6 +112,7 @@ for (var i = 1; i < 40; i++) {
 	//f_graph.push([i, i+1-i*0.02]);
 	//f_graph.push([i, i + Math.random()]);
 }
+
 
 
 var downed = null;
@@ -144,7 +148,12 @@ function mousedown(event) {
     let x = xy.x;
     let y = xy.y;
 	
-	if (Math.abs(y - min_y) < 10) {
+	if (Math.abs(y - f_y) < 30 && y < f_y) {
+		downed = (x - canvas.width/2)/cell_size + xpos;
+		downed = round_it(downed);
+		upped = downed;
+	}
+	else if (Math.abs(y - min_y) < 10) {
 		min_x = (x - 10)/cell_size/3;
 		min_x = round_it(min_x);
 	}
@@ -152,11 +161,7 @@ function mousedown(event) {
 		max_x = (x - 10)/cell_size/3;
 		max_x = round_it(max_x);
 	}
-	else if (Math.abs(y - f_y) < 30 && y < f_y) {
-		downed = (x - canvas.width/2)/cell_size + xpos;
-		downed = round_it(downed);
-		upped = downed;
-	}
+	//console.log(y - f_y);
 	
 	//update();
 }
@@ -183,9 +188,15 @@ function rat(a, b) {
 
 function getMousePos(canvas, evt) {
     const rect = canvas.getBoundingClientRect();
+    const displayX = (evt.clientX - rect.left) * (canvas.width / rect.width);
+    const displayY = (evt.clientY - rect.top) * (canvas.height / rect.height);
+
+    // The canvas is displayed with a 180-degree CSS rotation. Map pointer
+    // coordinates back through that rotation before the existing interaction
+    // code uses them.
     return {
-        x: (evt.clientX - rect.left) * (canvas.width / rect.width),
-        y: (evt.clientY - rect.top) * (canvas.height / rect.height)
+        x: canvas.width - displayX,
+        y: canvas.height - displayY
     };
 }
 
