@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Symbolic dynamics seminar." />
+  <title>σeminar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,650&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  
+    
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  defer
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Mathematics Seminar home">
+        <span class="brand-mark">σ</span>
+        <span>σeminar</span>
+      </a>
+
+      <button class="nav-toggle" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+
+      <nav id="main-nav" class="main-nav" aria-label="Main navigation">
+        <a href="#upcoming">Upcoming</a>
+        <a href="#schedule">Schedule</a>
+        <a href="#about">About</a>
+        <a href="#venue">Venue</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Autumn 2026 · Weekly seminar series</p>
+          <h1>σeminar</h1>
+          <p class="hero-text">
+			The σeminar meets weekly, with the idea of presenting nice ideas from symbolic dynamics. Other ideas are also welcome!
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#upcoming">See the next talk</a>
+            <a class="button button-ghost" href="#schedule">Full schedule</a>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <svg viewBox="0 0 560 430" role="img">
+            <img id="photo_id" src="figure.png" alt="This is a random point in a group shift on the free group." title="This is a random point in a group shift on the free group." class="photo" width=400>
+          </svg>
+        </div>
+      </section>
+
+      <section id="upcoming" class="section section-feature">
+        <div class="section-kicker">Next talk</div>
+        <div id="featured-talk" aria-live="polite"></div>
+      </section>
+
+      <section id="schedule" class="section">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Programme</p>
+            <h2>Autumn schedule</h2>
+          </div>
+          <p>Talks are normally held on Thursdays at 14:15 unless noted otherwise.</p>
+        </div>
+        <div id="schedule-list" class="schedule-list" aria-live="polite"></div>
+      </section>
+
+      <section id="about" class="section split">
+        <div>
+          <p class="section-kicker">About the seminar</p>
+          <h2>Symbolic dynamics seminar.</h2>
+        </div>
+        <div class="prose">
+          <p>
+            We are starting a symbolic dynamics seminar. For now the plan is to meet every Wednesday at 14 in QM3 (when it's available!). Watch this website for updates. The seminar is a little experimental, as we haven't had a seminar for a long time, and there's like three of us right now :) So everyone is extremely welcome to join. Feel free to be an active part of shaping the seminar, or just come and lurk!
+          </p>
+        </div>
+      </section>
+
+      <section id="venue" class="section venue-card">
+        <div>
+          <p class="section-kicker">Venue</p>
+          <h2>Department of Mathematics and Statistics</h2>
+          <p>QM3 room<br>Quantum building<br>University of Turku</p>
+          
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div>
+        <strong>σeminar</strong>
+      </div>
+      <div class="footer-links">
+        <div class="footer-contact">
+  <span>Contact</span>
+  <a href="mailto:vosalo@utu.fi">vosalo@utu.fi</a> or
+  <a href="mailto:iatorm@utu.fi">iatorm@utu.fi</a>
+</div>	
+        <a href="#top">Back to top ↑</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
