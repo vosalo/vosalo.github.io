@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,650&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
   
+  
     
 <script>
   window.MathJax = {
@@ -60,11 +61,15 @@
           </div>
         </div>
 
-        <div class="hero-visual" aria-hidden="true">
-          <svg viewBox="0 0 560 430" role="img">
-            <img id="photo_id" src="figure.png" alt="This is a random point in a group shift on the free group." title="This is a random point in a group shift on the free group." class="photo" width=400>
-          </svg>
-        </div>
+		<div class="hero-visual" aria-hidden="true">
+		  <canvas
+			id="tepCanvas"
+			width="560"
+			height="430"
+			aria-label="A random point in a group shift on the free group."
+		  ></canvas>
+		</div>
+		
       </section>
 
       <section id="upcoming" class="section section-feature">
@@ -121,5 +126,6 @@
   </div>
 
   <script src="script.js"></script>
+  <script src="tree.js"></script>
 </body>
 </html>
