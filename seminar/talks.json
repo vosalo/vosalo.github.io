@@ -1,5 +1,14 @@
 [
   {
+    "date": "2026-09-23",
+    "time": "14:15",
+    "room": "QM3",
+    "title": "Conditions for non-soficity of a $\\mathbb{Z}^2$-subshift",
+    "speaker": "Ilkka Törmä",
+    "abstract": "We survey some known conditions for non-soficity of $\\mathbb{Z}^2$-subshifts, in particular exchange arguments, subsystem entropy and Kolmogorov-complexity.",
+    "tags": []
+  },
+  {
     "date": "2026-09-30",
     "time": "14:15",
     "room": "QM3",
@@ -12,9 +21,28 @@
     "date": "2026-10-07",
     "time": "14:15",
     "room": "QM3",
-    "title": "TBA",
+    "title": "De Rham's theorem",
     "speaker": "Lumi Miinalainen",
+    "abstract": "Smooth manifolds are an important class of topological spaces, enabling the use of tools from analysis via a local coordinate structure. De Rham's theorem uncovers a deep connection between the analytical and topological properties of such a space: the de Rham cohomology of a smooth manifold, defined using the differentiable structure, in fact coincides with the singular cohomology arising from just continuous maps. Moreover, this isomorphism is given by integration. The theorem also admits a wide generalisation in terms of sheaf cohomology. This talk, based on my Master's Thesis work at the University of Helsinki, discusses primarily the classical formulation of the theorem.",
+    "tags": []
+  },
+  {
+    "date": "2026-10-14",
+    "time": "14:15",
+    "room": "QM3",
+    "title": "Linearly recurrent shifts have small automorphism groups",
+    "speaker": "Ilkka Törmä",
     "abstract": "TBA",
+    "tags": []
+  },
+  {
+    "date": "2026-10-28",
+    "time": "14:15",
+    "room": "QM3",
+    "title": "Asymptotic nilpotency implies nilpotency on $A^{\\mathbb{Z}}$",
+    "speaker": "Ville Salo",
+    "abstract": "We give the argument of Richard and Guillon showing that if a cellular automaton has the property that every initial configuration converges to the zero point under the time evolution, then actually the cellular automaton is a root of the zero map.",
     "tags": []
   }
 ]
+

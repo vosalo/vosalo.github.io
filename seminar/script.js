@@ -185,6 +185,7 @@ async function loadTalks() {
     schedule?.replaceChildren(
       el('p', 'empty-message', 'Please check that talks.json is present and valid.')
     );
+	console.log(error);
   }
 }
 
