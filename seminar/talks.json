@@ -43,6 +43,42 @@
     "speaker": "Ville Salo",
     "abstract": "We give the argument of Richard and Guillon showing that if a cellular automaton has the property that every initial configuration converges to the zero point under the time evolution, then actually the cellular automaton is a root of the zero map.",
     "tags": []
-  }
+  },
+  {
+    "date": "2026-11-02",
+    "time": "12:00",
+    "room": "QM1",
+    "title": "TBA",
+    "speaker": "Ilkka Törmä",
+    "abstract": "TBA",
+    "tags": []
+  },  
+  {
+    "date": "2026-11-09",
+    "time": "12:00",
+    "room": "QM1",
+    "title": "TBA",
+    "speaker": "Matteo Bordignon",
+    "abstract": "TBA",
+    "tags": []
+  },
+    {
+    "date": "2026-11-16",
+    "time": "12:00",
+    "room": "QM1",
+    "title": "TBA",
+    "speaker": "Aleksi Vanhatalo",
+    "abstract": "TBA",
+    "tags": []
+  },
+    {
+    "date": "2026-11-23",
+    "time": "12:00",
+    "room": "QM1",
+    "title": "TBA",
+    "speaker": "Aleksi Vanhatalo",
+    "abstract": "TBA",
+    "tags": []
+  },
 ]
 
