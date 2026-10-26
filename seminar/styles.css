@@ -405,8 +405,33 @@ footer strong { color: #102326; }
 }
 
 @media (max-width: 800px) {
-  .page-shell { width: min(100% - 28px, 1180px); }
-  .site-header { height: 78px; }
+  .page-shell {
+    width: calc(100% - 16px);
+    margin: 0 auto;
+  }
+
+  .hero,
+  .section,
+  footer {
+    width: 100%;
+    max-width: none;
+  }
+
+  .hero-copy,
+  .split,
+  .prose,
+  .venue-card {
+    width: 100%;
+    max-width: none;
+  }
+
+  h1 {
+    font-size: clamp(48px, 15vw, 72px);
+  }
+
+  .site-header {
+    height: 78px;
+  }
   .nav-toggle {
     display: grid;
     gap: 5px;
@@ -443,13 +468,30 @@ footer strong { color: #102326; }
     align-items: stretch;
     gap: 6px;
   }
+
+
+
+.hero-text {
+  max-width: 100%;
+  font-size: 18px;
+}
+
+  
   .main-nav a { padding: 11px 10px; }
   .hero {
     grid-template-columns: 1fr;
-    padding: 70px 20px 50px;
+    padding: 48px 20px 36px;
     gap: 10px;
   }
-  .hero-visual { min-height: 330px; }
+  .hero-copy {
+  width: 100%;
+  min-width: 0;
+}
+  .hero-visual { 
+  min-height: 0;
+  width: 100%;
+  padding: 10px 0 20px;
+  justify-content: center;  }
   .section { padding: 72px 20px; }
   .featured-talk {
     grid-template-columns: 1fr;
@@ -523,4 +565,42 @@ footer strong { color: #102326; }
   max-width: 760px;
   line-height: 1.6;
   font-size: 15px !important;
+}
+
+/* Prevent text blocks from overflowing narrow screens */
+.hero-copy,
+.split > div,
+.prose,
+.schedule-item > div {
+  min-width: 0;
+}
+
+.prose,
+.hero-text,
+.schedule-abstract {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+/* Make hero image responsive and centered */
+.hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-visual img,
+.hero-visual canvas,
+.photo {
+  display: block;
+  width: min(560px, 100%);
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
 }
