@@ -140,7 +140,7 @@ function renderSchedule(talks, nextTalk) {
     const status = el(
       'span',
       isNext ? 'status next' : 'status',
-      isNext ? `Next · ${talk.time}` : talk.time
+      isNext ? `Next · ${talk.time} · ${talk.room}` : `${talk.time} · ${talk.room}`
     );
 
     item.append(time, details, status);
@@ -158,7 +158,20 @@ async function loadTalks() {
 	
 	
 
-    const talks = await response.json();
+    const text = await response.text();
+
+	let talks;
+
+	try {
+	  talks = JSON.parse(text);
+	} catch (error) {
+	  console.error("JSON contents:", text);
+	  throw new Error(`Invalid talks.json: ${error.message}`);
+	}
+	
+	
+	
+	
 	console.log("Loaded from:", response.url);
 	console.log("Talk data:", talks);
 
