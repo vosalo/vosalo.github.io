@@ -48,9 +48,9 @@
     "date": "2026-11-02",
     "time": "12:00",
     "room": "QM1",
-    "title": "TBA",
+    "title": "Countable multidimensional SFTs",
     "speaker": "Ilkka Törmä",
-    "abstract": "TBA",
+    "abstract": "We consider shift spaces that have a countable number of configurations. We prove a result of Ballier, Durand and Jeandel from 2008: every countably infinite two-dimensional SFT contains a singly periodic configuration.",
 	"room": "QM1",
     "tags": []
   },  
