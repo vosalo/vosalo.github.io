@@ -127,8 +127,8 @@ function renderSchedule(talks, nextTalk) {
 	if (
 	  talk.abstract &&
 	  talk.abstract.trim().toUpperCase() !== 'TBA.' &&
-	  talk.abstract.trim().toUpperCase() !== 'TBA' &&
-	  parseLocalDate(talk.date) >= today
+	  talk.abstract.trim().toUpperCase() !== 'TBA' /*&&
+	  parseLocalDate(talk.date) >= today*/
 	) {
 	  details.append(
 		el('p', 'schedule-abstract', talk.abstract)

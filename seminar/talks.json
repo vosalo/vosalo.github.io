@@ -58,9 +58,9 @@
     "date": "2026-11-09",
     "time": "12:00",
     "room": "QM1",
-    "title": "TBA",
+    "title": "Mixing of the BCZ Map",
     "speaker": "Matteo Bordignon",
-    "abstract": "TBA",
+    "abstract": "Boca, Cobeli, and Zaharescu introduced the BCZ map in 2001 in their work on a conjecture of Hall concerning the Farey sequence. Its ergodic properties subsequently became the subject of several open questions. Athreya and Cheung (2014) identified the BCZ map as a Poincaré return map for the horocycle flow on the space of unimodular lattices, and used this connection to prove its ergodicity. More recently, Cheung and Quas (2024) proved that the BCZ map is weakly mixing.\n\nIn this talk I will present joint work with Albert Artiles and Andrew Best in which we prove that the BCZ map is strongly mixing. I will explain the main mechanism of the proof, which combines self-induction of the BCZ map, limits of graph measures, and estimates for primitive lattice points in thin regions.",
     "tags": []
   },
     {
