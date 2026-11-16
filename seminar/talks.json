@@ -85,9 +85,9 @@
     "date": "2026-11-30",
     "time": "12:00",
     "room": "QM1",
-    "title": "TBA",
+    "title": "The odd shift is sofic on $\\mathbb{Z}^2$",
     "speaker": "Lumi Miinalainen",
-    "abstract": "TBA",
+    "abstract": "In one-dimensional symbolic dynamics, the even and odd shifts are basic examples of sofic shifts that are not SFTs. While the even shift is known to be sofic on $\\mathbb{Z}^d$, soficity of the odd shift is open for $d > 2$ despite the seeming resemblance between these subshifts. This talk describes a proof of soficity of the odd shift in the case $d = 2$, based on slides by Cassaigne and Guillon.",
     "tags": []
   },
       {
