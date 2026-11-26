@@ -94,10 +94,10 @@
     "date": "2026-12-07",
     "time": "12:00",
     "room": "QM1",
-    "title": "TBA",
+    "title": "Regional Controllability of Deterministic Cellular Automata: Approaches Based on Markov Chains, Graph Theory, and Symbolic Dynamics",
     "speaker": "Sara Dridi",
 	"affiliation": "Université de Sétif 1, Algeria",
-    "abstract": "TBA",
+    "abstract": "Regional controllability is a specific notion of controllability that has received considerable attention in control theory, notably for partial differential equations. We study this problem in the framework of cellular automata (CA), viewed as discrete dynamical systems. The regional controllability problem of cellular automata amounts to searching a sequence of control that drives any initial configuration defined on a given region to a desired configuration in a finite time horizon. Several approaches are developed to characterize and establish the regional controllability, drawing on concepts from Markov chain theory, graph theory, and symbolic dynamics. The first approach uses Markov chain theory to establish sufficient conditions for regional controllability based on ergodicity and regularity. The second approach is based on graph theory, where regional controllability is characterized through the existence of a Hamiltonian circuit or, alternatively, a strongly connected component. These graph-theoretic properties provide criteria for establishing and deciding regional controllability. The third approach draws on symbolic dynamics to establish new characterizations of regional controllability. In this framework, necessary and sufficient conditions are derived using notions such as chain transitivity, chain mixing, trace approximation, transitive subshifts of finite type (SFTs), and mixing SFTs. In particular, we establish connections between the regional controllability properties of cellular automata and these dynamical properties. Finally, we demonstrate that the existence of visibly blocking words provides an obstruction to controllability, implying that the cellular automaton is not controllable.",
     "tags": []
   }
 ]
